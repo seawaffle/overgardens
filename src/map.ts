@@ -1,4 +1,4 @@
-import { Struct } from "malwoden";
+import { Rand, Struct } from "malwoden";
 import { TileTypes } from "./tile-types";
 
 export class Map {
@@ -13,11 +13,13 @@ export class Map {
   public addArea() {
     let index = this.areas.length;
     let area = new Area(index, this.width, this.height);
+    area.addLevel();
     this.areas.push(area);
   }
 
   public static generateMap(width: number, height: number): Map {
     let map = new Map(width, height);
+    map.addArea();
     return map;
   }
 }
@@ -29,6 +31,19 @@ export class Area {
   constructor(public id: number, public width: number, public height: number) {
     this.levels = [];
     this.currentLevel = 0;
+  }
+
+  public addLevel() {
+    let index = this.levels.length;
+    let level = new Level(index, this.width, this.height);
+    let rng = new Rand.AleaRNG("poop");
+    level.tiles.fill(TileTypes.Floor);
+    for (let i = 0; i < 300; i++) {
+      let x = rng.nextInt(0, level.width - 1);
+      let y = rng.nextInt(0, level.height - 1);
+      level.tiles.set({x, y}, TileTypes.Wall);
+    }
+    this.levels.push(level);
   }
 
 }

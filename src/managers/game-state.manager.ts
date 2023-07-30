@@ -1,12 +1,7 @@
 import { Game } from "../game";
+import { GameState } from "../game-state";
 import { Manager } from "./manager";
 
-export enum GameState {
-  Init = 1,
-  MainMenu,
-  AwaitingInput,
-  PlayerTurn,
-}
 export class GameStateManager extends Manager {
   state: GameState;
 
