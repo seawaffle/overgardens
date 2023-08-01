@@ -9,7 +9,6 @@ export class RenderManager extends Manager {
   displayWidth = 80;
   displayHeigth = 50;
 
-
   constructor(game: Game) {
     super(game);
     this.terminal = this.createTerminal();

@@ -6,7 +6,7 @@ import { AdventureContext, InventoryContext, MainMenuContext } from "../input";
 
 export class InputManager extends Manager {
   handler: Input.KeyboardHandler;
-  currentState: GameState
+  currentState: GameState;
 
   constructor(game: Game) {
     super(game);

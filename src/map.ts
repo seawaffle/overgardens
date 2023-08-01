@@ -1,11 +1,14 @@
 import { Rand, Struct } from "malwoden";
-import { TileTypes } from "./tile-types";
+import { FLOOR, Tile, WALL } from "./tile";
 
 export class Map {
   areas: Area[];
   currentArea: number;
 
-  constructor(public width: number, public height: number) {
+  constructor(
+    public width: number,
+    public height: number,
+  ) {
     this.areas = [];
     this.currentArea = 0;
   }
@@ -28,7 +31,11 @@ export class Area {
   levels: Level[];
   currentLevel: number;
 
-  constructor(public id: number, public width: number, public height: number) {
+  constructor(
+    public id: number,
+    public width: number,
+    public height: number,
+  ) {
     this.levels = [];
     this.currentLevel = 0;
   }
@@ -37,22 +44,24 @@ export class Area {
     let index = this.levels.length;
     let level = new Level(index, this.width, this.height);
     let rng = new Rand.AleaRNG("poop");
-    level.tiles.fill(TileTypes.Floor);
+    level.tiles.fill(FLOOR);
     for (let i = 0; i < 300; i++) {
       let x = rng.nextInt(0, level.width - 1);
       let y = rng.nextInt(0, level.height - 1);
-      level.tiles.set({x, y}, TileTypes.Wall);
+      level.tiles.set({ x, y }, WALL);
     }
     this.levels.push(level);
   }
-
 }
 
 export class Level {
-  tiles: Struct.Table<TileTypes>;
+  tiles: Struct.Table<Tile>;
 
-  constructor(public id: number, public width: number, public height: number) {
-    this.tiles = new Struct.Table<TileTypes>(width, height);
+  constructor(
+    public id: number,
+    public width: number,
+    public height: number,
+  ) {
+    this.tiles = new Struct.Table<Tile>(width, height);
   }
-  
 }
