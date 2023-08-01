@@ -1,5 +1,5 @@
 import { Rand, Struct } from "malwoden";
-import { FLOOR, Tile, WALL } from "./tile";
+import { Tile } from "./tile";
 
 export class Map {
   areas: Area[];
@@ -44,11 +44,11 @@ export class Area {
     let index = this.levels.length;
     let level = new Level(index, this.width, this.height);
     let rng = new Rand.AleaRNG("poop");
-    level.tiles.fill(FLOOR);
+    level.tiles.fill(Tile.Floor);
     for (let i = 0; i < 300; i++) {
       let x = rng.nextInt(0, level.width - 1);
       let y = rng.nextInt(0, level.height - 1);
-      level.tiles.set({ x, y }, WALL);
+      level.tiles.set({ x, y }, Tile.Wall);
     }
     this.levels.push(level);
   }

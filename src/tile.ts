@@ -8,9 +8,11 @@ export class Tile {
     public walkable: boolean,
     public transparent: boolean,
   ) {}
+
+  static Floor = new Tile("floor", Color.Black, Color.Black, true, true);
+  static Wall = new Tile("wall", Color.LightGray, Color.DarkGray, false, false);
+  static Water = new Tile("water", Color.LightBlue, Color.DimGray, false, true);
+  static Sky = new Tile("sky", Color.SkyBlue, Color.DeepSkyBlue, false, true);
+
 }
 
-export const FLOOR = new Tile("floor", Color.Black, Color.Black, true, true);
-export const WALL = new Tile("wall", Color.LightGray, Color.DarkGray, false, false);
-export const WATER = new Tile("water", Color.LightBlue, Color.DimGray, false, true);
-export const SKY = new Tile("sky", Color.SkyBlue, Color.DeepSkyBlue, false, true);

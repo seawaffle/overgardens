@@ -25,13 +25,12 @@ export class InputManager extends Manager {
         this.handler.setContext(new MainMenuContext(this.game));
         break;
       }
-      case GameState.Adventure: {
-        this.handler.setContext(new AdventureContext(this.game));
-        break;
-      }
       case GameState.Inventory: {
         this.handler.setContext(new InventoryContext(this.game));
         break;
+      }
+      default: {
+        this.handler.setContext(new AdventureContext(this.game));
       }
     }
     this.currentState = newState;
