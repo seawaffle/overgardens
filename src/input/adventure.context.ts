@@ -11,24 +11,23 @@ export class AdventureContext extends Input.KeyboardContext {
       if (this.game.gameState.state === GameState.AwaitingInput) {
         switch (keyEvent.key) {
           case Input.KeyCode.LeftArrow: {
-            Actions.tryMoveEntity(game.player, {x: -1, y: 0})
+            Actions.tryMoveEntity(game.player, { x: -1, y: 0 });
             break;
           }
           case Input.KeyCode.RightArrow: {
-            Actions.tryMoveEntity(game.player, {x: 1, y: 0})
+            Actions.tryMoveEntity(game.player, { x: 1, y: 0 });
             break;
           }
           case Input.KeyCode.UpArrow: {
-            Actions.tryMoveEntity(game.player, {x: 0, y: -1})
+            Actions.tryMoveEntity(game.player, { x: 0, y: -1 });
             break;
           }
           case Input.KeyCode.DownArrow: {
-            Actions.tryMoveEntity(game.player, {x: 0, y: 1})
+            Actions.tryMoveEntity(game.player, { x: 0, y: 1 });
             break;
           }
         }
       }
     });
   }
-
 }
