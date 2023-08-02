@@ -1,3 +1,4 @@
+import { Color, Glyph } from "malwoden";
 import {
   ECSManager,
   GameStateManager,
@@ -6,6 +7,7 @@ import {
   RenderManager,
 } from "./managers";
 import { RenderSystem } from "./systems";
+import { Entity } from "./components";
 
 export class Game {
   lastTime = performance.now(); // We add a field to keep track of the last time the loop ran
@@ -15,6 +17,7 @@ export class Game {
   map: MapManager;
   render: RenderManager;
   renderSystem: RenderSystem;
+  player: Entity;
 
   constructor() {
     this.ecs = new ECSManager(this);
@@ -23,10 +26,7 @@ export class Game {
     this.map = new MapManager(this);
     this.render = new RenderManager(this);
     this.renderSystem = new RenderSystem(this);
-  }
-
-  start() {
-    window.requestAnimationFrame(this.run.bind(this));
+    this.player = this.ecs.world.add({position: {pos: {x: 40, y: 25}}, renderable: {glyph: new Glyph('@', Color.Yellow), renderOrder: 1}, player: true})
   }
 
   tick(delta: number, time: number) {
@@ -38,6 +38,7 @@ export class Game {
   }
 
   updateSystems() {
+    this.input.update();
     this.renderSystem.update();
   }
 
@@ -46,5 +47,6 @@ export class Game {
     const delta = time - this.lastTime; // Calculate the difference
 
     this.tick(delta, this.lastTime); // Run our tick method with the times calculated
+    window.requestAnimationFrame(this.run.bind(this));
   }
 }

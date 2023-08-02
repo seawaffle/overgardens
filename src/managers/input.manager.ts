@@ -12,7 +12,7 @@ export class InputManager extends Manager {
     super(game);
 
     this.handler = new Input.KeyboardHandler();
-    this.currentState = game.gameState.state;
+    this.currentState = GameState.Init;
   }
 
   update() {
