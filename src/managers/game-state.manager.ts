@@ -8,6 +8,6 @@ export class GameStateManager extends Manager {
   constructor(game: Game) {
     super(game);
 
-    this.state = GameState.AwaitingInput;
+    this.state = GameState.MainMenu;
   }
 }

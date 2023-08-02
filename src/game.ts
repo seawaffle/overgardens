@@ -26,14 +26,14 @@ export class Game {
     this.map = new MapManager(this);
     this.render = new RenderManager(this);
     this.renderSystem = new RenderSystem(this);
-    this.player = this.ecs.world.add({
+    this.player = this.ecs.addEntity({
       position: { pos: { x: 40, y: 25 } },
       renderable: { glyph: new Glyph("@", Color.Yellow), renderOrder: 1 },
       player: true,
     });
   }
 
-  tick(delta: number, time: number) {
+  tick(_delta: number, _time: number) {
     // We'll put more code here later
     // For now, let's just write to the terminal every frame
     this.render.clear();

@@ -3,4 +3,6 @@ export enum GameState {
   AwaitingInput,
   MainMenu,
   Inventory,
+  EscapeMenu,
+  HelpScreen,
 }

@@ -12,7 +12,7 @@ export class ECSManager extends Manager {
     this.world = new World();
   }
 
-  addEntity(entity: Components.Entity) {
-    this.world.add(entity);
+  addEntity(entity: Components.Entity): Components.Entity {
+    return this.world.add(entity);
   }
 }

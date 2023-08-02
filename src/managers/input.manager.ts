@@ -3,15 +3,21 @@ import { Manager } from "./manager";
 import { Game } from "../game";
 import { GameState } from "../game-state";
 import { AdventureContext, InventoryContext, MainMenuContext } from "../input";
+import { HelpContext } from "../input/help.context";
+import { EscapeContext } from "../input/escape.context";
 
 export class InputManager extends Manager {
-  handler: Input.KeyboardHandler;
+  keyboardHandler: Input.KeyboardHandler;
+  mouseContext: Input.MouseContext;
+  mouseHandler: Input.MouseHandler;
   currentState: GameState;
 
   constructor(game: Game) {
     super(game);
 
-    this.handler = new Input.KeyboardHandler();
+    this.keyboardHandler = new Input.KeyboardHandler();
+    this.mouseContext = new Input.MouseContext();
+    this.mouseHandler = new Input.MouseHandler().setContext(this.mouseContext);
     this.currentState = GameState.Init;
   }
 
@@ -22,15 +28,23 @@ export class InputManager extends Manager {
     }
     switch (newState) {
       case GameState.MainMenu: {
-        this.handler.setContext(new MainMenuContext(this.game));
+        this.keyboardHandler.setContext(new MainMenuContext(this.game));
         break;
       }
       case GameState.Inventory: {
-        this.handler.setContext(new InventoryContext(this.game));
+        this.keyboardHandler.setContext(new InventoryContext(this.game));
+        break;
+      }
+      case GameState.HelpScreen: {
+        this.keyboardHandler.setContext(new HelpContext(this.game));
+        break;
+      }
+      case GameState.EscapeMenu: {
+        this.keyboardHandler.setContext(new EscapeContext(this.game));
         break;
       }
       default: {
-        this.handler.setContext(new AdventureContext(this.game));
+        this.keyboardHandler.setContext(new AdventureContext(this.game));
       }
     }
     this.currentState = newState;

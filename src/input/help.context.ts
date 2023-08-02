@@ -3,15 +3,15 @@ import { Game } from "../game";
 import { GameState } from "../game-state";
 import * as Actions from "../actions";
 
-export class InventoryContext extends Input.KeyboardContext {
+export class HelpContext extends Input.KeyboardContext {
   constructor(public game: Game) {
     super();
 
     this.onAnyUp((keyEvent) => {
-      if (this.game.gameState.state === GameState.Inventory) {
+      if (this.game.gameState.state === GameState.HelpScreen) {
         switch (keyEvent.key) {
           case Input.KeyCode.Escape: {
-            Actions.closeInventory(game);
+            Actions.closeHelp(game);
             break;
           }
         }
