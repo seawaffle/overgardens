@@ -14,14 +14,14 @@ export class Map {
   }
 
   public addArea() {
-    let index = this.areas.length;
-    let area = new Area(index, this.width, this.height);
+    const index = this.areas.length;
+    const area = new Area(index, this.width, this.height);
     area.addLevel();
     this.areas.push(area);
   }
 
   public static generateMap(width: number, height: number): Map {
-    let map = new Map(width, height);
+    const map = new Map(width, height);
     map.addArea();
     return map;
   }
@@ -41,13 +41,13 @@ export class Area {
   }
 
   public addLevel() {
-    let index = this.levels.length;
-    let level = new Level(index, this.width, this.height);
-    let rng = new Rand.AleaRNG("poop");
+    const index = this.levels.length;
+    const level = new Level(index, this.width, this.height);
+    const rng = new Rand.AleaRNG("poop");
     level.tiles.fill(Tile.Floor);
     for (let i = 0; i < 300; i++) {
-      let x = rng.nextInt(0, level.width - 1);
-      let y = rng.nextInt(0, level.height - 1);
+      const x = rng.nextInt(0, level.width - 1);
+      const y = rng.nextInt(0, level.height - 1);
       level.tiles.set({ x, y }, Tile.Wall);
     }
     this.levels.push(level);

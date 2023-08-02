@@ -22,7 +22,7 @@ export class InputManager extends Manager {
   }
 
   update() {
-    let newState = this.game.gameState.state;
+    const newState = this.game.gameState.state;
     if (newState === this.currentState) {
       return;
     }

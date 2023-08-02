@@ -103,7 +103,7 @@ export class RenderSystem extends System {
       },
     }).setParent(panelWidget);
     container.setDisabled(true);
-    return container;  
+    return container;
   }
 
   constructInventory(): GUI.ContainerWidget {

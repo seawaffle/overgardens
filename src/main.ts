@@ -1,4 +1,4 @@
 import { Game } from "./game";
 
-let game = new Game();
+const game = new Game();
 game.run();
