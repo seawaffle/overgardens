@@ -7,7 +7,7 @@ import { GameState } from "../game-state";
 import * as Actions from "../actions";
 
 export class RenderSystem extends System {
-  renderEntities: Query<With<Entity, "position" | "renderable">>;
+  renderQuery: Query<With<Entity, "position" | "renderable">>;
   mainMenuGui: GUI.ContainerWidget;
   inventoryGui: GUI.ContainerWidget;
   helpGui: GUI.ContainerWidget;
@@ -16,7 +16,7 @@ export class RenderSystem extends System {
   constructor(game: Game) {
     super(game);
 
-    this.renderEntities = this.game.ecs.world.with("position", "renderable");
+    this.renderQuery = this.game.ecs.world.with("position", "renderable");
     this.inventoryGui = this.constructInventory();
     this.mainMenuGui = this.constructMainMenu();
     this.helpGui = this.constructHelp();
@@ -254,13 +254,18 @@ export class RenderSystem extends System {
     const level = this.game.map.getCurrentLevel();
     for (let x = 0; x < level.tiles.width; x++) {
       for (let y = 0; y < level.tiles.height; y++) {
-        this.game.render.draw(
-          { x, y },
-          new Glyph(" ", Color.White, level.tiles.get({ x, y })?.color_light),
-        );
+        const v = { x, y };
+        const explored = level.exploredTiles.get(v)!;
+        const visible = level.visibleTiles.get(v)!;
+        const tile = level.tiles.get(v)!;
+        if (visible) {
+          this.game.render.draw(v, new Glyph(tile.character, tile.color_light));
+        } else if (explored) {
+          this.game.render.draw(v, new Glyph(tile.character, tile.color_dark));
+        }
       }
     }
-    for (const { position, renderable } of this.renderEntities) {
+    for (const { position, renderable } of this.renderQuery) {
       this.game.render.draw(position.pos, renderable.glyph);
     }
   }

@@ -15,4 +15,7 @@ export function tryMoveEntity(
     ? position
     : { x: pos.x + position.x, y: pos.y + position.y };
   entity.position!.pos = destination;
+  if (entity.viewshed) {
+    entity.viewshed.dirty = true;
+  }
 }

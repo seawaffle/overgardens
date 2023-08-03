@@ -56,6 +56,9 @@ export class Area {
 
 export class Level {
   tiles: Struct.Table<Tile>;
+  visibleTiles: Struct.Table<boolean>;
+  exploredTiles: Struct.Table<boolean>;
+  blockedTiles: Struct.Table<boolean>;
 
   constructor(
     public id: number,
@@ -63,5 +66,11 @@ export class Level {
     public height: number,
   ) {
     this.tiles = new Struct.Table<Tile>(width, height);
+    this.visibleTiles = new Struct.Table<boolean>(width, height);
+    this.visibleTiles.fill(false);
+    this.exploredTiles = new Struct.Table<boolean>(width, height);
+    this.exploredTiles.fill(false);
+    this.blockedTiles = new Struct.Table<boolean>(width, height);
+    this.blockedTiles.fill(false);
   }
 }

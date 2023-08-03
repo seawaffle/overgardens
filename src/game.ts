@@ -6,7 +6,7 @@ import {
   MapManager,
   RenderManager,
 } from "./managers";
-import { RenderSystem } from "./systems";
+import { RenderSystem, VisibilitySystem } from "./systems";
 import { Entity } from "./components";
 
 export class Game {
@@ -17,6 +17,7 @@ export class Game {
   map: MapManager;
   render: RenderManager;
   renderSystem: RenderSystem;
+  visibilitySystem: VisibilitySystem;
   player: Entity;
 
   constructor() {
@@ -26,10 +27,12 @@ export class Game {
     this.map = new MapManager(this);
     this.render = new RenderManager(this);
     this.renderSystem = new RenderSystem(this);
+    this.visibilitySystem = new VisibilitySystem(this);
     this.player = this.ecs.addEntity({
       position: { pos: { x: 40, y: 25 } },
       renderable: { glyph: new Glyph("@", Color.Yellow), renderOrder: 1 },
       player: true,
+      viewshed: { range: 7, dirty: true },
     });
   }
 
@@ -37,12 +40,13 @@ export class Game {
     // We'll put more code here later
     // For now, let's just write to the terminal every frame
     this.render.clear();
+    this.input.update();
     this.updateSystems();
     this.render.render();
   }
 
   updateSystems() {
-    this.input.update();
+    this.visibilitySystem.update();
     this.renderSystem.update();
   }
 
