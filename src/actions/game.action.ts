@@ -1,4 +1,4 @@
-import { Color, Glyph } from "malwoden";
+import { Color } from "malwoden";
 import { Game } from "../game";
 import { GameState } from "../game-state";
 
@@ -28,4 +28,4 @@ export function saveGame(game: Game) {
   game.database.saveGame();
 }
 
-export function listGames(game: Game) {}
+export function listGames(_game: Game) {}
