@@ -4,10 +4,11 @@ import { Game } from "../game";
 
 export function tryMoveEntity(
   game: Game,
-  entity: Entity,
+  entity: Entity | undefined,
   position: Vector2,
   absolute = false,
 ) {
+  if (!entity) return;
   if (!entity.position) {
     console.warn("Attempted to move an entity without position");
   }
@@ -16,7 +17,7 @@ export function tryMoveEntity(
   const destination = absolute
     ? position
     : { x: pos.x + position.x, y: pos.y + position.y };
-  if (!level.isBlocked(destination)) {
+  if (level && !level.isBlocked(destination)) {
     level.setBlocked(pos, false);
     level.setBlocked(destination);
     entity.position!.pos = destination;

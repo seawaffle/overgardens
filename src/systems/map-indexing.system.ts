@@ -14,10 +14,12 @@ export class MapIndexingSystem extends System {
 
   update(): void {
     const level = this.game.map.getCurrentLevel();
-    level.populateBlocked();
+    if (level) {
+      level.populateBlocked();
 
-    for (const e of this.blockerQuery) {
-      level.setBlocked(e.position.pos);
+      for (const e of this.blockerQuery) {
+        level.setBlocked(e.position.pos);
+      }
     }
   }
 }

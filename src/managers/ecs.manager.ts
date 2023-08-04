@@ -15,4 +15,8 @@ export class ECSManager extends Manager {
   addEntity(entity: Components.Entity): Components.Entity {
     return this.world.add(entity);
   }
+
+  reset(entities: Components.Entity[]) {
+    this.world = new World(entities);
+  }
 }

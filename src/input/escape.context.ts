@@ -14,6 +14,14 @@ export class EscapeContext extends Input.KeyboardContext {
             Actions.closeEscapeMenu(game);
             break;
           }
+          case Input.KeyCode.S: {
+            Actions.saveGame(game);
+            break;
+          }
+          case Input.KeyCode.Q: {
+            Actions.quitToMainMenu(game);
+            break;
+          }
         }
       }
     });

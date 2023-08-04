@@ -87,7 +87,7 @@ export class RenderSystem extends System {
         text: "[S]ave Game",
         hoverColor: Color.DarkSlateGray,
         onClick: () => {
-          Actions.newGame(this.game);
+          Actions.saveGame(this.game);
         },
       },
     }).setParent(panelWidget);
@@ -98,7 +98,7 @@ export class RenderSystem extends System {
         text: "[Q]uit",
         hoverColor: Color.DarkSlateGray,
         onClick: () => {
-          Actions.newGame(this.game);
+          Actions.quitToMainMenu(this.game);
         },
       },
     }).setParent(panelWidget);
@@ -179,7 +179,7 @@ export class RenderSystem extends System {
         // padding: 1,
         // borderStyle: "single-bar",
         onClick: () => {
-          Actions.loadGame(this.game);
+          Actions.loadGame(this.game, "poop");
         },
       },
     }).setParent(panelWidget);
@@ -252,21 +252,50 @@ export class RenderSystem extends System {
 
   renderWorld(): void {
     const level = this.game.map.getCurrentLevel();
-    for (let x = 0; x < level.tiles.width; x++) {
-      for (let y = 0; y < level.tiles.height; y++) {
-        const v = { x, y };
-        const explored = level.exploredTiles.get(v)!;
-        const visible = level.visibleTiles.get(v)!;
-        const tile = level.tiles.get(v)!;
-        if (visible) {
-          this.game.render.draw(v, new Glyph(tile.character, tile.color_light));
-        } else if (explored) {
-          this.game.render.draw(v, new Glyph(tile.character, tile.color_dark));
+    if (level) {
+      for (let x = 0; x < level.tiles.width; x++) {
+        for (let y = 0; y < level.tiles.height; y++) {
+          const v = { x, y };
+          const explored = level.exploredTiles.get(v)!;
+          const visible = level.visibleTiles.get(v)!;
+          const tile = level.tiles.get(v)!;
+          const light = new Color(
+            tile.color_light.r,
+            tile.color_light.g,
+            tile.color_light.b,
+          );
+          const dark = new Color(
+            tile.color_dark.r,
+            tile.color_dark.g,
+            tile.color_dark.b,
+          );
+          if (visible) {
+            this.game.render.draw(v, new Glyph(tile.character, light));
+          } else if (explored) {
+            this.game.render.draw(v, new Glyph(tile.character, dark));
+          }
         }
       }
-    }
-    for (const { position, renderable } of this.renderQuery) {
-      this.game.render.draw(position.pos, renderable.glyph);
+      for (const { position, renderable } of this.renderQuery) {
+        let fg = Color.White;
+        let bg = Color.Black;
+        if (renderable.glyph.fg) {
+          fg = new Color(
+            renderable.glyph.fg.r,
+            renderable.glyph.fg.g,
+            renderable.glyph.fg.b,
+          );
+        }
+        if (renderable.glyph.bg) {
+          bg = new Color(
+            renderable.glyph.bg.r,
+            renderable.glyph.bg.g,
+            renderable.glyph.bg.b,
+          );
+        }
+        const glyph = new Glyph(renderable.glyph.character, fg, bg);
+        this.game.render.draw(position.pos, glyph);
+      }
     }
   }
 }

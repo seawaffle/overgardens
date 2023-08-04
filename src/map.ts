@@ -1,5 +1,6 @@
 import { Rand, Struct, Vector2 } from "malwoden";
 import { Tile } from "./tile";
+import { MusicManager } from "./managers/music.manager";
 
 export class Map {
   areas: Area[];
@@ -13,16 +14,21 @@ export class Map {
     this.currentArea = 0;
   }
 
-  public addArea() {
+  public addArea(rng: Rand.AleaRNG) {
     const index = this.areas.length;
     const area = new Area(index, this.width, this.height);
-    area.addLevel();
+    area.rootNote = MusicManager.getRandomRoot();
+    area.addLevel(rng);
     this.areas.push(area);
   }
 
-  public static generateMap(width: number, height: number): Map {
+  public static generateMap(
+    rng: Rand.AleaRNG,
+    width: number,
+    height: number,
+  ): Map {
     const map = new Map(width, height);
-    map.addArea();
+    map.addArea(rng);
     return map;
   }
 }
@@ -30,6 +36,7 @@ export class Map {
 export class Area {
   levels: Level[];
   currentLevel: number;
+  rootNote: string;
 
   constructor(
     public id: number,
@@ -38,18 +45,20 @@ export class Area {
   ) {
     this.levels = [];
     this.currentLevel = 0;
+    this.rootNote = "";
   }
 
-  public addLevel() {
+  public addLevel(rng: Rand.AleaRNG) {
     const index = this.levels.length;
     const level = new Level(index, this.width, this.height);
-    const rng = new Rand.AleaRNG("poop");
     level.tiles.fill(Tile.Floor);
     for (let i = 0; i < 300; i++) {
       const x = rng.nextInt(0, level.width - 1);
       const y = rng.nextInt(0, level.height - 1);
       level.tiles.set({ x, y }, Tile.Wall);
     }
+    level.rootNote = this.rootNote;
+    level.mode = MusicManager.getRandomScale();
     this.levels.push(level);
   }
 }
@@ -59,6 +68,8 @@ export class Level {
   visibleTiles: Struct.Table<boolean>;
   exploredTiles: Struct.Table<boolean>;
   blockedTiles: Struct.Table<boolean>;
+  mode: string;
+  rootNote: string;
 
   constructor(
     public id: number,
@@ -72,6 +83,9 @@ export class Level {
     this.exploredTiles.fill(false);
     this.blockedTiles = new Struct.Table<boolean>(width, height);
     this.blockedTiles.fill(false);
+
+    this.mode = "";
+    this.rootNote = "";
   }
 
   populateBlocked() {

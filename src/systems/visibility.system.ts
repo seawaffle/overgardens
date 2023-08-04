@@ -15,34 +15,37 @@ export class VisibilitySystem extends System {
     this.fov = new FOV.PreciseShadowcasting({
       topology: "eight",
       lightPasses: (v) =>
-        this.game.map.getCurrentLevel().tiles.get(v)?.transparent ?? false,
+        this.game.map.getCurrentLevel()?.tiles.get(v)?.transparent ?? false,
     });
   }
 
   update(): void {
     const level = this.game.map.getCurrentLevel();
-    for (const e of this.viewersQuery) {
-      if (!e.viewshed.dirty) {
-        continue;
-      } else {
-        e.viewshed.dirty = false;
-      }
+    if (level) {
+      for (const e of this.viewersQuery) {
+        if (!e.viewshed.dirty) {
+          continue;
+        } else {
+          e.viewshed.dirty = false;
+        }
 
-      const visibility = this.fov.calculateArray(
-        e.position.pos,
-        e.viewshed.range,
-      );
-      e.viewshed.visibleTiles = visibility
-        .map((x) => x.pos)
-        .filter(
-          (v) => v.x > 0 && v.x < level.width && v.y > 0 && v.y < level.height,
+        const visibility = this.fov.calculateArray(
+          e.position.pos,
+          e.viewshed.range,
         );
-      if (e.player) {
-        level.visibleTiles.fill(false);
-        e.viewshed.visibleTiles.forEach((v) => {
-          level.visibleTiles.set(v, true);
-          level.exploredTiles.set(v, true);
-        });
+        e.viewshed.visibleTiles = visibility
+          .map((x) => x.pos)
+          .filter(
+            (v) =>
+              v.x > 0 && v.x < level.width && v.y > 0 && v.y < level.height,
+          );
+        if (e.player) {
+          level.visibleTiles.fill(false);
+          e.viewshed.visibleTiles.forEach((v) => {
+            level.visibleTiles.set(v, true);
+            level.exploredTiles.set(v, true);
+          });
+        }
       }
     }
   }
