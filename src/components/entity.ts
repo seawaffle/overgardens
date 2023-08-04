@@ -5,4 +5,5 @@ export interface Entity {
   renderable?: Renderable;
   player?: true;
   viewshed?: Viewshed;
+  blocksTile?: true;
 }

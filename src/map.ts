@@ -1,4 +1,4 @@
-import { Rand, Struct } from "malwoden";
+import { Rand, Struct, Vector2 } from "malwoden";
 import { Tile } from "./tile";
 
 export class Map {
@@ -72,5 +72,22 @@ export class Level {
     this.exploredTiles.fill(false);
     this.blockedTiles = new Struct.Table<boolean>(width, height);
     this.blockedTiles.fill(false);
+  }
+
+  populateBlocked() {
+    for (let x = 0; x < this.width; x++) {
+      for (let y = 0; y < this.height; y++) {
+        const tile = this.tiles.get({ x, y })!;
+        this.setBlocked({ x, y }, !tile.walkable);
+      }
+    }
+  }
+
+  setBlocked(tile: Vector2, value = true) {
+    this.blockedTiles.set(tile, value);
+  }
+
+  isBlocked(tile: Vector2): boolean {
+    return !!this.blockedTiles.get(tile);
   }
 }

@@ -6,7 +6,7 @@ import {
   MapManager,
   RenderManager,
 } from "./managers";
-import { RenderSystem, VisibilitySystem } from "./systems";
+import { MapIndexingSystem, RenderSystem, VisibilitySystem } from "./systems";
 import { Entity } from "./components";
 
 export class Game {
@@ -18,6 +18,7 @@ export class Game {
   render: RenderManager;
   renderSystem: RenderSystem;
   visibilitySystem: VisibilitySystem;
+  mapIndexingSystem: MapIndexingSystem;
   player: Entity;
 
   constructor() {
@@ -28,6 +29,7 @@ export class Game {
     this.render = new RenderManager(this);
     this.renderSystem = new RenderSystem(this);
     this.visibilitySystem = new VisibilitySystem(this);
+    this.mapIndexingSystem = new MapIndexingSystem(this);
     this.player = this.ecs.addEntity({
       position: { pos: { x: 40, y: 25 } },
       renderable: { glyph: new Glyph("@", Color.Yellow), renderOrder: 1 },
@@ -46,6 +48,7 @@ export class Game {
   }
 
   updateSystems() {
+    this.mapIndexingSystem.update();
     this.visibilitySystem.update();
     this.renderSystem.update();
   }

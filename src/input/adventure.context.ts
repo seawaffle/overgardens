@@ -12,22 +12,22 @@ export class AdventureContext extends Input.KeyboardContext {
         switch (keyEvent.key) {
           case Input.KeyCode.Numpad4:
           case Input.KeyCode.LeftArrow: {
-            Actions.tryMoveEntity(game.player, { x: -1, y: 0 });
+            Actions.tryMoveEntity(game, game.player, { x: -1, y: 0 });
             break;
           }
           case Input.KeyCode.Numpad6:
           case Input.KeyCode.RightArrow: {
-            Actions.tryMoveEntity(game.player, { x: 1, y: 0 });
+            Actions.tryMoveEntity(game, game.player, { x: 1, y: 0 });
             break;
           }
           case Input.KeyCode.Numpad8:
           case Input.KeyCode.UpArrow: {
-            Actions.tryMoveEntity(game.player, { x: 0, y: -1 });
+            Actions.tryMoveEntity(game, game.player, { x: 0, y: -1 });
             break;
           }
           case Input.KeyCode.Numpad2:
           case Input.KeyCode.DownArrow: {
-            Actions.tryMoveEntity(game.player, { x: 0, y: 1 });
+            Actions.tryMoveEntity(game, game.player, { x: 0, y: 1 });
             break;
           }
           case Input.KeyCode.I: {
