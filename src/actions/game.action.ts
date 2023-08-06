@@ -3,6 +3,7 @@ import { Game } from "../game";
 import { GameState } from "../game-state";
 
 export function newGame(game: Game) {
+  console.log("new game action");
   if (game.gameState.state !== GameState.MainMenu) {
     return;
   }
@@ -17,13 +18,15 @@ export function newGame(game: Game) {
     viewshed: { range: 7, dirty: true },
   });
 
-  game.gameState.state = GameState.AwaitingInput;
+  game.gameState.setState(GameState.AwaitingInput);
 }
 
 export function loadGame(game: Game) {
+  console.log("load game action");
   game.database.loadGame();
 }
 
 export function saveGame(game: Game) {
+  console.log("save game action");
   game.database.saveGame();
 }

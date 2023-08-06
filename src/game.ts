@@ -36,6 +36,7 @@ export class Game {
     this.visibilitySystem = new VisibilitySystem(this);
     this.mapIndexingSystem = new MapIndexingSystem(this);
     this.player = undefined;
+    this.gameState.setState(GameState.MainMenu);
   }
 
   tick(_delta: number, _time: number) {

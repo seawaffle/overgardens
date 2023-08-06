@@ -6,7 +6,7 @@ export function openEscapeMenu(game: Game) {
     return;
   }
 
-  game.gameState.state = GameState.EscapeMenu;
+  game.gameState.setState(GameState.EscapeMenu);
 }
 
 export function closeEscapeMenu(game: Game) {
@@ -14,7 +14,7 @@ export function closeEscapeMenu(game: Game) {
     return;
   }
 
-  game.gameState.state = GameState.AwaitingInput;
+  game.gameState.setState(GameState.AwaitingInput);
 }
 
 export function quitToMainMenu(game: Game) {
@@ -22,5 +22,5 @@ export function quitToMainMenu(game: Game) {
     return;
   }
 
-  game.gameState.state = GameState.MainMenu;
+  game.gameState.setState(GameState.MainMenu);
 }

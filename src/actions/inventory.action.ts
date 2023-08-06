@@ -2,11 +2,13 @@ import { Game } from "../game";
 import { GameState } from "../game-state";
 
 export function openInventory(game: Game) {
+  console.log("open inv action");
+
   if (game.gameState.state !== GameState.AwaitingInput) {
     return;
   }
 
-  game.gameState.state = GameState.Inventory;
+  game.gameState.setState(GameState.Inventory);
 }
 
 export function closeInventory(game: Game) {
@@ -14,5 +16,5 @@ export function closeInventory(game: Game) {
     return;
   }
 
-  game.gameState.state = GameState.AwaitingInput;
+  game.gameState.setState(GameState.AwaitingInput);
 }

@@ -6,7 +6,7 @@ export function openHelp(game: Game) {
     return;
   }
 
-  game.gameState.state = GameState.HelpScreen;
+  game.gameState.setState(GameState.HelpScreen);
 }
 
 export function closeHelp(game: Game) {
@@ -14,5 +14,5 @@ export function closeHelp(game: Game) {
     return;
   }
 
-  game.gameState.state = GameState.AwaitingInput;
+  game.gameState.setState(GameState.AwaitingInput);
 }
