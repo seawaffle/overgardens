@@ -7,7 +7,7 @@ export function newGame(game: Game) {
     return;
   }
 
-  game.gameId = "poop";
+  game.gameId = Date.now.toString();
   game.map.generateMap();
   game.ecs.world.clear();
   game.player = game.ecs.addEntity({
@@ -20,12 +20,10 @@ export function newGame(game: Game) {
   game.gameState.state = GameState.AwaitingInput;
 }
 
-export function loadGame(game: Game, seed: string) {
-  game.database.loadGame(seed);
+export function loadGame(game: Game) {
+  game.database.loadGame();
 }
 
 export function saveGame(game: Game) {
   game.database.saveGame();
 }
-
-export function listGames(_game: Game) {}

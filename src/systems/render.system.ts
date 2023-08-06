@@ -174,12 +174,12 @@ export class RenderSystem extends System {
     new GUI.ButtonWidget({
       origin: { x: 30, y: 10 },
       initialState: {
-        text: "[L]oad Game",
+        text: "[C]ontinue",
         hoverColor: Color.DarkSlateGray,
         // padding: 1,
         // borderStyle: "single-bar",
         onClick: () => {
-          Actions.loadGame(this.game, "poop");
+          Actions.loadGame(this.game);
         },
       },
     }).setParent(panelWidget);
@@ -201,6 +201,7 @@ export class RenderSystem extends System {
         this.renderHelpMenu();
         break;
       }
+      case GameState.EscapeMenu:
       default: {
         this.renderWorld();
         if (this.game.gameState.state === GameState.EscapeMenu) {

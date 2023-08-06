@@ -62,7 +62,7 @@ export class Game {
   }
 
   createSaveData(): Record<string, any> {
-    let data: Record<string, any> = {};
+    const data: Record<string, any> = {};
     data.gameId = this.gameId;
     data.player = this.player;
     data.entities = this.ecs.world.entities;

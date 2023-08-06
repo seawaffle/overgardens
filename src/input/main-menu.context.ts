@@ -15,7 +15,7 @@ export class MainMenuContext extends Input.KeyboardContext {
             break;
           }
           case Input.KeyCode.L: {
-            Actions.loadGame(game, "poop");
+            Actions.loadGame(game);
             break;
           }
         }

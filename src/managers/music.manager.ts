@@ -10,7 +10,7 @@ export class MusicManager extends Manager {
   }
 
   static getRandomRoot(): string {
-    let rng = new Rand.AleaRNG();
+    const rng = new Rand.AleaRNG();
     const note = rng.nextItem<string>([
       "C",
       "C#",
@@ -30,7 +30,7 @@ export class MusicManager extends Manager {
   }
 
   static getRandomScale(): string {
-    let rng = new Rand.AleaRNG();
+    const rng = new Rand.AleaRNG();
     return rng.nextItem<string>(ScaleType.names())!;
   }
 
