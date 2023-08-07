@@ -36,7 +36,7 @@ export class Tile {
   );
   static Sky = new Tile(
     "sky",
-    " ",
+    "-",
     Color.SkyBlue,
     Color.DeepSkyBlue,
     false,
