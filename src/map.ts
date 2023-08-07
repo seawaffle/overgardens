@@ -1,7 +1,6 @@
 import { Rand, Struct, Vector2 } from "malwoden";
 import { Tile } from "./tile";
 import { MusicManager } from "./managers/music.manager";
-import { Noise } from "rot-js";
 import { mixNoise, reshape } from "./utils";
 
 export class Map {
@@ -54,13 +53,19 @@ export class Area {
     const index = this.levels.length;
     const level = new Level(index, this.width, this.height);
     level.tiles.fill(Tile.Sky);
-    const distanceFn = (nx: number, ny: number) => 1 - (1-nx*nx) * (1-ny*ny);
-    const noiseMap = mixNoise(level.width, level.height, [1, 1/2, 1/4, 1/8, 1/16], 2)
+    const distanceFn = (nx: number, ny: number) =>
+      1 - (1 - nx * nx) * (1 - ny * ny);
+    const noiseMap = mixNoise(
+      level.width,
+      level.height,
+      [1, 1 / 2, 1 / 4, 1 / 8, 1 / 16],
+      2,
+    );
     for (let y = 0; y < level.height; y++) {
       for (let x = 0; x < level.width; x++) {
         const nx = 2 * (x / level.width) - 1;
         const ny = 2 * (y / level.height) - 1;
-        let n = noiseMap.get({x, y})!;
+        let n = noiseMap.get({ x, y })!;
         let d = distanceFn(nx, ny);
         if (d < 0) d = 0;
         if (d > 1) d = 1;
@@ -70,11 +75,6 @@ export class Area {
         }
       }
     }
-    // for (let i = 0; i < 300; i++) {
-    //   const x = rng.nextInt(0, level.width - 1);
-    //   const y = rng.nextInt(0, level.height - 1);
-    //   level.tiles.set({ x, y }, Tile.Wall);
-    // }
     level.rootNote = this.rootNote;
     level.mode = MusicManager.getRandomScale();
     this.levels.push(level);

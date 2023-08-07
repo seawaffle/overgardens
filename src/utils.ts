@@ -7,9 +7,9 @@ export function mixNoise(
   spectrum: number[],
   frequency: number,
 ): Struct.Table<number> {
-  let maps: Struct.Table<number>[] = [];
+  const maps: Struct.Table<number>[] = [];
   let scale = 0.0;
-  let amplitudes = [];
+  const amplitudes = [];
   for (
     let octave = 0, exponent = 1;
     octave < spectrum.length;
@@ -39,9 +39,9 @@ function fillNoise(
   const aspect = output.width / output.height;
   for (let y = 0; y < output.height; y++) {
     for (let x = 0; x < output.width; x++) {
-      let nx = x / output.width - 0.5;
-      let ny = y / output.height - 0.5;
-      let z = noise(nx * frequency * aspect, ny * frequency);
+      const nx = x / output.width - 0.5;
+      const ny = y / output.height - 0.5;
+      const z = noise(nx * frequency * aspect, ny * frequency);
       output.set({ x, y }, z / 2 + 0.5);
     }
   }
