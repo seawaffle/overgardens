@@ -49,7 +49,7 @@ export class Area {
     this.rootNote = "";
   }
 
-  public addLevel(rng: Rand.AleaRNG) {
+  public addLevel(_rng: Rand.AleaRNG) {
     const index = this.levels.length;
     const level = new Level(index, this.width, this.height);
     level.tiles.fill(Tile.Sky);

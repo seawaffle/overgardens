@@ -37,7 +37,7 @@ export class VisibilitySystem extends System {
           .map((x) => x.pos)
           .filter(
             (v) =>
-              v.x > 0 && v.x < level.width && v.y > 0 && v.y < level.height,
+              v.x >= 0 && v.x < level.width && v.y >= 0 && v.y < level.height,
           );
         if (e.player) {
           level.visibleTiles.fill(false);

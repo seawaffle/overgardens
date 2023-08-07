@@ -1,5 +1,5 @@
 import { Struct } from "malwoden";
-import { createNoise2D } from "simplex-noise";
+import { Noise } from "rot-js";
 // noise related functions stolen from https://www.redblobgames.com/maps/terrain-from-noise
 export function mixNoise(
   width: number,
@@ -35,13 +35,13 @@ function fillNoise(
   frequency: number,
 ): Struct.Table<number> {
   const output = new Struct.Table<number>(width, height);
-  const noise = createNoise2D();
+  const noise = new Noise.Simplex();
   const aspect = output.width / output.height;
   for (let y = 0; y < output.height; y++) {
     for (let x = 0; x < output.width; x++) {
       const nx = x / output.width - 0.5;
       const ny = y / output.height - 0.5;
-      const z = noise(nx * frequency * aspect, ny * frequency);
+      const z = noise.get(nx * frequency * aspect, ny * frequency);
       output.set({ x, y }, z / 2 + 0.5);
     }
   }
