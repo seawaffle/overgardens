@@ -1,12 +1,12 @@
 import { Rand } from "malwoden";
 import { Game } from "../game";
-import { Area, Level, Map } from "../map";
+import { Area, Level, Map } from "../data";
 import { Manager } from "./manager";
 
 export class MapManager extends Manager {
   map: Map | undefined;
-  areaWidth = 80;
-  areaHeight = 50;
+  areaWidth = 120;
+  areaHeight = 120;
   rng: Rand.AleaRNG;
 
   constructor(game: Game) {
@@ -41,8 +41,7 @@ export class MapManager extends Manager {
 
   getCurrentLevel(): Level | undefined {
     if (this.map) {
-      const area = this.map.areas[this.map.currentArea];
-      return area.levels[area.currentLevel];
+      return this.map.getCurrentLevel();
     }
     return undefined;
   }

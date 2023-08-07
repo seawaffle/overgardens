@@ -2,7 +2,7 @@ import { Color, GUI } from "malwoden";
 import { Screen } from "./screen";
 import * as Actions from "../actions";
 import { Game } from "../game";
-import { GameState } from "../game-state";
+import { GameState } from "../data";
 
 export class MainMenuScreen extends Screen {
   guiContainer: GUI.ContainerWidget;
@@ -21,8 +21,8 @@ export class MainMenuScreen extends Screen {
     const panelWidget = new GUI.PanelWidget({
       origin: { x: 0, y: 0 },
       initialState: {
-        width: 80,
-        height: 50,
+        width: this.game.render.displayWidth,
+        height: this.game.render.displayHeight,
         borderStyle: "double-bar",
       },
     }).setParent(container);

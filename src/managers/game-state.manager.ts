@@ -1,6 +1,5 @@
 import { Game } from "../game";
-import { GameState } from "../game-state";
-import { StateListener } from "../state-listener";
+import { GameState, StateListener } from "../data";
 import { Manager } from "./manager";
 
 export class GameStateManager extends Manager {

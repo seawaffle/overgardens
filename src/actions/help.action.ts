@@ -1,5 +1,5 @@
 import { Game } from "../game";
-import { GameState } from "../game-state";
+import { GameState } from "../data/game-state";
 
 export function openHelp(game: Game) {
   if (game.gameState.state !== GameState.AwaitingInput) {

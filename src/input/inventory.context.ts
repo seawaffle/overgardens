@@ -1,6 +1,6 @@
 import { Input } from "malwoden";
 import { Game } from "../game";
-import { GameState } from "../game-state";
+import { GameState } from "../data";
 import * as Actions from "../actions";
 
 export class InventoryContext extends Input.KeyboardContext {

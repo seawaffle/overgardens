@@ -1,7 +1,7 @@
 import { Rand, Struct, Vector2 } from "malwoden";
 import { Tile } from "./tile";
-import { MusicManager } from "./managers/music.manager";
-import { mixNoise, reshape } from "./utils";
+import { MusicManager } from "../managers/music.manager";
+import { mixNoise, reshape } from "../utils";
 
 export class Map {
   areas: Area[];
@@ -21,6 +21,15 @@ export class Map {
     area.rootNote = MusicManager.getRandomRoot();
     area.addLevel(rng);
     this.areas.push(area);
+  }
+
+  public getCurrentArea(): Area {
+    return this.areas[this.currentArea];
+  }
+
+  public getCurrentLevel(): Level {
+    const area = this.getCurrentArea();
+    return area.levels[area.currentLevel];
   }
 
   public static generateMap(

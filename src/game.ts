@@ -8,7 +8,7 @@ import {
 } from "./managers";
 import { MapIndexingSystem, RenderSystem, VisibilitySystem } from "./systems";
 import { Entity } from "./components";
-import { GameState } from "./game-state";
+import { GameState } from "./data";
 
 export class Game {
   lastTime = performance.now(); // We add a field to keep track of the last time the loop ran

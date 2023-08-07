@@ -1,13 +1,13 @@
 import { Input } from "malwoden";
 import { Game } from "../game";
-import { GameState } from "../game-state";
+import { GameState } from "../data";
 import * as Actions from "../actions";
 
 export class AdventureContext extends Input.KeyboardContext {
   constructor(public game: Game) {
     super();
 
-    this.onAnyUp((keyEvent) => {
+    this.onAnyDown((keyEvent) => {
       if (this.game.gameState.state === GameState.AwaitingInput) {
         switch (keyEvent.key) {
           case Input.KeyCode.Numpad4:

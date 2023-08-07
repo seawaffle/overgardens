@@ -1,10 +1,14 @@
 import { Input } from "malwoden";
 import { Manager } from "./manager";
 import { Game } from "../game";
-import { GameState } from "../game-state";
-import { AdventureContext, InventoryContext, MainMenuContext } from "../input";
-import { HelpContext } from "../input/help.context";
-import { EscapeContext } from "../input/escape.context";
+import { GameState } from "../data";
+import {
+  AdventureContext,
+  InventoryContext,
+  MainMenuContext,
+  HelpContext,
+  EscapeContext,
+} from "../input";
 
 export class InputManager extends Manager {
   keyboardHandler: Input.KeyboardHandler;

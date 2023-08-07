@@ -1,5 +1,6 @@
-import { Struct } from "malwoden";
+import { Struct, Vector2 } from "malwoden";
 import { Noise } from "rot-js";
+import { Map } from "./data";
 // noise related functions stolen from https://www.redblobgames.com/maps/terrain-from-noise
 export function mixNoise(
   width: number,
@@ -77,4 +78,72 @@ function lerp(a: number, b: number, t: number) {
 }
 export function reshape(e: number, d: number) {
   return lerp(e, 1 - d, 0.5);
+}
+
+export function findOpenGround(map: Map, edge?: string) {
+  const level = map.getCurrentLevel();
+  const mapCenter = { x: level.width / 2, y: level.height / 2 };
+  let position = { x: 0, y: 0 };
+  switch (edge) {
+    case "north": {
+      for (let y = 0; y < level.height; y++) {
+        const coord = { x: mapCenter.x, y };
+        if (!level.isBlocked(coord)) {
+          position = coord;
+          break;
+        }
+      }
+      break;
+    }
+    case "south": {
+      for (let y = level.height - 1; y > 0; y--) {
+        const coord = { x: mapCenter.x, y };
+        if (!level.isBlocked(coord)) {
+          position = coord;
+          break;
+        }
+      }
+      break;
+    }
+    case "east": {
+      for (let x = level.width - 1; x > 0; x--) {
+        const coord = { x, y: mapCenter.y };
+        if (!level.isBlocked(coord)) {
+          position = coord;
+          break;
+        }
+      }
+      break;
+    }
+    case "west": {
+      for (let x = 0; x < level.width; x++) {
+        const coord = { x, y: mapCenter.y };
+        if (!level.isBlocked(coord)) {
+          position = coord;
+          break;
+        }
+      }
+      break;
+    }
+    default: {
+      const coords: Vector2[] = [];
+      const badCoords: Vector2[] = [];
+      coords.push(mapCenter);
+      while (coords.length > 0) {
+        const coord = coords.pop()!;
+        if (!level.isBlocked(coord)) {
+          position = coord;
+          break;
+        } else {
+          for (const c of level.tiles.getNeighbors(coord)) {
+            if (!badCoords.includes(c)) {
+              coords.push(c);
+            }
+          }
+        }
+      }
+      break;
+    }
+  }
+  return position;
 }

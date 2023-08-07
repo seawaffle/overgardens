@@ -2,7 +2,7 @@ import { Color, GUI } from "malwoden";
 import { Screen } from "./screen";
 import * as Actions from "../actions";
 import { Game } from "../game";
-import { GameState } from "../game-state";
+import { GameState } from "../data";
 
 export class InventoryScreen extends Screen {
   guiContainer: GUI.ContainerWidget;

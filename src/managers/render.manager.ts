@@ -6,8 +6,8 @@ export class RenderManager extends Manager {
   terminal: Terminal.RetroTerminal;
   tileWidth = 12;
   tileHeight = 12;
-  displayWidth = 80;
-  displayHeigth = 50;
+  displayWidth = 60;
+  displayHeight = 40;
 
   constructor(game: Game) {
     super(game);
@@ -20,7 +20,7 @@ export class RenderManager extends Manager {
 
     return new Terminal.RetroTerminal({
       width: this.displayWidth,
-      height: this.displayHeigth,
+      height: this.displayHeight,
       imageURL: "/cheep_12.png",
       charWidth: this.tileWidth,
       charHeight: this.tileHeight,

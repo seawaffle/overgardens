@@ -10,6 +10,14 @@ export class Tile {
     public transparent: boolean,
   ) {}
 
+  static Nothing = new Tile(
+    "nothing",
+    " ",
+    Color.Black,
+    Color.Black,
+    false,
+    false,
+  );
   static Floor = new Tile(
     "floor",
     ".",
