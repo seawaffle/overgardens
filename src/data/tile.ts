@@ -21,8 +21,8 @@ export class Tile {
   static Floor = new Tile(
     "floor",
     ".",
-    Color.DarkGray,
-    Color.Black,
+    Color.LightGray,
+    Color.DimGray,
     true,
     true,
   );

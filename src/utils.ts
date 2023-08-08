@@ -1,4 +1,4 @@
-import { Struct, Vector2 } from "malwoden";
+import { Rand, Struct, Vector2 } from "malwoden";
 import { Noise } from "rot-js";
 import { Map } from "./data";
 // noise related functions stolen from https://www.redblobgames.com/maps/terrain-from-noise
@@ -146,4 +146,23 @@ export function findOpenGround(map: Map, edge?: string) {
     }
   }
   return position;
+}
+
+export function randomOpenTile(map: Map): Vector2 {
+  const level = map.getCurrentLevel();
+  const rng = new Rand.AleaRNG();
+  while (true) {
+    let pos = { x: rng.nextInt(0, level.width), y: rng.nextInt(0, level.height) };
+    if (!level.isBlocked(pos)) {
+      return pos;
+    }
+  }
+}
+
+export function* range(min: number, max: number, step = 1) {
+  let value = min;
+  while (value <= max) {
+    yield value;
+    value += step;
+  }
 }

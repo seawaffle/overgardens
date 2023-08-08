@@ -4,3 +4,4 @@ export * from "./input.manager";
 export * from "./map.manager";
 export * from "./render.manager";
 export * from "./database.manager";
+export * from "./procgen.manager";

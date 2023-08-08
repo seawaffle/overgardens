@@ -4,6 +4,7 @@ import {
   GameStateManager,
   InputManager,
   MapManager,
+  ProcGenManager,
   RenderManager,
 } from "./managers";
 import { MapIndexingSystem, RenderSystem, VisibilitySystem } from "./systems";
@@ -17,6 +18,7 @@ export class Game {
   gameState: GameStateManager;
   input: InputManager;
   map: MapManager;
+  procgen: ProcGenManager
   render: RenderManager;
   database: DatabaseManager;
   renderSystem: RenderSystem;
@@ -32,6 +34,7 @@ export class Game {
     this.map = new MapManager(this);
     this.render = new RenderManager(this);
     this.database = new DatabaseManager(this);
+    this.procgen = new ProcGenManager(this);
     this.renderSystem = new RenderSystem(this);
     this.visibilitySystem = new VisibilitySystem(this);
     this.mapIndexingSystem = new MapIndexingSystem(this);
