@@ -5,6 +5,7 @@ import { Query, With } from "miniplex";
 import { Entity } from "../components";
 import * as Screens from "../screens";
 import { Tile } from "../data";
+import { ColorTranslator } from "colortranslator";
 
 export class RenderSystem extends System {
   renderQuery: Query<With<Entity, "position" | "renderable">>;
@@ -86,16 +87,10 @@ export class RenderSystem extends System {
           const explored = level.exploredTiles.get(mapPos)!;
           const visible = level.visibleTiles.get(mapPos)!;
           const tile = level.tiles.get(mapPos) || Tile.Nothing;
-          const light = new Color(
-            tile.color_light.r,
-            tile.color_light.g,
-            tile.color_light.b,
-          );
-          const dark = new Color(
-            tile.color_dark.r,
-            tile.color_dark.g,
-            tile.color_dark.b,
-          );
+          const colorLight = new ColorTranslator(tile.color_light).RGBObject;
+          const light = new Color(colorLight.r, colorLight.g, colorLight.b);
+          const colorDark = new ColorTranslator(tile.color_dark).RGBObject;
+          const dark = new Color(colorDark.r, colorDark.g, colorDark.b);
           if (visible) {
             this.game.render.draw(displayPos, new Glyph(tile.character, light));
           } else if (explored) {
@@ -118,18 +113,12 @@ export class RenderSystem extends System {
           let fg = Color.White;
           let bg = Color.Black;
           if (renderable.glyph.fg) {
-            fg = new Color(
-              renderable.glyph.fg.r,
-              renderable.glyph.fg.g,
-              renderable.glyph.fg.b,
-            );
+            const color = new ColorTranslator(renderable.glyph.fg).RGBObject;
+            fg = new Color(color.r, color.g, color.b);
           }
           if (renderable.glyph.bg) {
-            bg = new Color(
-              renderable.glyph.bg.r,
-              renderable.glyph.bg.g,
-              renderable.glyph.bg.b,
-            );
+            const color = new ColorTranslator(renderable.glyph.bg).RGBObject;
+            bg = new Color(color.r, color.g, color.b);
           }
           const glyph = new Glyph(renderable.glyph.character, fg, bg);
           this.game.render.draw(pos, glyph);

@@ -1,7 +1,8 @@
-import { Color, Rand } from "malwoden";
+import { Rand } from "malwoden";
 import { Game } from "../game";
 import { findOpenGround, randomOpenTile, range } from "../utils";
 import { Manager } from "./manager";
+import * as Prefabs from "../prefabs";
 
 export class ProcGenManager extends Manager {
   constructor(game: Game) {
@@ -20,21 +21,16 @@ export class ProcGenManager extends Manager {
   }
 
   generateEntities() {
-    this.game.player = this.game.ecs.addEntity({
-      position: { pos: findOpenGround(this.game.map.map!, "south") },
-      renderable: { glyph: { character: "@", fg: Color.Yellow }, renderOrder: 1 },
-      player: true,
-      blocksTile: true,
-      viewshed: { range: 7, dirty: true },
-    });
+    const map = this.game.map.map!;
+    const player = { ...Prefabs.Player};
+    player.position = { pos: findOpenGround(map, "south") }
+    this.game.player = this.game.ecs.addEntity(player);
     const rng = new Rand.AleaRNG();
     for (const _ of range(0, rng.nextInt(3, 10))) {
-      this.game.ecs.addEntity({
-        position: { pos: randomOpenTile(this.game.map.map!) },
-        renderable: { glyph: { character: "r", fg: Color.White }, renderOrder: 1},
-        blocksTile: true,
-        viewshed: { range: 5, dirty: true },
-      });
+      this.game.mapIndexingSystem.update();
+      const rat = { ...Prefabs.Rat};
+      rat.position = {pos: randomOpenTile(map)};
+      this.game.ecs.addEntity(rat);
     }
   }
 }

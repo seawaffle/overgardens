@@ -1,11 +1,9 @@
-import { Color } from "malwoden";
-
 export class Tile {
   constructor(
     public type: string,
     public character: string,
-    public color_light: Color,
-    public color_dark: Color,
+    public color_light: string,
+    public color_dark: string,
     public walkable: boolean,
     public transparent: boolean,
   ) {}
@@ -13,40 +11,40 @@ export class Tile {
   static Nothing = new Tile(
     "nothing",
     " ",
-    Color.Black,
-    Color.Black,
+    "black",
+    "black",
     false,
     false,
   );
   static Floor = new Tile(
     "floor",
     ".",
-    Color.LightGray,
-    Color.DimGray,
+    "lightgray",
+    "dimgray",
     true,
     true,
   );
   static Wall = new Tile(
     "wall",
     "#",
-    Color.Green,
-    Color.DarkGray,
+    "green",
+    "darkgray",
     false,
     false,
   );
   static Water = new Tile(
     "water",
     "~",
-    Color.LightBlue,
-    Color.DimGray,
+    "lightblue",
+    "dimgray",
     false,
     true,
   );
   static Sky = new Tile(
     "sky",
     "-",
-    Color.SkyBlue,
-    Color.DeepSkyBlue,
+    "skyblue",
+    "deepskyblue",
     false,
     true,
   );

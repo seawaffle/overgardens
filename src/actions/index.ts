@@ -3,3 +3,4 @@ export * from "./game.action";
 export * from "./inventory.action";
 export * from "./help.action";
 export * from "./escape.action";
+export * from "./wait.action";

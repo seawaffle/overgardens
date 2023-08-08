@@ -7,7 +7,7 @@ import {
   ProcGenManager,
   RenderManager,
 } from "./managers";
-import { MapIndexingSystem, RenderSystem, VisibilitySystem } from "./systems";
+import { MapIndexingSystem, RenderSystem, VisibilitySystem, InitiativeSystem, AISystem } from "./systems";
 import { Entity } from "./components";
 import { GameState } from "./data";
 
@@ -24,6 +24,8 @@ export class Game {
   renderSystem: RenderSystem;
   visibilitySystem: VisibilitySystem;
   mapIndexingSystem: MapIndexingSystem;
+  initiativeSystem: InitiativeSystem;
+  aiSystem: AISystem;
   player: Entity | undefined;
 
   constructor(id?: string) {
@@ -38,6 +40,8 @@ export class Game {
     this.renderSystem = new RenderSystem(this);
     this.visibilitySystem = new VisibilitySystem(this);
     this.mapIndexingSystem = new MapIndexingSystem(this);
+    this.initiativeSystem = new InitiativeSystem(this);
+    this.aiSystem = new AISystem(this);
     this.player = undefined;
     this.gameState.setState(GameState.MainMenu);
   }
@@ -54,6 +58,8 @@ export class Game {
   updateSystems() {
     this.mapIndexingSystem.update();
     this.visibilitySystem.update();
+    this.initiativeSystem.update();
+    this.aiSystem.update();
     this.renderSystem.update();
   }
 

@@ -2,8 +2,6 @@ import { Game } from "../game";
 import { GameState } from "../data/game-state";
 
 export function openInventory(game: Game) {
-  console.log("open inv action");
-
   if (game.gameState.state !== GameState.AwaitingInput) {
     return;
   }

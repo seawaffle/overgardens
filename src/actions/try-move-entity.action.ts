@@ -1,6 +1,7 @@
 import { Vector2 } from "malwoden";
 import { Entity } from "../components";
 import { Game } from "../game";
+import { GameState } from "../data";
 
 export function tryMoveEntity(
   game: Game,
@@ -23,6 +24,9 @@ export function tryMoveEntity(
     entity.position!.pos = destination;
     if (entity.viewshed) {
       entity.viewshed.dirty = true;
+    }
+    if (entity.player) {
+      game.gameState.setState(GameState.Ticking);
     }
   }
 }

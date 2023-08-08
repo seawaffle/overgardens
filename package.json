@@ -20,8 +20,10 @@
     "vite": "^4.4.5"
   },
   "dependencies": {
+    "colortranslator": "^3.0.2",
     "malwoden": "^0.5.0",
     "miniplex": "^2.0.0",
+    "nanoid": "^4.0.2",
     "rot-js": "^2.2.0",
     "tonal": "^5.0.0",
     "tone": "^14.7.77"
