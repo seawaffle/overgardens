@@ -7,7 +7,7 @@ export class MainMenuContext extends Input.KeyboardContext {
   constructor(public game: Game) {
     super();
 
-    this.onAnyUp((keyEvent) => {
+    this.onAnyDown((keyEvent) => {
       if (this.game.gameState.state === GameState.MainMenu) {
         switch (keyEvent.key) {
           case Input.KeyCode.N: {

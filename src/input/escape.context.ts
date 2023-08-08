@@ -7,7 +7,7 @@ export class EscapeContext extends Input.KeyboardContext {
   constructor(public game: Game) {
     super();
 
-    this.onAnyUp((keyEvent) => {
+    this.onAnyDown((keyEvent) => {
       if (this.game.gameState.state === GameState.EscapeMenu) {
         switch (keyEvent.key) {
           case Input.KeyCode.Escape: {

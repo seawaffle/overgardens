@@ -21,8 +21,8 @@ export class HelpScreen extends Screen {
     const panelWidget = new GUI.PanelWidget({
       origin: { x: 0, y: 0 },
       initialState: {
-        width: 80,
-        height: 50,
+        width: this.game.render.displayWidth,
+        height: this.game.render.displayHeight,
         borderStyle: "double-bar",
       },
     }).setParent(container);
@@ -33,7 +33,7 @@ export class HelpScreen extends Screen {
     }).setParent(panelWidget);
     // close button
     new GUI.ButtonWidget({
-      origin: { x: 79, y: 0 },
+      origin: { x: this.game.render.displayWidth - 1, y: 0 },
       initialState: {
         text: "X",
         hoverColor: Color.DarkSlateGray,

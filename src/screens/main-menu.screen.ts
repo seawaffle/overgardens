@@ -27,15 +27,19 @@ export class MainMenuScreen extends Screen {
       },
     }).setParent(container);
     // title
+    const title = "Overgardens of the Ageless";
+    const titleX = this.game.render.displayWidth / 2 - title.length / 2;
     new GUI.TextWidget({
-      origin: { x: 25, y: 2 },
-      initialState: { text: "Overgardens of the Ageless" },
+      origin: { x: titleX, y: 2 },
+      initialState: { text: title },
     }).setParent(panelWidget);
     // new game button
+    const newGameText = "[N]ew Game";
+    const newGameX = this.game.render.displayWidth / 2 - newGameText.length / 2;
     new GUI.ButtonWidget({
-      origin: { x: 30, y: 8 },
+      origin: { x: newGameX, y: 8 },
       initialState: {
-        text: "[N]ew Game",
+        text: newGameText,
         hoverColor: Color.DarkSlateGray,
         onClick: () => {
           Actions.newGame(this.game);
@@ -43,10 +47,12 @@ export class MainMenuScreen extends Screen {
       },
     }).setParent(panelWidget);
     // load game button
+    const continueText = "[C]ontinue";
+    const continueX  = this.game.render.displayWidth / 2 - continueText.length / 2;
     new GUI.ButtonWidget({
-      origin: { x: 30, y: 10 },
+      origin: { x: continueX, y: 10 },
       initialState: {
-        text: "[C]ontinue",
+        text: continueText,
         hoverColor: Color.DarkSlateGray,
         onClick: () => {
           Actions.loadGame(this.game);

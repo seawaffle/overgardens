@@ -18,17 +18,21 @@ export class EscapeScreen extends Screen {
       .setMouseHandler(this.game.input.mouseHandler)
       .registerMouseContext(this.game.input.mouseContext)
       .setTerminal(this.game.render.terminal);
+    const escapeWidth = 20;
+    const escapeHeight = 10;
+    const escapeX = this.game.render.displayWidth / 2 - escapeWidth / 2;
+    const escapeY = this.game.render.displayHeight / 2 - escapeHeight / 2;
     const panelWidget = new GUI.PanelWidget({
-      origin: { x: 25, y: 15 },
+      origin: { x: escapeX, y: escapeY },
       initialState: {
-        width: 30,
-        height: 10,
+        width: escapeWidth,
+        height: escapeHeight,
         borderStyle: "single-bar",
       },
     }).setParent(container);
     // close button
     new GUI.ButtonWidget({
-      origin: { x: 29, y: 0 },
+      origin: { x: escapeWidth - 1, y: 0 },
       initialState: {
         text: "X",
         hoverColor: Color.DarkSlateGray,
