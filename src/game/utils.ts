@@ -152,7 +152,10 @@ export function randomOpenTile(map: Map): Vector2 {
   const level = map.getCurrentLevel();
   const rng = new Rand.AleaRNG();
   while (true) {
-    let pos = { x: rng.nextInt(0, level.width), y: rng.nextInt(0, level.height) };
+    const pos = {
+      x: rng.nextInt(0, level.width),
+      y: rng.nextInt(0, level.height),
+    };
     if (!level.isBlocked(pos)) {
       return pos;
     }

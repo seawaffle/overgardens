@@ -5,7 +5,7 @@ export function newGame(game: Game) {
   if (game.gameState.state !== GameState.MainMenu) {
     return;
   }
-  
+
   game.gameId = Date.now.toString();
   game.procgen.generate();
   game.gameState.setState(GameState.AwaitingInput);

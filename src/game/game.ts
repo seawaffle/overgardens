@@ -7,7 +7,13 @@ import {
   ProcGenManager,
   RenderManager,
 } from "./managers";
-import { MapIndexingSystem, RenderSystem, VisibilitySystem, InitiativeSystem, AISystem } from "./systems";
+import {
+  MapIndexingSystem,
+  RenderSystem,
+  VisibilitySystem,
+  InitiativeSystem,
+  AISystem,
+} from "./systems";
 import { Entity } from "./components";
 import { GameState } from "./data";
 import { Rand } from "malwoden";
@@ -19,7 +25,7 @@ export class Game {
   gameState: GameStateManager;
   input: InputManager;
   map: MapManager;
-  procgen: ProcGenManager
+  procgen: ProcGenManager;
   render: RenderManager;
   database: DatabaseManager;
   renderSystem: RenderSystem;

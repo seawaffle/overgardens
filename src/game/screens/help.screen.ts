@@ -7,7 +7,7 @@ import { GameState } from "../data";
 export class HelpScreen extends Screen {
   guiContainer: GUI.ContainerWidget;
   helpTexts = [
-    "? - This help screen", 
+    "? - This help screen",
     "i - Inventory screen",
     ". - Wait 1 turn",
     "Arrow Keys - Movement",
@@ -48,13 +48,13 @@ export class HelpScreen extends Screen {
       },
     }).setParent(panelWidget);
     // help text
-    for (let y = 0; y < this.helpTexts.length; y++) {    
+    for (let y = 0; y < this.helpTexts.length; y++) {
       new GUI.TextWidget({
-        origin: { x: 2, y: y + 2},
+        origin: { x: 2, y: y + 2 },
         initialState: {
           text: this.helpTexts[y],
           wrapAt: this.game.render.displayWidth - 4,
-        }
+        },
       }).setParent(panelWidget);
     }
     container.setDisabled(true);

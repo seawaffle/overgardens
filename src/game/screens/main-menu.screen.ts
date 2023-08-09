@@ -48,7 +48,8 @@ export class MainMenuScreen extends Screen {
     }).setParent(panelWidget);
     // load game button
     const continueText = "[C]ontinue";
-    const continueX  = this.game.render.displayWidth / 2 - continueText.length / 2;
+    const continueX =
+      this.game.render.displayWidth / 2 - continueText.length / 2;
     new GUI.ButtonWidget({
       origin: { x: continueX, y: 10 },
       initialState: {
