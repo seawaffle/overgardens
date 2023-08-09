@@ -4,20 +4,21 @@
   "version": "0.0.1",
   "type": "module",
   "scripts": {
-    "dev": "vite",
-    "build": "tsc && vite build",
+    "dev": "astro dev",
+    "build": "tsc && astro build",
     "preview": "vite preview",
     "format": "prettier --write src",
     "lint": "eslint src",
     "publish": "git push origin :gh-pages && git subtree push --prefix dist origin gh-pages"
   },
   "devDependencies": {
+    "@types/babel__core": "^7.20.1",
     "@typescript-eslint/eslint-plugin": "^6.2.1",
     "@typescript-eslint/parser": "^6.2.1",
+    "astro": "^2.10.3",
     "eslint": "^8.46.0",
     "prettier": "^3.0.0",
-    "typescript": "^5.0.2",
-    "vite": "^4.4.5"
+    "typescript": "^5.0.2"
   },
   "dependencies": {
     "colortranslator": "^3.0.2",

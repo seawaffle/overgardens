@@ -1,0 +1,18 @@
+---
+import BaseHead from "./_BaseHead.astro";
+import Header from "./_Header.astro";
+import { SITE_TITLE } from "../consts"
+---
+<!doctype html>
+<html lang="en">
+	<head>
+		<BaseHead title={SITE_TITLE} />
+	</head>
+	<body>
+		<Header title={SITE_TITLE} />
+    <main>
+      <div id="app"></div>
+      <script src="/src/game/main.ts"></script>
+    </main>
+  </body>
+</html>
