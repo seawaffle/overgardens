@@ -1,7 +1,8 @@
 import { defineConfig } from 'astro/config'
 
 export default defineConfig({
-    base: '',
+    site: 'https://seawaffle.github.io',
+    base: '/overgardens',
     build: {
       assetsPrefix: './'
     },

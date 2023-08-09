@@ -6,10 +6,8 @@
   "scripts": {
     "dev": "astro dev",
     "build": "tsc && astro build",
-    "preview": "vite preview",
     "format": "prettier --write src",
-    "lint": "eslint src",
-    "publish": "git push origin :gh-pages && git subtree push --prefix dist origin gh-pages"
+    "lint": "eslint src"
   },
   "devDependencies": {
     "@types/babel__core": "^7.20.1",

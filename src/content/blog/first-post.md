@@ -2,7 +2,7 @@
 title: "First Post"
 description: "I guess I'm going to start blogging?"
 pubDate: "Aug 9 2023"
-heroImage: "/screenshots/first-post.png"
+heroImage: "/overgardens/screenshots/first-post.png"
 ---
 Well, I don't do this sort of thing much, but I guess a dev blog for the game is a good thing.  I'm working on this game (currently called Overgardens of the Ageless) as a hobby project.  Hopefully I can get it to a finished state.  
 
