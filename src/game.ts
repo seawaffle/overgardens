@@ -10,6 +10,7 @@ import {
 import { MapIndexingSystem, RenderSystem, VisibilitySystem, InitiativeSystem, AISystem } from "./systems";
 import { Entity } from "./components";
 import { GameState } from "./data";
+import { Rand } from "malwoden";
 
 export class Game {
   lastTime = performance.now(); // We add a field to keep track of the last time the loop ran
@@ -27,9 +28,11 @@ export class Game {
   initiativeSystem: InitiativeSystem;
   aiSystem: AISystem;
   player: Entity | undefined;
+  rng: Rand.AleaRNG;
 
   constructor(id?: string) {
     this.gameId = id || Date.now().toString();
+    this.rng = new Rand.AleaRNG(this.gameId);
     this.ecs = new ECSManager(this);
     this.gameState = new GameStateManager(this);
     this.input = new InputManager(this);

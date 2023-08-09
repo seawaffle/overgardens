@@ -1,4 +1,3 @@
-import { Rand } from "malwoden";
 import { Game } from "../game";
 import { Area, Level, Map } from "../data";
 import { Manager } from "./manager";
@@ -7,11 +6,9 @@ export class MapManager extends Manager {
   map: Map | undefined;
   areaWidth = 120;
   areaHeight = 120;
-  rng: Rand.AleaRNG;
-
+  
   constructor(game: Game) {
     super(game);
-    this.rng = new Rand.AleaRNG();
   }
 
   loadMap(data: Record<string, any>) {
@@ -36,7 +33,7 @@ export class MapManager extends Manager {
   }
 
   generateMap() {
-    this.map = Map.generateMap(this.rng, this.areaWidth, this.areaHeight);
+    this.map = Map.generateMap(this.game.rng, this.areaWidth, this.areaHeight);
   }
 
   getCurrentLevel(): Level | undefined {

@@ -1,4 +1,3 @@
-import { Rand } from "malwoden";
 import { Game } from "../game";
 import { findOpenGround, randomOpenTile, range } from "../utils";
 import { Manager } from "./manager";
@@ -25,8 +24,7 @@ export class ProcGenManager extends Manager {
     const player = { ...Prefabs.Player};
     player.position = { pos: findOpenGround(map, "south") }
     this.game.player = this.game.ecs.addEntity(player);
-    const rng = new Rand.AleaRNG();
-    for (const _ of range(0, rng.nextInt(3, 10))) {
+    for (const _ of range(0, this.game.rng.nextInt(3, 10))) {
       this.game.mapIndexingSystem.update();
       const rat = { ...Prefabs.Rat};
       rat.position = {pos: randomOpenTile(map)};

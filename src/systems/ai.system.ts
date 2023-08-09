@@ -2,7 +2,6 @@ import { Query, With } from "miniplex";
 import { Entity } from "../components";
 import { System } from "./system";
 import { Game } from "../game";
-import { Rand } from "malwoden";
 import * as Actions from "../actions";
 import { GameState } from "../data";
 
@@ -21,8 +20,7 @@ export class AISystem extends System {
         }
         for (const e of this.query) {
             // random movement for now
-            const rng = new Rand.AleaRNG();
-            const roll = rng.nextInt(0, 5);
+            const roll = this.game.rng.nextInt(0, 5);
             let dest = { x: 0, y: 0 }
             switch (roll) {
                 case 1: {
