@@ -21,13 +21,13 @@ export class ProcGenManager extends Manager {
 
   generateEntities() {
     const map = this.game.map.map!;
-    const player = { ...Prefabs.Player};
-    player.position = { pos: findOpenGround(map, "south") }
+    const player = { ...Prefabs.Player };
+    player.position = { pos: findOpenGround(map, "south") };
     this.game.player = this.game.ecs.addEntity(player);
     for (const _ of range(0, this.game.rng.nextInt(3, 10))) {
       this.game.mapIndexingSystem.update();
-      const rat = { ...Prefabs.Rat};
-      rat.position = {pos: randomOpenTile(map)};
+      const rat = { ...Prefabs.Rat };
+      rat.position = { pos: randomOpenTile(map) };
       this.game.ecs.addEntity(rat);
     }
   }

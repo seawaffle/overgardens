@@ -39,7 +39,7 @@ export class Tile {
     "water",
     CharCode.space,
     Palette.SteelBlue,
-    Palette.CatalinaBlue,    
+    Palette.CatalinaBlue,
     false,
     true,
   );

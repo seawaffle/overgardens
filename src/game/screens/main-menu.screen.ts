@@ -33,7 +33,7 @@ export class MainMenuScreen extends Screen {
     const titleX = this.game.render.displayWidth / 2 - title.length / 2;
     new GUI.TextWidget({
       origin: { x: titleX, y: 2 },
-      initialState: { 
+      initialState: {
         text: title,
         backColor: Palette.Ebony,
         foreColor: Palette.GreyNurse,
@@ -56,7 +56,8 @@ export class MainMenuScreen extends Screen {
     }).setParent(panelWidget);
     // load game button
     const continueText = "[C]ontinue";
-    const continueX  = this.game.render.displayWidth / 2 - continueText.length / 2;
+    const continueX =
+      this.game.render.displayWidth / 2 - continueText.length / 2;
     new GUI.ButtonWidget({
       origin: { x: continueX, y: 10 },
       initialState: {

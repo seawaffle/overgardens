@@ -153,7 +153,10 @@ export function randomOpenTile(map: Map): Vector2 {
   const level = map.getCurrentLevel();
   const rng = new Rand.AleaRNG();
   while (true) {
-    let pos = { x: rng.nextInt(0, level.width), y: rng.nextInt(0, level.height) };
+    const pos = {
+      x: rng.nextInt(0, level.width),
+      y: rng.nextInt(0, level.height),
+    };
     if (!level.isBlocked(pos)) {
       return pos;
     }
@@ -174,9 +177,9 @@ export function hexToColor(hex: string): Color {
 }
 
 export function randomTileShading(rng: Rand.AleaRNG, tile: Tile): Tile {
-  let randR = rng.nextInt(-4, 5);
-  let randG = rng.nextInt(-4, 5);
-  let randB = rng.nextInt(-4, 5);
+  const randR = rng.nextInt(-4, 5);
+  const randG = rng.nextInt(-4, 5);
+  const randB = rng.nextInt(-4, 5);
   tile.color_light = adjustColor(tile.color_light, randR, randG, randB);
   // tile.bg_color_light = adjustColor(tile.bg_color_light, randR, randG, randB);
   tile.color_dark = adjustColor(tile.color_dark, randR, randG, randB);

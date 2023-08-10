@@ -6,7 +6,7 @@ export class MapManager extends Manager {
   map: Map | undefined;
   areaWidth = 120;
   areaHeight = 120;
-  
+
   constructor(game: Game) {
     super(game);
   }

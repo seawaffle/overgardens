@@ -31,7 +31,7 @@ export class InventoryScreen extends Screen {
     // title
     new GUI.TextWidget({
       origin: { x: 2, y: 0 },
-      initialState: { 
+      initialState: {
         text: "Inventory",
         backColor: Palette.Ebony,
         foreColor: Palette.GreyNurse,

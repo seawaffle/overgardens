@@ -1,4 +1,4 @@
-import { Color, Glyph, Vector2 } from "malwoden";
+import { Glyph, Vector2 } from "malwoden";
 import { System } from "./system";
 import { Game } from "../game";
 import { Query, With } from "miniplex";
@@ -96,15 +96,18 @@ export class RenderSystem extends System {
           let color = blank;
           // let bg = bg_blank;
           if (visible) {
-            color = colorLight
+            color = colorLight;
             // fg = fg_colorLight;
             // bg = bg_colorLight;
           } else if (explored) {
-            color = colorDark
+            color = colorDark;
             // fg = fg_colorDark;
             // bg = bg_colorDark;
           }
-          this.game.render.draw(displayPos, Glyph.fromCharCode(tile.character, color, color));
+          this.game.render.draw(
+            displayPos,
+            Glyph.fromCharCode(tile.character, color, color),
+          );
         }
       }
     }

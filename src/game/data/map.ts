@@ -81,11 +81,11 @@ export class Area {
         n = reshape(n, d);
         let tile: Tile;
         if (n >= 0.5) {
-          tile = randomTileShading(rng, { ...Tile.Floor});
+          tile = randomTileShading(rng, { ...Tile.Floor });
         } else {
-          tile = randomTileShading(rng, { ...Tile.Sky});
+          tile = randomTileShading(rng, { ...Tile.Sky });
         }
-        level.tiles.set({x, y}, tile);
+        level.tiles.set({ x, y }, tile);
       }
     }
     level.rootNote = this.rootNote;
