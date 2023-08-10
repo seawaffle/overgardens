@@ -1,11 +1,11 @@
-import { Color, Glyph, Vector2 } from "malwoden";
+import { Glyph, Vector2 } from "malwoden";
 import { System } from "./system";
 import { Game } from "../game";
 import { Query, With } from "miniplex";
 import { Entity } from "../components";
 import * as Screens from "../screens";
-import { Tile } from "../data";
-import { ColorTranslator } from "colortranslator";
+import { Palette, Tile } from "../data";
+import { hexToColor } from "../utils";
 
 export class RenderSystem extends System {
   renderQuery: Query<With<Entity, "position" | "renderable">>;
@@ -80,6 +80,8 @@ export class RenderSystem extends System {
       this.screenHeight,
     );
     if (level) {
+      const blank = Tile.Nothing.color_dark;
+      // const bg_blank = Tile.Nothing.bg_color_dark;
       for (let x = 0; x < this.screenWidth; x++) {
         for (let y = 0; y < this.screenHeight; y++) {
           const displayPos = { x, y };
@@ -87,15 +89,25 @@ export class RenderSystem extends System {
           const explored = level.exploredTiles.get(mapPos)!;
           const visible = level.visibleTiles.get(mapPos)!;
           const tile = level.tiles.get(mapPos) || Tile.Nothing;
-          const colorLight = new ColorTranslator(tile.color_light).RGBObject;
-          const light = new Color(colorLight.r, colorLight.g, colorLight.b);
-          const colorDark = new ColorTranslator(tile.color_dark).RGBObject;
-          const dark = new Color(colorDark.r, colorDark.g, colorDark.b);
+          const colorLight = tile.color_light;
+          const colorDark = tile.color_dark;
+          // const bg_colorLight = tile.bg_color_light;
+          // const bg_colorDark = tile.bg_color_dark;
+          let color = blank;
+          // let bg = bg_blank;
           if (visible) {
-            this.game.render.draw(displayPos, new Glyph(tile.character, light));
+            color = colorLight;
+            // fg = fg_colorLight;
+            // bg = bg_colorLight;
           } else if (explored) {
-            this.game.render.draw(displayPos, new Glyph(tile.character, dark));
+            color = colorDark;
+            // fg = fg_colorDark;
+            // bg = bg_colorDark;
           }
+          this.game.render.draw(
+            displayPos,
+            Glyph.fromCharCode(tile.character, color, color),
+          );
         }
       }
     }
@@ -109,16 +121,15 @@ export class RenderSystem extends System {
           level.visibleTiles.get(position.pos) &&
           this.isInCamera(position.pos)
         ) {
+          const tile = level.tiles.get(position.pos);
           const pos = this.transformToCameraCoords(position.pos);
-          let fg = Color.White;
-          let bg = Color.Black;
+          let fg = Palette.GreyNurse;
+          let bg = tile ? tile.color_light : Palette.Ebony;
           if (renderable.glyph.fg) {
-            const color = new ColorTranslator(renderable.glyph.fg).RGBObject;
-            fg = new Color(color.r, color.g, color.b);
+            fg = hexToColor(renderable.glyph.fg);
           }
           if (renderable.glyph.bg) {
-            const color = new ColorTranslator(renderable.glyph.bg).RGBObject;
-            bg = new Color(color.r, color.g, color.b);
+            bg = hexToColor(renderable.glyph.bg);
           }
           const glyph = new Glyph(renderable.glyph.character, fg, bg);
           this.game.render.draw(pos, glyph);

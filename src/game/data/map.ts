@@ -1,7 +1,7 @@
 import { Rand, Struct, Vector2 } from "malwoden";
 import { Tile } from "./tile";
 import { MusicManager } from "../managers/music.manager";
-import { mixNoise, reshape } from "../utils";
+import { mixNoise, randomTileShading, reshape } from "../utils";
 
 export class Map {
   areas: Area[];
@@ -58,10 +58,10 @@ export class Area {
     this.rootNote = "";
   }
 
-  public addLevel(_rng: Rand.AleaRNG) {
+  public addLevel(rng: Rand.AleaRNG) {
     const index = this.levels.length;
     const level = new Level(index, this.width, this.height);
-    level.tiles.fill(Tile.Sky);
+    // level.tiles.fill(Tile.Sky);
     const distanceFn = (nx: number, ny: number) =>
       1 - (1 - nx * nx) * (1 - ny * ny);
     const noiseMap = mixNoise(
@@ -79,9 +79,13 @@ export class Area {
         if (d < 0) d = 0;
         if (d > 1) d = 1;
         n = reshape(n, d);
+        let tile: Tile;
         if (n >= 0.5) {
-          level.tiles.set({ x, y }, Tile.Floor);
+          tile = randomTileShading(rng, { ...Tile.Floor });
+        } else {
+          tile = randomTileShading(rng, { ...Tile.Sky });
         }
+        level.tiles.set({ x, y }, tile);
       }
     }
     level.rootNote = this.rootNote;

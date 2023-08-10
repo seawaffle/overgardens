@@ -1,8 +1,8 @@
-import { Color, GUI } from "malwoden";
+import { GUI } from "malwoden";
 import { Screen } from "./screen";
 import * as Actions from "../actions";
 import { Game } from "../game";
-import { GameState } from "../data";
+import { GameState, Palette } from "../data";
 
 export class EscapeScreen extends Screen {
   guiContainer: GUI.ContainerWidget;
@@ -28,6 +28,8 @@ export class EscapeScreen extends Screen {
         width: escapeWidth,
         height: escapeHeight,
         borderStyle: "single-bar",
+        backColor: Palette.Ebony,
+        foreColor: Palette.GreyNurse,
       },
     }).setParent(container);
     // close button
@@ -35,7 +37,9 @@ export class EscapeScreen extends Screen {
       origin: { x: escapeWidth - 1, y: 0 },
       initialState: {
         text: "X",
-        hoverColor: Color.DarkSlateGray,
+        backColor: Palette.Ebony,
+        foreColor: Palette.GreyNurse,
+        hoverColor: Palette.Atomic,
         onClick: () => {
           Actions.closeEscapeMenu(this.game);
         },
@@ -46,7 +50,9 @@ export class EscapeScreen extends Screen {
       origin: { x: 2, y: 2 },
       initialState: {
         text: "[S]ave Game",
-        hoverColor: Color.DarkSlateGray,
+        backColor: Palette.Ebony,
+        foreColor: Palette.GreyNurse,
+        hoverColor: Palette.Atomic,
         onClick: () => {
           Actions.saveGame(this.game);
         },
@@ -57,7 +63,9 @@ export class EscapeScreen extends Screen {
       origin: { x: 2, y: 4 },
       initialState: {
         text: "[Q]uit",
-        hoverColor: Color.DarkSlateGray,
+        backColor: Palette.Ebony,
+        foreColor: Palette.GreyNurse,
+        hoverColor: Palette.Atomic,
         onClick: () => {
           Actions.quitToMainMenu(this.game);
         },

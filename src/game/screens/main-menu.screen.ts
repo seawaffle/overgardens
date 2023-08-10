@@ -1,8 +1,8 @@
-import { Color, GUI } from "malwoden";
+import { GUI } from "malwoden";
 import { Screen } from "./screen";
 import * as Actions from "../actions";
 import { Game } from "../game";
-import { GameState } from "../data";
+import { GameState, Palette } from "../data";
 
 export class MainMenuScreen extends Screen {
   guiContainer: GUI.ContainerWidget;
@@ -24,6 +24,8 @@ export class MainMenuScreen extends Screen {
         width: this.game.render.displayWidth,
         height: this.game.render.displayHeight,
         borderStyle: "double-bar",
+        backColor: Palette.Ebony,
+        foreColor: Palette.GreyNurse,
       },
     }).setParent(container);
     // title
@@ -31,7 +33,11 @@ export class MainMenuScreen extends Screen {
     const titleX = this.game.render.displayWidth / 2 - title.length / 2;
     new GUI.TextWidget({
       origin: { x: titleX, y: 2 },
-      initialState: { text: title },
+      initialState: {
+        text: title,
+        backColor: Palette.Ebony,
+        foreColor: Palette.GreyNurse,
+      },
     }).setParent(panelWidget);
     // new game button
     const newGameText = "[N]ew Game";
@@ -40,7 +46,9 @@ export class MainMenuScreen extends Screen {
       origin: { x: newGameX, y: 8 },
       initialState: {
         text: newGameText,
-        hoverColor: Color.DarkSlateGray,
+        backColor: Palette.Ebony,
+        foreColor: Palette.GreyNurse,
+        hoverColor: Palette.Atomic,
         onClick: () => {
           Actions.newGame(this.game);
         },
@@ -54,7 +62,9 @@ export class MainMenuScreen extends Screen {
       origin: { x: continueX, y: 10 },
       initialState: {
         text: continueText,
-        hoverColor: Color.DarkSlateGray,
+        backColor: Palette.Ebony,
+        foreColor: Palette.GreyNurse,
+        hoverColor: Palette.Atomic,
         onClick: () => {
           Actions.loadGame(this.game);
         },

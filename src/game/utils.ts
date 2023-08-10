@@ -1,6 +1,7 @@
-import { Rand, Struct, Vector2 } from "malwoden";
+import { Color, Rand, Struct, Vector2 } from "malwoden";
 import { Noise } from "rot-js";
-import { Map } from "./data";
+import { Map, Tile } from "./data";
+import { ColorTranslator } from "colortranslator";
 // noise related functions stolen from https://www.redblobgames.com/maps/terrain-from-noise
 export function mixNoise(
   width: number,
@@ -168,4 +169,24 @@ export function* range(min: number, max: number, step = 1) {
     yield value;
     value += step;
   }
+}
+
+export function hexToColor(hex: string): Color {
+  const c = new ColorTranslator(hex);
+  return new Color(c.R, c.G, c.B);
+}
+
+export function randomTileShading(rng: Rand.AleaRNG, tile: Tile): Tile {
+  const randR = rng.nextInt(-4, 5);
+  const randG = rng.nextInt(-4, 5);
+  const randB = rng.nextInt(-4, 5);
+  tile.color_light = adjustColor(tile.color_light, randR, randG, randB);
+  // tile.bg_color_light = adjustColor(tile.bg_color_light, randR, randG, randB);
+  tile.color_dark = adjustColor(tile.color_dark, randR, randG, randB);
+  // tile.bg_color_dark = adjustColor(tile.bg_color_dark, randR, randG, randB);
+  return tile;
+}
+
+function adjustColor(color: Color, r: number, g: number, b: number): Color {
+  return new Color(color.r + r, color.g + g, color.b + b);
 }

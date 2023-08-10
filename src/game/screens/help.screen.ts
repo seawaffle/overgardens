@@ -1,8 +1,8 @@
-import { Color, GUI } from "malwoden";
+import { GUI } from "malwoden";
 import { Screen } from "./screen";
 import * as Actions from "../actions";
 import { Game } from "../game";
-import { GameState } from "../data";
+import { GameState, Palette } from "../data";
 
 export class HelpScreen extends Screen {
   guiContainer: GUI.ContainerWidget;
@@ -29,19 +29,27 @@ export class HelpScreen extends Screen {
         width: this.game.render.displayWidth,
         height: this.game.render.displayHeight,
         borderStyle: "double-bar",
+        backColor: Palette.Ebony,
+        foreColor: Palette.GreyNurse,
       },
     }).setParent(container);
     // title
     new GUI.TextWidget({
       origin: { x: 2, y: 0 },
-      initialState: { text: "Help" },
+      initialState: {
+        text: "Help",
+        backColor: Palette.Ebony,
+        foreColor: Palette.GreyNurse,
+      },
     }).setParent(panelWidget);
     // close button
     new GUI.ButtonWidget({
       origin: { x: this.game.render.displayWidth - 1, y: 0 },
       initialState: {
         text: "X",
-        hoverColor: Color.DarkSlateGray,
+        backColor: Palette.Ebony,
+        foreColor: Palette.GreyNurse,
+        hoverColor: Palette.Atomic,
         onClick: () => {
           Actions.closeHelp(this.game);
         },
@@ -53,6 +61,8 @@ export class HelpScreen extends Screen {
         origin: { x: 2, y: y + 2 },
         initialState: {
           text: this.helpTexts[y],
+          backColor: Palette.Ebony,
+          foreColor: Palette.GreyNurse,
           wrapAt: this.game.render.displayWidth - 4,
         },
       }).setParent(panelWidget);
