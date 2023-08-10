@@ -22,7 +22,7 @@ export class HelpScreen extends Screen {
     const container = new GUI.ContainerWidget()
       .setMouseHandler(this.game.input.mouseHandler)
       .registerMouseContext(this.game.input.mouseContext)
-      .setTerminal(this.game.render.terminal);
+      .setTerminal(this.game.render.display);
     const panelWidget = new GUI.PanelWidget({
       origin: { x: 0, y: 0 },
       initialState: {

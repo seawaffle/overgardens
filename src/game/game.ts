@@ -61,7 +61,6 @@ export class Game {
     this.render.clear();
     this.input.update();
     this.updateSystems();
-    this.render.render();
   }
 
   updateSystems() {
@@ -75,8 +74,10 @@ export class Game {
   run() {
     const time = performance.now(); // Get the current time
     const delta = time - this.lastTime; // Calculate the difference
+    console.log('fps: ' + delta)
 
     this.tick(delta, this.lastTime); // Run our tick method with the times calculated
+    this.lastTime = time;
     window.requestAnimationFrame(this.run.bind(this));
   }
 
@@ -101,6 +102,5 @@ export class Game {
     this.visibilitySystem = new VisibilitySystem(this);
     this.renderSystem = new RenderSystem(this);
     this.updateSystems();
-    this.render.render();
   }
 }

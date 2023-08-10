@@ -1,19 +1,18 @@
-import { CharCode, Color } from "malwoden";
 import { Palette } from ".";
 
 export class Tile {
   constructor(
     public type: string,
-    public character: CharCode,
-    public color_light: Color,
-    public color_dark: Color,
+    public character: string,
+    public color_light: string,
+    public color_dark: string,
     public walkable: boolean,
     public transparent: boolean,
   ) {}
 
   static Nothing = new Tile(
     "nothing",
-    CharCode.space,
+    " ",
     Palette.Ebony,
     Palette.Ebony,
     false,
@@ -21,7 +20,7 @@ export class Tile {
   );
   static Floor = new Tile(
     "floor",
-    CharCode.space,
+    " ",
     Palette.Submarine,
     Palette.William,
     true,
@@ -29,7 +28,7 @@ export class Tile {
   );
   static Wall = new Tile(
     "wall",
-    CharCode.space,
+    " ",
     Palette.Atomic,
     Palette.Elephant,
     false,
@@ -37,7 +36,7 @@ export class Tile {
   );
   static Water = new Tile(
     "water",
-    CharCode.space,
+    " ",
     Palette.SteelBlue,
     Palette.CatalinaBlue,
     false,
@@ -45,7 +44,7 @@ export class Tile {
   );
   static Sky = new Tile(
     "sky",
-    CharCode.space,
+    " ",
     Palette.FrenchPass,
     Palette.Seagull,
     false,

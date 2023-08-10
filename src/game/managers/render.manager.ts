@@ -1,9 +1,10 @@
-import { Glyph, Terminal, Vector2 } from "malwoden";
+import { Palette } from "../data";
 import { Game } from "../game";
 import { Manager } from "./manager";
+import { Display } from "rot-js";
 
 export class RenderManager extends Manager {
-  terminal: Terminal.RetroTerminal;
+  display: Display;
   tileWidth = 12;
   tileHeight = 12;
   displayWidth = 60;
@@ -11,32 +12,31 @@ export class RenderManager extends Manager {
 
   constructor(game: Game) {
     super(game);
-    this.terminal = this.createTerminal();
+    this.display = this.createDisplay();
   }
 
-  createTerminal(): Terminal.RetroTerminal {
-    const mountNode = document.getElementById("app");
-    if (!mountNode) throw new Error("mountNode not defined");
-
-    return new Terminal.RetroTerminal({
+  createDisplay(): Display {
+    const display = new Display({
       width: this.displayWidth,
       height: this.displayHeight,
-      imageURL: "cheep_12.png",
-      charWidth: this.tileWidth,
-      charHeight: this.tileHeight,
-      mountNode,
+      fg: Palette.GreyNurse,
+      bg: Palette.Ebony,
+      forceSquareRatio: true,
     });
+    const container = display.getContainer()!;
+    document.body.appendChild(container);
+    return display;
   }
 
   clear() {
-    this.terminal.clear();
+    this.display.clear();
   }
 
-  render() {
-    this.terminal.render();
-  }
-
-  draw(pos: Vector2, glyph: Glyph) {
-    this.terminal.drawGlyph(pos, glyph);
+  draw(x: number, y: number, char: string, fg: string | null, bg: string | null, overwrite = false) {
+    if (overwrite) {
+      this.display.draw(x, y, char, fg, bg);
+    } else {
+      this.display.drawOver(x, y, char, fg, bg);
+    }
   }
 }
