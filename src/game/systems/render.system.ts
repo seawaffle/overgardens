@@ -13,6 +13,8 @@ export class RenderSystem extends System {
   helpScreen: Screens.HelpScreen;
   escapeScreen: Screens.EscapeScreen;
   inventoryScreen: Screens.InventoryScreen;
+  hudScreen: Screens.HUDScreen;
+  logScreen: Screens.LogScreen;
 
   screenWidth: number;
   screenHeight: number;
@@ -20,17 +22,21 @@ export class RenderSystem extends System {
   constructor(game: Game) {
     super(game);
 
-    this.screenHeight = this.game.render.displayHeight;
-    this.screenWidth = this.game.render.displayWidth;
+    this.screenHeight = this.game.render.viewportHeight;
+    this.screenWidth = this.game.render.viewportWidth;
 
     this.renderQuery = this.game.ecs.world.with("position", "renderable");
     this.mainMenuScreen = new Screens.MainMenuScreen(this.game);
     this.helpScreen = new Screens.HelpScreen(this.game);
     this.escapeScreen = new Screens.EscapeScreen(this.game);
     this.inventoryScreen = new Screens.InventoryScreen(this.game);
+    this.hudScreen = new Screens.HUDScreen(this.game);
+    this.logScreen = new Screens.LogScreen(this.game);
   }
 
   renderScreens() {
+    this.hudScreen.render();
+    this.logScreen.render();
     this.mainMenuScreen.render();
     this.inventoryScreen.render();
     this.helpScreen.render();
@@ -80,7 +86,7 @@ export class RenderSystem extends System {
       this.screenHeight,
     );
     if (level) {
-      const blank = Tile.Nothing.color_dark;
+      const blank = Tile.Nothing.bg_color_dark;
       // const bg_blank = Tile.Nothing.bg_color_dark;
       for (let x = 0; x < this.screenWidth; x++) {
         for (let y = 0; y < this.screenHeight; y++) {
@@ -89,24 +95,23 @@ export class RenderSystem extends System {
           const explored = level.exploredTiles.get(mapPos)!;
           const visible = level.visibleTiles.get(mapPos)!;
           const tile = level.tiles.get(mapPos) || Tile.Nothing;
-          const colorLight = tile.color_light;
-          const colorDark = tile.color_dark;
-          // const bg_colorLight = tile.bg_color_light;
-          // const bg_colorDark = tile.bg_color_dark;
-          let color = blank;
+          const fg_colorLight = tile.fg_color_light;
+          const fg_colorDark = tile.fg_color_dark;
+          const bg_colorLight = tile.bg_color_light;
+          const bg_colorDark = tile.bg_color_dark;
+          let fg = blank;
+          let bg = blank;
           // let bg = bg_blank;
           if (visible) {
-            color = colorLight;
-            // fg = fg_colorLight;
-            // bg = bg_colorLight;
+            fg = fg_colorLight;
+            bg = bg_colorLight;
           } else if (explored) {
-            color = colorDark;
-            // fg = fg_colorDark;
-            // bg = bg_colorDark;
+            fg = fg_colorDark;
+            bg = bg_colorDark;
           }
           this.game.render.draw(
             displayPos,
-            Glyph.fromCharCode(tile.character, color, color),
+            Glyph.fromCharCode(tile.character, fg, bg),
           );
         }
       }
@@ -124,7 +129,7 @@ export class RenderSystem extends System {
           const tile = level.tiles.get(position.pos);
           const pos = this.transformToCameraCoords(position.pos);
           let fg = Palette.GreyNurse;
-          let bg = tile ? tile.color_light : Palette.Ebony;
+          let bg = tile ? tile.bg_color_light : Palette.Ebony;
           if (renderable.glyph.fg) {
             fg = hexToColor(renderable.glyph.fg);
           }

@@ -1,4 +1,4 @@
-import { Rand, Struct, Vector2 } from "malwoden";
+import { CharCode, Rand, Struct, Vector2 } from "malwoden";
 import { Tile } from "./tile";
 import { MusicManager } from "../managers/music.manager";
 import { mixNoise, randomTileShading, reshape } from "../utils";
@@ -70,6 +70,12 @@ export class Area {
       [1, 1 / 2, 1 / 4, 1 / 8, 1 / 16],
       2,
     );
+    const cloudMap = mixNoise(
+      level.width,
+      level.height,
+      [1, 1 / 2, 1 / 4, 1 /8, 1 / 16],
+      2,
+    );
     for (let y = 0; y < level.height; y++) {
       for (let x = 0; x < level.width; x++) {
         const nx = 2 * (x / level.width) - 1;
@@ -80,10 +86,26 @@ export class Area {
         if (d > 1) d = 1;
         n = reshape(n, d);
         let tile: Tile;
-        if (n >= 0.5) {
-          tile = randomTileShading(rng, { ...Tile.Floor });
+        if (n >= 0.6) {
+          if (rng.next() > 0.9) {
+            tile = randomTileShading(rng, { ...Tile.Tree})
+          } else {
+            tile = randomTileShading(rng, { ...Tile.Grass });
+          }
+        } else if (n >= 0.5) {
+          tile = randomTileShading(rng, { ...Tile.Ground });
         } else {
-          tile = randomTileShading(rng, { ...Tile.Sky });
+          const cloudCover = cloudMap.get({x, y})!;
+          if (cloudCover >= 0.4) {
+            tile = { ...Tile.Cloud};
+            if (cloudCover >= 0.7) {
+              tile.character = CharCode.darkShade;
+            } else if (cloudCover >= 0.6) {
+              tile.character = CharCode.mediumShade;
+            }
+          } else {
+            tile = randomTileShading(rng, { ...Tile.Sky });
+          }
         }
         level.tiles.set({ x, y }, tile);
       }

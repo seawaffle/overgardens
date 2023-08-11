@@ -4,8 +4,8 @@ import { Manager } from "./manager";
 
 export class MapManager extends Manager {
   map: Map | undefined;
-  areaWidth = 120;
-  areaHeight = 120;
+  areaWidth = 80;
+  areaHeight = 80;
 
   constructor(game: Game) {
     super(game);

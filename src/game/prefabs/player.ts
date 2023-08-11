@@ -13,8 +13,16 @@ export const Player: Entity = {
   player: true,
   mobile: true,
   viewshed: {
-    range: 7,
+    range: 20,
     dirty: true,
   },
   initiative: 0,
+  body: {
+    strength: 1,
+    agility: 1,
+    constitution: 1,
+    intellect: 1,
+    hp: 30,
+    maxHp: 30,
+  }
 };
