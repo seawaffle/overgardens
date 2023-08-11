@@ -1,7 +1,7 @@
 import { GUI } from "malwoden";
 import { Screen } from "./screen";
 import { Game } from "../game";
-import { GameState, Palette } from "../data";
+import { Palette } from "../data";
 import { HUDScreen } from ".";
 
 export class LogScreen extends Screen {
@@ -25,7 +25,8 @@ export class LogScreen extends Screen {
     const logHeight = this.game.render.displayHeight - HUDScreen.HUD_HEIGHT;
     const logX = this.game.render.viewportWidth;
     const logY = HUDScreen.HUD_HEIGHT;
-    const panelWidget = new GUI.PanelWidget({
+    // const panelWidget = new GUI.PanelWidget({
+    new GUI.PanelWidget({
       origin: { x: logX, y: logY },
       initialState: {
         width: logWidth,
