@@ -35,6 +35,8 @@ export class Game {
   aiSystem: AISystem;
   player: Entity | undefined;
   rng: Rand.AleaRNG;
+  fpsTicks: number[] = [];
+  avgFps: number = 0;
 
   constructor(id?: string) {
     this.gameId = id || Date.now().toString();
@@ -75,8 +77,13 @@ export class Game {
   run() {
     const time = performance.now(); // Get the current time
     const delta = time - this.lastTime; // Calculate the difference
-
+    this.fpsTicks.push(1000 / delta);
+    if (this.fpsTicks.length >= 50) {
+      this.avgFps = this.fpsTicks.reduce((x, y) => x + y, 0) / this.fpsTicks.length;
+      this.fpsTicks = [];
+    }
     this.tick(delta, this.lastTime); // Run our tick method with the times calculated
+    this.lastTime = time;
     window.requestAnimationFrame(this.run.bind(this));
   }
 
