@@ -6,9 +6,7 @@ export function newGame(game: Game) {
     return;
   }
 
-  game.gameId = Date.now.toString();
-  game.procgen.generate();
-  game.gameState.setState(GameState.AwaitingInput);
+  game.startNewGame();
 }
 
 export function loadGame(game: Game) {

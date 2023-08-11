@@ -24,5 +24,5 @@ export const Player: Entity = {
     intellect: 1,
     hp: 30,
     maxHp: 30,
-  }
+  },
 };

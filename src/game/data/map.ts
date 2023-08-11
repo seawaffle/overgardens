@@ -61,7 +61,6 @@ export class Area {
   public addLevel(rng: Rand.AleaRNG) {
     const index = this.levels.length;
     const level = new Level(index, this.width, this.height);
-    // level.tiles.fill(Tile.Sky);
     const distanceFn = (nx: number, ny: number) =>
       1 - (1 - nx * nx) * (1 - ny * ny);
     const noiseMap = mixNoise(
@@ -73,7 +72,7 @@ export class Area {
     const cloudMap = mixNoise(
       level.width,
       level.height,
-      [1, 1 / 2, 1 / 4, 1 /8, 1 / 16],
+      [1, 1 / 2, 1 / 4, 1 / 8, 1 / 16],
       2,
     );
     for (let y = 0; y < level.height; y++) {
@@ -88,19 +87,19 @@ export class Area {
         let tile: Tile;
         if (n >= 0.6) {
           if (rng.next() > 0.9) {
-            tile = randomTileShading(rng, { ...Tile.Tree})
+            tile = randomTileShading(rng, { ...Tile.Tree });
           } else {
             tile = randomTileShading(rng, { ...Tile.Grass });
           }
         } else if (n >= 0.5) {
           tile = randomTileShading(rng, { ...Tile.Ground });
         } else {
-          const cloudCover = cloudMap.get({x, y})!;
+          const cloudCover = cloudMap.get({ x, y })!;
           if (cloudCover >= 0.4) {
-            tile = { ...Tile.Cloud};
-            if (cloudCover >= 0.7) {
+            tile = randomTileShading(rng, { ...Tile.Cloud });
+            if (cloudCover >= 0.6) {
               tile.character = CharCode.darkShade;
-            } else if (cloudCover >= 0.6) {
+            } else if (cloudCover >= 0.5) {
               tile.character = CharCode.mediumShade;
             }
           } else {

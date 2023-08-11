@@ -80,6 +80,20 @@ export class Game {
     window.requestAnimationFrame(this.run.bind(this));
   }
 
+  startNewGame(seed?: string) {
+    this.gameId = seed || Date.now.toString();
+    this.rng = new Rand.AleaRNG(this.gameId);
+    this.procgen.generate();
+    this.gameState.setState(GameState.AwaitingInput);
+    this.input.update();
+    this.player!.viewshed!.dirty = true;
+    this.mapIndexingSystem = new MapIndexingSystem(this);
+    this.visibilitySystem = new VisibilitySystem(this);
+    this.renderSystem = new RenderSystem(this);
+    this.updateSystems();
+    this.render.render();
+  }
+
   createSaveData(): Record<string, any> {
     const data: Record<string, any> = {};
     data.gameId = this.gameId;

@@ -9,7 +9,7 @@ export interface Entity {
   viewshed?: Viewshed;
   blocksTile?: true;
   body?: Body;
-  faction?: string[];
+  faction?: string;
   mobile: true;
   initiative: number;
   currentTurn?: true;
