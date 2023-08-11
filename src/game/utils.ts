@@ -180,10 +180,10 @@ export function randomTileShading(rng: Rand.AleaRNG, tile: Tile): Tile {
   const randR = rng.nextInt(-4, 5);
   const randG = rng.nextInt(-4, 5);
   const randB = rng.nextInt(-4, 5);
-  tile.color_light = adjustColor(tile.color_light, randR, randG, randB);
-  // tile.bg_color_light = adjustColor(tile.bg_color_light, randR, randG, randB);
-  tile.color_dark = adjustColor(tile.color_dark, randR, randG, randB);
-  // tile.bg_color_dark = adjustColor(tile.bg_color_dark, randR, randG, randB);
+  tile.fg_color_light = adjustColor(tile.fg_color_light, randR, randG, randB);
+  tile.bg_color_light = adjustColor(tile.bg_color_light, randR, randG, randB);
+  tile.fg_color_dark = adjustColor(tile.fg_color_dark, randR, randG, randB);
+  tile.bg_color_dark = adjustColor(tile.bg_color_dark, randR, randG, randB);
   return tile;
 }
 

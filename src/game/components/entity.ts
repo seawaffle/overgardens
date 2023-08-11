@@ -1,4 +1,4 @@
-import { Position, Renderable, Stats, Viewshed } from ".";
+import { Position, Renderable, Body, Viewshed } from ".";
 
 export interface Entity {
   id?: string;
@@ -8,8 +8,8 @@ export interface Entity {
   player?: true;
   viewshed?: Viewshed;
   blocksTile?: true;
-  stats?: Stats;
-  faction?: string[];
+  body?: Body;
+  faction?: string;
   mobile: true;
   initiative: number;
   currentTurn?: true;

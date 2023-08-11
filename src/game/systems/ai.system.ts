@@ -42,6 +42,7 @@ export class AISystem extends System {
           break;
         }
         default: {
+          break;
         }
       }
       Actions.tryMoveEntity(this.game, e, dest);

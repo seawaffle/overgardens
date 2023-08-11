@@ -5,6 +5,8 @@ import { Game } from "../game";
 import { GameState, Palette } from "../data";
 
 export class EscapeScreen extends Screen {
+  static ESCAPE_WIDTH = 20;
+  static ESCAPE_HEIGHT = 10;
   guiContainer: GUI.ContainerWidget;
 
   constructor(game: Game) {
@@ -18,15 +20,15 @@ export class EscapeScreen extends Screen {
       .setMouseHandler(this.game.input.mouseHandler)
       .registerMouseContext(this.game.input.mouseContext)
       .setTerminal(this.game.render.terminal);
-    const escapeWidth = 20;
-    const escapeHeight = 10;
-    const escapeX = this.game.render.displayWidth / 2 - escapeWidth / 2;
-    const escapeY = this.game.render.displayHeight / 2 - escapeHeight / 2;
+    const escapeX =
+      this.game.render.displayWidth / 2 - EscapeScreen.ESCAPE_WIDTH / 2;
+    const escapeY =
+      this.game.render.displayHeight / 2 - EscapeScreen.ESCAPE_HEIGHT / 2;
     const panelWidget = new GUI.PanelWidget({
       origin: { x: escapeX, y: escapeY },
       initialState: {
-        width: escapeWidth,
-        height: escapeHeight,
+        width: EscapeScreen.ESCAPE_WIDTH,
+        height: EscapeScreen.ESCAPE_HEIGHT,
         borderStyle: "single-bar",
         backColor: Palette.Ebony,
         foreColor: Palette.GreyNurse,
@@ -34,7 +36,7 @@ export class EscapeScreen extends Screen {
     }).setParent(container);
     // close button
     new GUI.ButtonWidget({
-      origin: { x: escapeWidth - 1, y: 0 },
+      origin: { x: EscapeScreen.ESCAPE_WIDTH - 1, y: 0 },
       initialState: {
         text: "X",
         backColor: Palette.Ebony,

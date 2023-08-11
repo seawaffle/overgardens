@@ -6,9 +6,7 @@ export class Screen implements StateListener {
     this.game.gameState.registerListener(this);
   }
 
-  notify(state: GameState) {
-    console.log("base screen: " + state);
-  }
+  notify(_state: GameState) {}
 
   render() {}
 }
