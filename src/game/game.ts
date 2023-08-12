@@ -13,6 +13,8 @@ import {
   VisibilitySystem,
   InitiativeSystem,
   AISystem,
+  DamageSystem,
+  DeathSystem,
 } from "./systems";
 import { Entity } from "./components";
 import { GameState } from "./data";
@@ -32,6 +34,8 @@ export class Game {
   visibilitySystem: VisibilitySystem;
   mapIndexingSystem: MapIndexingSystem;
   initiativeSystem: InitiativeSystem;
+  damageSystem: DamageSystem;
+  deathSystem: DeathSystem;
   aiSystem: AISystem;
   player: Entity | undefined;
   rng: Rand.AleaRNG;
@@ -53,6 +57,8 @@ export class Game {
     this.mapIndexingSystem = new MapIndexingSystem(this);
     this.initiativeSystem = new InitiativeSystem(this);
     this.aiSystem = new AISystem(this);
+    this.damageSystem = new DamageSystem(this);
+    this.deathSystem = new DeathSystem(this);
     this.player = undefined;
     this.gameState.setState(GameState.MainMenu);
   }
@@ -71,6 +77,8 @@ export class Game {
     this.visibilitySystem.update();
     this.initiativeSystem.update();
     this.aiSystem.update();
+    this.damageSystem.update();
+    this.deathSystem.update();
     this.renderSystem.update();
   }
 

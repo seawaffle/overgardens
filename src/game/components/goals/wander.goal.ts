@@ -25,7 +25,7 @@ export class WanderGoal extends Goal {
         break;
       }
       default: {
-        break;
+        return;
       }
     }
     Actions.tryMoveEntity(this.game, me, dest);

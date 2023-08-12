@@ -4,21 +4,25 @@ import { Entity } from "../components";
 import { Game } from "../game";
 
 export class MapIndexingSystem extends System {
-  blockerQuery: Query<With<Entity, "position" | "blocksTile">>;
+  query: Query<With<Entity, "position">>;
 
   constructor(game: Game) {
     super(game);
 
-    this.blockerQuery = this.game.ecs.world.with("position", "blocksTile");
+    this.query = this.game.ecs.world.with("position");
   }
 
   update(): void {
     const level = this.game.map.getCurrentLevel();
     if (level) {
+      level.clearTileContent();
       level.populateBlocked();
 
-      for (const e of this.blockerQuery) {
-        level.setBlocked(e.position.pos);
+      for (const e of this.query) {
+        level.addTileContent(e.position.pos, e);
+        if (e.blocksTile) {
+          level.setBlocked(e.position.pos);
+        }
       }
     }
   }

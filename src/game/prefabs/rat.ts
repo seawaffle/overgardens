@@ -16,4 +16,12 @@ export const Rat: Entity = {
     dirty: true,
   },
   initiative: 2,
+  body: {
+    strength: 1,
+    agility: 1,
+    constitution: 1,
+    intellect: 1,
+    hp: 5,
+    maxHp: 5,
+  },
 };

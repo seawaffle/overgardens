@@ -96,11 +96,11 @@ export class Area {
           tile = randomTileShading(rng, { ...Tile.Ground });
         } else {
           const cloudCover = cloudMap.get({ x, y })!;
-          if (cloudCover >= 0.4) {
+          if (cloudCover >= 0.5) {
             tile = randomTileShading(rng, { ...Tile.Cloud });
             if (cloudCover >= 0.6) {
               tile.character = CharCode.darkShade;
-            } else if (cloudCover >= 0.5) {
+            } else if (cloudCover >= 0.55) {
               tile.character = CharCode.mediumShade;
             }
           } else {
@@ -158,5 +158,18 @@ export class Level {
 
   isBlocked(tile: Vector2): boolean {
     return !!this.blockedTiles.get(tile);
+  }
+
+  clearTileContent() {
+    this.tileContent.fill([]);
+  }
+
+  addTileContent(tile: Vector2, ...entities: Entity[]) {
+    const content = this.getTileContent(tile);
+    this.tileContent.set(tile, content.concat(...entities));
+  }
+
+  getTileContent(tile: Vector2) {
+    return this.tileContent.get(tile) || [];
   }
 }

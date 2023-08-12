@@ -15,4 +15,5 @@ export interface Entity {
   initiative: number;
   currentTurn?: true;
   goal?: Goal;
+  incomingDamage?: number;
 }

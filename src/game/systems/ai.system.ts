@@ -8,14 +8,12 @@ import { MovementAI } from "../ai/movement.ai";
 
 export class AISystem extends System {
   ais: AI[] = [];
-  query: Query<With<Entity, "currentTurn" | "position">>;
+  query: Query<With<Entity, "currentTurn">>;
 
   constructor(game: Game) {
     super(game);
     this.ais.push(new MovementAI(game));
-    this.query = this.game.ecs.world
-      .with("currentTurn", "position")
-      .without("player");
+    this.query = this.game.ecs.world.with("currentTurn").without("player");
   }
 
   update(): void {
@@ -24,6 +22,7 @@ export class AISystem extends System {
     }
     for (const e of this.query) {
       // evaluate goals
+      console.log(`${e.name}:${e.id} turn : ${e.body!.hp}`)
       for (const ai of this.ais) {
         ai.run(e);
         if (e.goal) {
