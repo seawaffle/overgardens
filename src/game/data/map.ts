@@ -2,6 +2,7 @@ import { CharCode, Rand, Struct, Vector2 } from "malwoden";
 import { Tile } from "./tile";
 import { MusicManager } from "../managers/music.manager";
 import { mixNoise, randomTileShading, reshape } from "../utils";
+import { Entity } from "../components";
 
 export class Map {
   areas: Area[];
@@ -120,6 +121,7 @@ export class Level {
   visibleTiles: Struct.Table<boolean>;
   exploredTiles: Struct.Table<boolean>;
   blockedTiles: Struct.Table<boolean>;
+  tileContent: Struct.Table<Entity[]>;
   mode: string;
   rootNote: string;
 
@@ -135,6 +137,7 @@ export class Level {
     this.exploredTiles.fill(false);
     this.blockedTiles = new Struct.Table<boolean>(width, height);
     this.blockedTiles.fill(false);
+    this.tileContent = new Struct.Table<Entity[]>(width, height);
 
     this.mode = "";
     this.rootNote = "";

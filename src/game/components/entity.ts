@@ -1,4 +1,5 @@
 import { Position, Renderable, Body, Viewshed } from ".";
+import { Goal } from "./goals";
 
 export interface Entity {
   id?: string;
@@ -13,4 +14,5 @@ export interface Entity {
   mobile: true;
   initiative: number;
   currentTurn?: true;
+  goal?: Goal;
 }

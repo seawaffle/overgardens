@@ -2,15 +2,17 @@ import { Query, With } from "miniplex";
 import { Entity } from "../components";
 import { System } from "./system";
 import { Game } from "../game";
-import * as Actions from "../actions";
 import { GameState } from "../data";
+import { AI } from "../ai/ai";
+import { MovementAI } from "../ai/movement.ai";
 
 export class AISystem extends System {
+  ais: AI[] = [];
   query: Query<With<Entity, "currentTurn" | "position">>;
 
   constructor(game: Game) {
     super(game);
-
+    this.ais.push(new MovementAI(game));
     this.query = this.game.ecs.world
       .with("currentTurn", "position")
       .without("player");
@@ -21,31 +23,14 @@ export class AISystem extends System {
       return;
     }
     for (const e of this.query) {
-      // random movement for now
-      const roll = this.game.rng.nextInt(0, 5);
-      const dest = { x: 0, y: 0 };
-      switch (roll) {
-        case 1: {
-          dest.x += 1;
-          break;
-        }
-        case 2: {
-          dest.x -= 1;
-          break;
-        }
-        case 3: {
-          dest.y += 1;
-          break;
-        }
-        case 4: {
-          dest.y -= 1;
-          break;
-        }
-        default: {
+      // evaluate goals
+      for (const ai of this.ais) {
+        ai.run(e);
+        if (e.goal) {
+          e.goal.run(e);
           break;
         }
       }
-      Actions.tryMoveEntity(this.game, e, dest);
       this.game.ecs.world.removeComponent(e, "currentTurn");
     }
   }
