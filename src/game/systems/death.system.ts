@@ -15,12 +15,12 @@ export class DeathSystem extends System {
     const dead: Entity[] = [];
     for (const e of this.statsQuery) {
       if (e.body.hp <= 0) {
-        console.log(`${e.name}:${e.id} hp: ${e.body.hp}`)
+        console.log(`${e.name}:${e.id} hp: ${e.body.hp}`);
         dead.push(e);
       }
     }
     for (const d of dead) {
-      console.log(`${d.name}:${d.id} has died`)
+      this.game.log.addMessage(`${d.name} has died`);
       this.game.ecs.world.remove(d);
     }
   }

@@ -5,3 +5,4 @@ export * from "./map.manager";
 export * from "./render.manager";
 export * from "./database.manager";
 export * from "./procgen.manager";
+export * from "./log.manager";

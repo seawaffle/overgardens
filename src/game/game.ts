@@ -3,6 +3,7 @@ import {
   ECSManager,
   GameStateManager,
   InputManager,
+  LogManager,
   MapManager,
   ProcGenManager,
   RenderManager,
@@ -30,6 +31,7 @@ export class Game {
   procgen: ProcGenManager;
   render: RenderManager;
   database: DatabaseManager;
+  log: LogManager;
   renderSystem: RenderSystem;
   visibilitySystem: VisibilitySystem;
   mapIndexingSystem: MapIndexingSystem;
@@ -52,6 +54,7 @@ export class Game {
     this.render = new RenderManager(this);
     this.database = new DatabaseManager(this);
     this.procgen = new ProcGenManager(this);
+    this.log = new LogManager(this);
     this.renderSystem = new RenderSystem(this);
     this.visibilitySystem = new VisibilitySystem(this);
     this.mapIndexingSystem = new MapIndexingSystem(this);

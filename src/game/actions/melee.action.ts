@@ -13,11 +13,10 @@ export function meleeCombat(game: Game, attacker: Entity, defender: Entity) {
   if (damage === 0) {
     console.log("unable to do damage");
   } else {
-    console.log(`${attacker.name}:${attacker.id} hit ${defender.name}:${defender.id} for ${damage}`);
+    game.log.addMessage(`${attacker.name} hit ${defender.name} for ${damage}`);
     inflictDamage(game, defender, damage);
     if (attacker.player) {
       game.gameState.setState(GameState.Ticking);
     }
-
   }
 }

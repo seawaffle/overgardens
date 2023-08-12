@@ -22,7 +22,7 @@ export class AISystem extends System {
     }
     for (const e of this.query) {
       // evaluate goals
-      console.log(`${e.name}:${e.id} turn : ${e.body!.hp}`)
+      console.log(`${e.name}:${e.id} turn : ${e.body!.hp}`);
       for (const ai of this.ais) {
         ai.run(e);
         if (e.goal) {

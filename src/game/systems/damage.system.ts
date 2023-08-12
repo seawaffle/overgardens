@@ -14,7 +14,7 @@ export class DamageSystem extends System {
   update(): void {
     for (const e of this.damageQuery) {
       e.body.hp -= e.incomingDamage;
-      console.log(`${e.name}:${e.id} hp: ${e.body.hp}`)
+      console.log(`${e.name}:${e.id} hp: ${e.body.hp}`);
       this.game.ecs.world.removeComponent(e, "incomingDamage");
     }
   }

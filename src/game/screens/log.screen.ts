@@ -25,8 +25,7 @@ export class LogScreen extends Screen {
     const logHeight = this.game.render.displayHeight - HUDScreen.HUD_HEIGHT;
     const logX = this.game.render.viewportWidth;
     const logY = HUDScreen.HUD_HEIGHT;
-    // const panelWidget = new GUI.PanelWidget({
-    new GUI.PanelWidget({
+    const panelWidget = new GUI.PanelWidget({
       origin: { x: logX, y: logY },
       initialState: {
         width: logWidth,
@@ -36,11 +35,41 @@ export class LogScreen extends Screen {
         foreColor: Palette.GreyNurse,
       },
     }).setParent(container);
+    const logTextWidth = logWidth - 2;
+    new GUI.TextWidget({
+      origin: { x: 1, y: 1 },
+      initialState: {
+        text: "Test",
+        wrapAt: logWidth - 2,
+      },
+    })
+      .setUpdateFunc(() => {
+        const logs = this.game.log.contents(30);
+        let text = "";
+        let lines = 0;
+        for (const l of logs) {
+          const length = l.length;
+          let padAmount = 0;
+          if (length > logTextWidth) {
+            padAmount = length - (length % logTextWidth);
+          } else {
+            padAmount = logTextWidth - length;
+          }
+          lines += (length + padAmount) / logTextWidth;
+          if (lines > logHeight - 1) {
+            break;
+          }
+          text += l.padEnd(length + padAmount, " ");
+        }
+        return { text };
+      })
+      .setParent(panelWidget);
     container.setDisabled(false);
     return container;
   }
 
   render(): void {
+    this.guiContainer.cascadeUpdate();
     this.guiContainer.cascadeDraw();
   }
 }
