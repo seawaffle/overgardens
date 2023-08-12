@@ -3,6 +3,7 @@ import { System } from "./system";
 import { Entity } from "../components";
 import { Game } from "../game";
 import { GameState } from "../data";
+import { distanceFromPosition } from "../utils";
 
 export class InitiativeSystem extends System {
   initiativeQuery: Query<With<Entity, "initiative" | "position">>;
@@ -19,6 +20,12 @@ export class InitiativeSystem extends System {
     }
 
     for (const e of this.initiativeQuery) {
+      if (
+        distanceFromPosition(this.game.player!.position!.pos, e.position.pos) >
+        this.game.player!.viewshed!.range
+      ) {
+        continue;
+      }
       e.initiative -= 1;
       if (e.initiative < 1) {
         this.game.ecs.world.addComponent(e, "currentTurn", true);

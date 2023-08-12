@@ -187,6 +187,12 @@ export function randomTileShading(rng: Rand.AleaRNG, tile: Tile): Tile {
   return tile;
 }
 
+export function distanceFromPosition(a: Vector2, b: Vector2) {
+  let dx = Math.max(a.x, b.x) - Math.min(a.x, b.x);
+  let dy = Math.max(a.y, b.y) - Math.min(a.y, a.y);
+  return Math.sqrt(dx * dx + dy * dy);
+}
+
 function adjustColor(color: Color, r: number, g: number, b: number): Color {
   return new Color(color.r + r, color.g + g, color.b + b);
 }
