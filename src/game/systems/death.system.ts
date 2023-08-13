@@ -15,7 +15,6 @@ export class DeathSystem extends System {
     const dead: Entity[] = [];
     for (const e of this.statsQuery) {
       if (e.body.hp <= 0) {
-        console.log(`${e.name}:${e.id} hp: ${e.body.hp}`);
         dead.push(e);
       }
     }

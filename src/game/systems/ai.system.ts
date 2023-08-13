@@ -4,15 +4,14 @@ import { System } from "./system";
 import { Game } from "../game";
 import { GameState } from "../data";
 import { AI } from "../ai/ai";
-import { MovementAI } from "../ai/movement.ai";
+import { AdjacentAI, MovementAI } from "../ai";
 
 export class AISystem extends System {
-  ais: AI[] = [];
+  ais: AI[] = [new AdjacentAI(this.game), new MovementAI(this.game)];
   query: Query<With<Entity, "currentTurn">>;
 
   constructor(game: Game) {
     super(game);
-    this.ais.push(new MovementAI(game));
     this.query = this.game.ecs.world.with("currentTurn").without("player");
   }
 
@@ -22,11 +21,11 @@ export class AISystem extends System {
     }
     for (const e of this.query) {
       // evaluate goals
-      console.log(`${e.name}:${e.id} turn : ${e.body!.hp}`);
       for (const ai of this.ais) {
         ai.run(e);
         if (e.goal) {
           e.goal.run(e);
+          e.goal = undefined;
           break;
         }
       }

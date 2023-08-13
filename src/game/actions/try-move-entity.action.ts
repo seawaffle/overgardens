@@ -21,7 +21,7 @@ export function tryMoveEntity(
     : { x: pos.x + position.x, y: pos.y + position.y };
   if (level) {
     for (const e of level.getTileContent(destination)) {
-      if (e.body) {
+      if (entity.player && e.body) {
         meleeCombat(game, entity, e);
         return;
       }
