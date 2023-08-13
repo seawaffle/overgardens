@@ -196,3 +196,7 @@ export function distanceFromPosition(a: Vector2, b: Vector2) {
 function adjustColor(color: Color, r: number, g: number, b: number): Color {
   return new Color(color.r + r, color.g + g, color.b + b);
 }
+
+export function deepCopy(item: any): any {
+  return JSON.parse(JSON.stringify(item));
+}
