@@ -1,11 +1,12 @@
 import { Entity } from "../components";
+import { Palette } from "../data";
 
 export const Player: Entity = {
   name: "Player",
   renderable: {
     glyph: {
       character: "@",
-      fg: "yellow",
+      fg: Palette.HarvestGoldHex,
     },
     renderOrder: 1,
   },

@@ -94,7 +94,7 @@ export class Tile {
     true,
   );
   static Tree = new Tile(
-    "grass",
+    "tree",
     CharCode.blackSpadeSuit,
     Palette.KaitokeGreen,
     Palette.CardinGreen,

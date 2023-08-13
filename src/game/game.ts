@@ -19,7 +19,7 @@ import {
 } from "./systems";
 import { Entity } from "./components";
 import { GameState } from "./data";
-import { Rand } from "malwoden";
+import { Rand, Vector2 } from "malwoden";
 
 export class Game {
   lastTime = performance.now(); // We add a field to keep track of the last time the loop ran
@@ -43,6 +43,7 @@ export class Game {
   rng: Rand.AleaRNG;
   fpsTicks: number[] = [];
   avgFps: number = 0;
+  examinePosition: Vector2 = { x: -1, y: -1 };
 
   constructor(id?: string) {
     this.gameId = id || Date.now().toString();

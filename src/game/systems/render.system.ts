@@ -4,7 +4,7 @@ import { Game } from "../game";
 import { Query, With } from "miniplex";
 import { Entity } from "../components";
 import * as Screens from "../screens";
-import { Palette, Tile } from "../data";
+import { GameState, Palette, Tile } from "../data";
 import { hexToColor } from "../utils";
 
 export class RenderSystem extends System {
@@ -49,12 +49,19 @@ export class RenderSystem extends System {
   }
 
   getCameraCorner(width: number, height: number): Vector2 {
-    const playerPosition = this.game.player?.position?.pos;
-    if (playerPosition === undefined) {
-      return { x: 0, y: 0 };
+    let target: Vector2;
+    if (
+      this.game.gameState.state === GameState.Examine &&
+      this.game.examinePosition
+    ) {
+      target = this.game.examinePosition;
+    } else if (this.game.player) {
+      target = this.game.player.position!.pos;
+    } else {
+      target = { x: 0, y: 0 };
     }
-    const x = playerPosition.x - width / 2;
-    const y = playerPosition.y - height / 2;
+    const x = target.x - width / 2;
+    const y = target.y - height / 2;
     return { x, y };
   }
 
@@ -109,6 +116,14 @@ export class RenderSystem extends System {
             fg = fg_colorDark;
             bg = bg_colorDark;
           }
+          if (
+            this.game.gameState.state === GameState.Examine &&
+            mapPos.x === this.game.examinePosition.x &&
+            mapPos.y === this.game.examinePosition.y
+          ) {
+            fg = Palette.Mulberry;
+            bg = Palette.Mulberry;
+          }
           this.game.render.draw(
             displayPos,
             Glyph.fromCharCode(tile.character, fg, bg),
@@ -135,6 +150,13 @@ export class RenderSystem extends System {
           }
           if (renderable.glyph.bg) {
             bg = hexToColor(renderable.glyph.bg);
+          }
+          if (
+            this.game.gameState.state === GameState.Examine &&
+            position.pos.x === this.game.examinePosition.x &&
+            position.pos.y === this.game.examinePosition.y
+          ) {
+            bg = Palette.Mulberry;
           }
           const glyph = new Glyph(renderable.glyph.character, fg, bg);
           this.game.render.draw(pos, glyph);

@@ -5,8 +5,6 @@ import { Palette } from "../data";
 import { HUDScreen } from ".";
 
 export class LogScreen extends Screen {
-  static HUD_HEIGHT = 10;
-  static HUD_Y = 10;
   guiContainer: GUI.ContainerWidget;
 
   constructor(game: Game) {
@@ -35,6 +33,13 @@ export class LogScreen extends Screen {
         foreColor: Palette.GreyNurse,
       },
     }).setParent(container);
+    // unsure about this, maybe at some point?
+    // const expand = new GUI.ButtonWidget({
+    //   origin: { x: logWidth - 1, y: 0 },
+    //   initialState: {
+    //     text: "‼"
+    //   }
+    // }).setParent(panelWidget)
     const logTextWidth = logWidth - 2;
     new GUI.TextWidget({
       origin: { x: 1, y: 1 },

@@ -1,11 +1,12 @@
 import { Entity } from "../components";
+import { Palette } from "../data";
 
 export const Rat: Entity = {
   name: "Rat",
   renderable: {
     glyph: {
       character: "r",
-      fg: "white",
+      fg: Palette.GeyserHex,
     },
     renderOrder: 1,
   },

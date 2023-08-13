@@ -48,6 +48,10 @@ export class AdventureContext extends Input.KeyboardContext {
             Actions.openEscapeMenu(game);
             break;
           }
+          case Input.KeyCode.X: {
+            Actions.startExamine(game);
+            break;
+          }
         }
       }
     });

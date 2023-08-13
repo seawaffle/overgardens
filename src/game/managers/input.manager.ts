@@ -8,6 +8,7 @@ import {
   MainMenuContext,
   HelpContext,
   EscapeContext,
+  ExamineContext,
 } from "../input";
 
 export class InputManager extends Manager {
@@ -45,6 +46,10 @@ export class InputManager extends Manager {
       }
       case GameState.EscapeMenu: {
         this.keyboardHandler.setContext(new EscapeContext(this.game));
+        break;
+      }
+      case GameState.Examine: {
+        this.keyboardHandler.setContext(new ExamineContext(this.game));
         break;
       }
       default: {

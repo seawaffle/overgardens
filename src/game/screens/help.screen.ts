@@ -11,6 +11,7 @@ export class HelpScreen extends Screen {
     "i - Inventory screen",
     ". - Wait 1 turn",
     "Arrow Keys - Movement",
+    "x - Examine your surroundings",
   ];
   constructor(game: Game) {
     super(game);

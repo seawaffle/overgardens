@@ -6,4 +6,5 @@ export enum GameState {
   Inventory,
   EscapeMenu,
   HelpScreen,
+  Examine,
 }
