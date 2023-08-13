@@ -1,29 +1,29 @@
 import { Entity } from "../components";
+import { Palette } from "../data";
 
-export const Player: Entity = {
-  name: "Player",
+export const Ooze: Entity = {
+  name: "Ooze",
   renderable: {
     glyph: {
-      character: "@",
-      fg: "yellow", //deviate from palette for visibility?
+      character: "o",
+      fg: Palette.KaitokeGreenHex,
     },
     renderOrder: 1,
   },
   blocksTile: true,
-  player: true,
   mobile: true,
   viewshed: {
-    range: 20,
+    range: 5,
     dirty: true,
   },
-  faction: "player",
-  initiative: 0,
+  faction: "mindless",
+  initiative: 8,
   body: {
     strength: 1,
     agility: 1,
     constitution: 1,
     intellect: 1,
-    hp: 30,
-    maxHp: 30,
+    hp: 5,
+    maxHp: 5,
   },
 };

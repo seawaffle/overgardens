@@ -1,5 +1,5 @@
 import { Position, Renderable, Body, Viewshed } from ".";
-import { Goal } from "./goals";
+import { Goal } from "../ai/goals";
 
 export interface Entity {
   id?: string;

@@ -16,6 +16,7 @@ export const Rat: Entity = {
     range: 5,
     dirty: true,
   },
+  faction: "herbivores",
   initiative: 2,
   body: {
     strength: 1,

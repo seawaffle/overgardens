@@ -20,6 +20,7 @@ import {
 import { Entity } from "./components";
 import { GameState } from "./data";
 import { Rand, Vector2 } from "malwoden";
+import { FactionManager } from "./managers/faction.manager";
 
 export class Game {
   lastTime = performance.now(); // We add a field to keep track of the last time the loop ran
@@ -32,6 +33,7 @@ export class Game {
   render: RenderManager;
   database: DatabaseManager;
   log: LogManager;
+  faction: FactionManager;
   renderSystem: RenderSystem;
   visibilitySystem: VisibilitySystem;
   mapIndexingSystem: MapIndexingSystem;
@@ -56,6 +58,7 @@ export class Game {
     this.database = new DatabaseManager(this);
     this.procgen = new ProcGenManager(this);
     this.log = new LogManager(this);
+    this.faction = new FactionManager(this);
     this.renderSystem = new RenderSystem(this);
     this.visibilitySystem = new VisibilitySystem(this);
     this.mapIndexingSystem = new MapIndexingSystem(this);

@@ -1,4 +1,4 @@
-import { Vector2 } from "malwoden";
+import { Pathfinding, Vector2 } from "malwoden";
 import { Entity } from "../components";
 import { Game } from "../game";
 import { GameState } from "../data";
@@ -37,5 +37,27 @@ export function tryMoveEntity(
         game.gameState.setState(GameState.Ticking);
       }
     }
+  }
+}
+
+export function approach(game: Game, entity: Entity, destination: Vector2) {
+  if (!entity) return;
+  if (!entity.position) {
+    console.warn("Attempted to move an entity without position");
+    return;
+  }
+  const level = game.map.getCurrentLevel();
+  if (!level) return;
+  const pos = entity.position.pos;
+  const astar = new Pathfinding.AStar({
+    topology: "eight",
+    isBlockedCallback: (p) => {
+      // if (p === destination) return false;
+      return !level.tiles.get(p)!.walkable;
+    },
+  });
+  const path = astar.compute(pos, destination);
+  if (path && path.length > 1) {
+    tryMoveEntity(game, entity, path[1], true);
   }
 }

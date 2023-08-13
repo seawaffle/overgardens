@@ -1,13 +1,14 @@
-import { Faction, Reaction } from "../data/faction";
+import { Reaction } from "../data/faction";
 
-export const Factions: Faction[] = [
-  { name: "player", views: new Map<string, Reaction>() },
-  {
-    name: "mindless",
-    views: new Map<string, Reaction>().set("default", Reaction.Attack),
+export const Factions: Object = {
+  player: {
+    default: Reaction.Ignore,
   },
-  {
-    name: "herbivores",
-    views: new Map<string, Reaction>().set("default", Reaction.Ignore),
+  mindless: {
+    default: Reaction.Attack,
   },
-];
+  herbivores: {
+    default: Reaction.Ignore,
+    herbivores: Reaction.Ignore,
+  },
+};

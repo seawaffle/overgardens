@@ -1,5 +1,5 @@
 import { Entity } from "../components";
-import { WanderGoal } from "../components/goals";
+import { WanderGoal } from "./goals";
 import { AI } from "./ai";
 
 export class MovementAI extends AI {

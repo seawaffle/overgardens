@@ -56,9 +56,9 @@ export class LogScreen extends Screen {
           const length = l.length;
           let padAmount = 0;
           if (length > logTextWidth) {
-            padAmount = length - (length % logTextWidth);
+            padAmount = length - (length % logTextWidth) + 1;
           } else {
-            padAmount = logTextWidth - length;
+            padAmount = logTextWidth - length + 1;
           }
           lines += (length + padAmount) / logTextWidth;
           if (lines > logHeight - 1) {

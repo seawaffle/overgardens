@@ -1,4 +1,4 @@
-import { Entity } from "..";
+import { Entity } from "../../components";
 import { Game } from "../../game";
 
 export class Goal {

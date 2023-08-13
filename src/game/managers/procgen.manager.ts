@@ -33,5 +33,12 @@ export class ProcGenManager extends Manager {
       rat.position = { pos: randomOpenTile(map) };
       this.game.ecs.addEntity(rat);
     }
+    for (const _ of range(0, this.game.rng.nextInt(1, 2))) {
+      this.game.mapIndexingSystem.update();
+      const ooze = JSON.parse(JSON.stringify(Prefabs.Ooze));
+      ooze.id = nanoid();
+      ooze.position = { pos: randomOpenTile(map) };
+      this.game.ecs.addEntity(ooze);
+    }
   }
 }

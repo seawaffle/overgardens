@@ -1,23 +1,23 @@
 import { Entity } from "../components";
-import { MeleeGoal } from "./goals";
 import { Reaction } from "../data/faction";
 import { AI } from "./ai";
+import { ApproachGoal } from "./goals";
 
-export class AdjacentAI extends AI {
+export class VisibleAI extends AI {
   run(e: Entity): void {
+    if (!e.viewshed) {
+      return;
+    }
+    const visibleTiles = e.viewshed.visibleTiles!;
     const level = this.game.map.getCurrentLevel()!;
-    const adjacents = level.tiles.getNeighbors(
-      e.position!.pos,
-      undefined,
-      "eight",
-    );
-    for (const adjPos of adjacents) {
-      const content = level.tileContent.get(adjPos)!;
+    for (const pos of visibleTiles) {
+      const content = level.getTileContent(pos);
       for (const other of content) {
+        if (other === e) continue;
         if (other.body) {
           const reaction = this.game.faction.getReaction(e, other);
           if (reaction === Reaction.Attack) {
-            e.goal = new MeleeGoal(this.game, other);
+            e.goal = new ApproachGoal(this.game, other.position!.pos);
           }
         }
       }

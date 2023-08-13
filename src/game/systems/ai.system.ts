@@ -4,10 +4,14 @@ import { System } from "./system";
 import { Game } from "../game";
 import { GameState } from "../data";
 import { AI } from "../ai/ai";
-import { AdjacentAI, MovementAI } from "../ai";
+import { AdjacentAI, MovementAI, VisibleAI } from "../ai";
 
 export class AISystem extends System {
-  ais: AI[] = [new AdjacentAI(this.game), new MovementAI(this.game)];
+  ais: AI[] = [
+    new AdjacentAI(this.game),
+    new VisibleAI(this.game),
+    new MovementAI(this.game),
+  ];
   query: Query<With<Entity, "currentTurn">>;
 
   constructor(game: Game) {
