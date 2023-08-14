@@ -3,6 +3,7 @@ import { Entity } from "../components";
 import { Game } from "../game";
 import { GameState } from "../data";
 import { meleeCombat } from ".";
+import { DijkstraMap } from "../data/djikstra-map";
 
 export function tryMoveEntity(
   game: Game,
@@ -64,4 +65,27 @@ export function approach(game: Game, entity: Entity, destination: Vector2) {
 
 export function flee(game: Game, entity: Entity, target: Vector2) {
   console.log(`${entity.name} wants to flee`)
+  if (!entity) return;
+  if (!entity.position) {
+    console.warn("Attempted to move an entity without position");
+    return;
+  }
+  const level = game.map.getCurrentLevel();
+  if (!level) return;
+  const pos = entity.position.pos;
+  const djikstraMap = new DijkstraMap({
+    start: pos,
+    topology: "eight",
+    flee: true,
+    isBlockedCallback: (p) => {
+      const tile = level.tiles.get(p)!;
+      // if (p === destination) return false;
+      return !tile.walkable;
+    },
+  });
+  djikstraMap.add(target, 100, true)
+  const next = djikstraMap.compute();
+  if (next) {
+    tryMoveEntity(game, entity, next, true);
+  }
 }
