@@ -1,6 +1,6 @@
 import { Reaction } from "../data/faction";
 
-export const Factions: Object = {
+export const Factions: object = {
   player: {
     default: Reaction.Ignore,
   },

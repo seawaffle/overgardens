@@ -12,6 +12,11 @@ export class LogManager extends Manager {
     }
   }
 
+  clearLogs() {
+    this.logs = [];
+    this.overrideMessage = [];
+  }
+
   setOverride(...msg: string[]) {
     this.clearOverride();
     this.overrideMessage.push(...msg);

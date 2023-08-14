@@ -24,6 +24,17 @@ export class AISystem extends System {
       return;
     }
     for (const e of this.query) {
+      // avoid a fist of the north star situation
+      if (e.body) {
+        const alreadyDead = e.body.hp <= 0;
+        const aboutToDie = e.incomingDamage
+          ? e.body.hp - e.incomingDamage <= 0
+          : false;
+        if (alreadyDead || aboutToDie) {
+          this.game.ecs.world.removeComponent(e, "currentTurn");
+          continue;
+        }
+      }
       // evaluate goals
       for (const ai of this.ais) {
         ai.run(e);

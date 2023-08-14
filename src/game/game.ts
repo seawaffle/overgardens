@@ -107,6 +107,7 @@ export class Game {
     this.gameId = seed || Date.now.toString();
     this.rng = new Rand.AleaRNG(this.gameId);
     this.procgen.generate();
+    this.log.clearLogs();
     this.gameState.setState(GameState.AwaitingInput);
     this.input.update();
     this.player!.viewshed!.dirty = true;
@@ -132,11 +133,16 @@ export class Game {
     this.ecs.reset(data.entities);
     this.player = this.ecs.world.with("player").first;
     this.map.loadMap(data.map);
-    this.gameState.state = GameState.AwaitingInput;
-    this.input.update();
-    this.mapIndexingSystem = new MapIndexingSystem(this);
-    this.visibilitySystem = new VisibilitySystem(this);
+    this.gameState = new GameStateManager(this);
+    this.gameState.setState(GameState.AwaitingInput);
     this.renderSystem = new RenderSystem(this);
+    this.visibilitySystem = new VisibilitySystem(this);
+    this.mapIndexingSystem = new MapIndexingSystem(this);
+    this.initiativeSystem = new InitiativeSystem(this);
+    this.aiSystem = new AISystem(this);
+    this.damageSystem = new DamageSystem(this);
+    this.deathSystem = new DeathSystem(this);
+    this.input.update();
     this.updateSystems();
     this.render.render();
   }

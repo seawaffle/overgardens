@@ -23,10 +23,15 @@ export class DeathSystem extends System {
     for (const d of dead) {
       this.game.log.addMessage(`${d.name} has died`);
       if (level) {
-        let bg = level.tiles.get(d.position!.pos)!.bg_color_light;
-        const bloodStain = bg.blend(Palette.MilanoRed, this.game.rng.next());
-        level.tiles.get(d.position!.pos)!.bg_color_light = bloodStain;
-
+        const tile = level.tiles.get(d.position!.pos)!;
+        const bloodStain = tile.bg_color_light.blend(
+          Palette.MilanoRed,
+          this.game.rng.next(),
+        );
+        tile.bg_color_light = bloodStain;
+        if (!tile.type.includes("blood")) {
+          tile.type = `bloody ${tile.type}`;
+        }
       }
       this.game.ecs.world.remove(d);
     }

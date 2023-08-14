@@ -188,8 +188,8 @@ export function randomTileShading(rng: Rand.AleaRNG, tile: Tile): Tile {
 }
 
 export function distanceFromPosition(a: Vector2, b: Vector2) {
-  let dx = Math.max(a.x, b.x) - Math.min(a.x, b.x);
-  let dy = Math.max(a.y, b.y) - Math.min(a.y, a.y);
+  const dx = Math.max(a.x, b.x) - Math.min(a.x, b.x);
+  const dy = Math.max(a.y, b.y) - Math.min(a.y, a.y);
   return Math.sqrt(dx * dx + dy * dy);
 }
 
