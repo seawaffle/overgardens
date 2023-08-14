@@ -1,6 +1,6 @@
 import { Color, Rand, Struct, Vector2 } from "malwoden";
 import { Noise } from "rot-js";
-import { Map, Tile } from "./data";
+import { Level, Tile } from "./data";
 import { ColorTranslator } from "colortranslator";
 // noise related functions stolen from https://www.redblobgames.com/maps/terrain-from-noise
 export function mixNoise(
@@ -81,8 +81,7 @@ export function reshape(e: number, d: number) {
   return lerp(e, 1 - d, 0.5);
 }
 
-export function findOpenGround(map: Map, edge?: string) {
-  const level = map.getCurrentLevel();
+export function findOpenGround(level: Level, edge?: string) {
   const mapCenter = { x: level.width / 2, y: level.height / 2 };
   let position = { x: 0, y: 0 };
   switch (edge) {
@@ -149,8 +148,7 @@ export function findOpenGround(map: Map, edge?: string) {
   return position;
 }
 
-export function randomOpenTile(map: Map): Vector2 {
-  const level = map.getCurrentLevel();
+export function randomOpenTile(level: Level): Vector2 {
   const rng = new Rand.AleaRNG();
   while (true) {
     const pos = {

@@ -64,7 +64,6 @@ export function approach(game: Game, entity: Entity, destination: Vector2) {
 }
 
 export function flee(game: Game, entity: Entity, target: Vector2) {
-  console.log(`${entity.name} wants to flee`)
   if (!entity) return;
   if (!entity.position) {
     console.warn("Attempted to move an entity without position");

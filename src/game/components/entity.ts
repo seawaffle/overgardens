@@ -1,4 +1,4 @@
-import { Position, Renderable, Body, Viewshed } from ".";
+import { Position, Renderable, Body, Viewshed, Destination } from ".";
 import { Goal } from "../ai/goals";
 
 export interface Entity {
@@ -11,9 +11,10 @@ export interface Entity {
   blocksTile?: true;
   body?: Body;
   faction?: string;
-  mobile: true;
-  initiative: number;
+  mobile: boolean;
+  initiative?: number;
   currentTurn?: true;
   goal?: Goal;
   incomingDamage?: number;
+  travelable?: Destination;
 }
