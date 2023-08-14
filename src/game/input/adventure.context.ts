@@ -30,6 +30,22 @@ export class AdventureContext extends Input.KeyboardContext {
             Actions.tryMoveEntity(game, game.player, { x: 0, y: 1 });
             break;
           }
+          case Input.KeyCode.Numpad1: {
+            Actions.tryMoveEntity(game, game.player, { x: -1, y: 1 });
+            break;
+          }
+          case Input.KeyCode.Numpad3: {
+            Actions.tryMoveEntity(game, game.player, { x: 1, y: 1 });
+            break;
+          }
+          case Input.KeyCode.Numpad7: {
+            Actions.tryMoveEntity(game, game.player, { x: -1, y: -1 });
+            break;
+          }
+          case Input.KeyCode.Numpad9: {
+            Actions.tryMoveEntity(game, game.player, { x: 1, y: -1 });
+            break;
+          }
           case Input.KeyCode.Period: {
             Actions.wait(game, game.player);
             break;
