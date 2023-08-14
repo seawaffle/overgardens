@@ -8,7 +8,7 @@ export const Factions: object = {
     default: Reaction.Attack,
   },
   herbivores: {
-    default: Reaction.Ignore,
+    default: Reaction.Flee,
     herbivores: Reaction.Ignore,
   },
 };

@@ -61,3 +61,7 @@ export function approach(game: Game, entity: Entity, destination: Vector2) {
     tryMoveEntity(game, entity, path[1], true);
   }
 }
+
+export function flee(game: Game, entity: Entity, target: Vector2) {
+  console.log(`${entity.name} wants to flee`)
+}

@@ -2,6 +2,7 @@ import { Entity } from "../components";
 import { Reaction } from "../data/faction";
 import { AI } from "./ai";
 import { ApproachGoal } from "./goals";
+import { FleeGoal } from "./goals/flee.goal";
 
 export class VisibleAI extends AI {
   run(e: Entity): void {
@@ -18,6 +19,11 @@ export class VisibleAI extends AI {
           const reaction = this.game.faction.getReaction(e, other);
           if (reaction === Reaction.Attack) {
             e.goal = new ApproachGoal(this.game, other.position!.pos);
+            break;
+          }
+          if (reaction === Reaction.Flee) {
+            e.goal = new FleeGoal(this.game, other.position!.pos);
+            break;
           }
         }
       }
