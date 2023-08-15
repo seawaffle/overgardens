@@ -18,11 +18,11 @@ export class VisibleAI extends AI {
         if (other.body) {
           const reaction = this.game.faction.getReaction(e, other);
           if (reaction === Reaction.Attack) {
-            e.goal = new ApproachGoal(this.game, other.position!.pos);
+            e.goal = new ApproachGoal(this.game, other.position!);
             break;
           }
           if (reaction === Reaction.Flee) {
-            e.goal = new FleeGoal(this.game, other.position!.pos);
+            e.goal = new FleeGoal(this.game, other.position!);
             break;
           }
         }

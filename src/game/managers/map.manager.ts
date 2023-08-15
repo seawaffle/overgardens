@@ -46,13 +46,26 @@ export class MapManager extends Manager {
     }
   }
 
-  changeLevel() {
-
+  changeZone(area: number, level: number) {
+    if (this.map!.areas.length > area) {
+      this.map!.currentArea = area;
+    }
+    const currentArea = this.map!.getCurrentArea()!;
+    if (currentArea.levels.length > level) {
+      currentArea.currentLevel = level;
+    }
   }
 
   // have to do this because it can't figure out that it's supposed to be a color
   deserializeColor(color: Color): Color {
     return new Color(color.r, color.g, color.b);
+  }
+
+  getCurrentArea(): Area | undefined{
+    if (this.map) {
+      return this.map.getCurrentArea();
+    }
+    return undefined;
   }
 
   getCurrentLevel(): Level | undefined {

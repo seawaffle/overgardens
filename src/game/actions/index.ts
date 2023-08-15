@@ -7,3 +7,4 @@ export * from "./wait.action";
 export * from "./damage.action";
 export * from "./melee.action";
 export * from "./examine.action";
+export * from "./level.action";

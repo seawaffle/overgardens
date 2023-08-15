@@ -16,6 +16,7 @@ import {
   AISystem,
   DamageSystem,
   DeathSystem,
+  ZoneChangeSystem,
 } from "./systems";
 import { Entity } from "./components";
 import { GameState } from "./data";
@@ -41,6 +42,7 @@ export class Game {
   damageSystem: DamageSystem;
   deathSystem: DeathSystem;
   aiSystem: AISystem;
+  zoneChangeSystem: ZoneChangeSystem;
   player: Entity | undefined;
   rng: Rand.AleaRNG;
   fpsTicks: number[] = [];
@@ -66,6 +68,7 @@ export class Game {
     this.aiSystem = new AISystem(this);
     this.damageSystem = new DamageSystem(this);
     this.deathSystem = new DeathSystem(this);
+    this.zoneChangeSystem = new ZoneChangeSystem(this);
     this.player = undefined;
     this.gameState.setState(GameState.MainMenu);
   }
@@ -86,6 +89,7 @@ export class Game {
     this.aiSystem.update();
     this.damageSystem.update();
     this.deathSystem.update();
+    this.zoneChangeSystem.update();
     this.renderSystem.update();
   }
 

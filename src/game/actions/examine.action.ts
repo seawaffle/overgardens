@@ -15,7 +15,7 @@ export function startExamine(game: Game) {
   if (game.gameState.state !== GameState.AwaitingInput) {
     return;
   }
-  game.examinePosition = game.player!.position!.pos;
+  game.examinePosition = game.player!.position!;
   game.gameState.setState(GameState.Examine);
 }
 

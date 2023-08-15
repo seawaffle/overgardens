@@ -1,10 +1,12 @@
-import { Position, Renderable, Body, Viewshed, Destination } from ".";
+import { Vector2 } from "malwoden";
+import { Renderable, Body, Viewshed, Destination, OutOfLevel } from ".";
 import { Goal } from "../ai/goals";
 
 export interface Entity {
   id?: string;
   name: string;
-  position?: Position;
+  position?: Vector2;
+  outOfLevel?: OutOfLevel;
   renderable?: Renderable;
   player?: true;
   viewshed?: Viewshed;

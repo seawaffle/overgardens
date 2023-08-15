@@ -153,14 +153,14 @@ export class ProcGenManager extends Manager {
   placePlayer(level: Level, stairs?: Vector2) {
     if (this.game.player) {
       if (stairs) {
-        this.game.player.position = {pos: stairs};
+        this.game.player.position = stairs;
       } else {
-        this.game.player.position = { pos: findOpenGround(level, "south") };
+        this.game.player.position = findOpenGround(level, "south");
       }
     } else {
       const player = { ...Prefabs.Player };
       player.id = nanoid();
-      player.position = { pos: findOpenGround(level, "south") };
+      player.position = findOpenGround(level, "south");
       this.game.player = this.game.ecs.addEntity(player);  
     }
   }
@@ -170,28 +170,28 @@ export class ProcGenManager extends Manager {
       this.game.mapIndexingSystem.update();
       const rat: Entity = JSON.parse(JSON.stringify(Prefabs.Rat));
       rat.id = nanoid();
-      rat.position = { pos: randomOpenTile(level) };
+      rat.position = randomOpenTile(level);
       this.game.ecs.addEntity(rat);
     }
     for (const _ of range(0, this.game.rng.nextInt(1, 2))) {
       this.game.mapIndexingSystem.update();
       const ooze: Entity = JSON.parse(JSON.stringify(Prefabs.Ooze));
       ooze.id = nanoid();
-      ooze.position = { pos: randomOpenTile(level) };
+      ooze.position = randomOpenTile(level);
       this.game.ecs.addEntity(ooze);
     }
     if (nextLevel) {
       // if there's a place to go down to, put some stairs
       const downstairs: Entity = JSON.parse(JSON.stringify(Prefabs.DownStairs));
       downstairs.travelable = { destArea: 0, destLevel: nextLevel.id };
-      downstairs.position = { pos: randomOpenTile(level) };
+      downstairs.position = randomOpenTile(level);
       this.game.ecs.addEntity(downstairs);
     }
     if (previousLevel) {
       // if there's a place to go up to, put some stairs
       const upstairs: Entity = JSON.parse(JSON.stringify(Prefabs.UpStairs));
       upstairs.travelable = { destArea: 0, destLevel: previousLevel.id };
-      upstairs.position = { pos: randomOpenTile(level) };
+      upstairs.position = randomOpenTile(level);
       this.game.ecs.addEntity(upstairs);
     }
   }

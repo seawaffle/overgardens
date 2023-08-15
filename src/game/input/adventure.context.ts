@@ -46,7 +46,20 @@ export class AdventureContext extends Input.KeyboardContext {
             Actions.tryMoveEntity(game, game.player, { x: 1, y: -1 });
             break;
           }
+          case Input.KeyCode.Comma: {
+            if (keyEvent.shiftKey) {
+              // open angle bracket
+              Actions.changeLevel(game);
+              break;
+            }
+            break;
+          }
           case Input.KeyCode.Period: {
+            if (keyEvent.shiftKey) {
+              // close angle bracket
+              Actions.changeLevel(game);
+              break;
+            }
             Actions.wait(game, game.player);
             break;
           }

@@ -19,9 +19,9 @@ export class MapIndexingSystem extends System {
       level.populateBlocked();
 
       for (const e of this.query) {
-        level.addTileContent(e.position.pos, e);
+        level.addTileContent(e.position, e);
         if (e.blocksTile) {
-          level.setBlocked(e.position.pos);
+          level.setBlocked(e.position);
         }
       }
     }

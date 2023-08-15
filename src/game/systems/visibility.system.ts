@@ -30,7 +30,7 @@ export class VisibilitySystem extends System {
         }
 
         const visibility = this.fov.calculateArray(
-          e.position.pos,
+          e.position,
           e.viewshed.range,
         );
         e.viewshed.visibleTiles = visibility

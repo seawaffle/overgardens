@@ -16,7 +16,7 @@ export function tryMoveEntity(
     console.warn("Attempted to move an entity without position");
   }
   const level = game.map.getCurrentLevel();
-  const pos = entity.position!.pos;
+  const pos = entity.position!;
   const destination = absolute
     ? position
     : { x: pos.x + position.x, y: pos.y + position.y };
@@ -30,7 +30,7 @@ export function tryMoveEntity(
     if (!level.isBlocked(destination)) {
       level.setBlocked(pos, false);
       level.setBlocked(destination);
-      entity.position!.pos = destination;
+      entity.position! = destination;
       if (entity.viewshed) {
         entity.viewshed.dirty = true;
       }
@@ -49,7 +49,7 @@ export function approach(game: Game, entity: Entity, destination: Vector2) {
   }
   const level = game.map.getCurrentLevel();
   if (!level) return;
-  const pos = entity.position.pos;
+  const pos = entity.position;
   const astar = new Pathfinding.AStar({
     topology: "eight",
     isBlockedCallback: (p) => {
@@ -71,7 +71,7 @@ export function flee(game: Game, entity: Entity, target: Vector2) {
   }
   const level = game.map.getCurrentLevel();
   if (!level) return;
-  const pos = entity.position.pos;
+  const pos = entity.position;
   const djikstraMap = new DijkstraMap({
     start: pos,
     topology: "eight",

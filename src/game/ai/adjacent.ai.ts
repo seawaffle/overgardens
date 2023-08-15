@@ -7,7 +7,7 @@ export class AdjacentAI extends AI {
   run(e: Entity): void {
     const level = this.game.map.getCurrentLevel()!;
     const adjacents = level.tiles.getNeighbors(
-      e.position!.pos,
+      e.position!,
       undefined,
       "eight",
     );

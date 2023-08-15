@@ -26,7 +26,7 @@ export class DeathSystem extends System {
         this.game.gameState.setState(GameState.GameOver);
       }
       if (level) {
-        const tile = level.tiles.get(d.position!.pos)!;
+        const tile = level.tiles.get(d.position!)!;
         const bloodStain = tile.bg_color_light.blend(
           Palette.MilanoRed,
           this.game.rng.next(),

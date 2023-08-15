@@ -21,7 +21,7 @@ export class InitiativeSystem extends System {
 
     for (const e of this.initiativeQuery) {
       if (
-        distanceFromPosition(this.game.player!.position!.pos, e.position.pos) >
+        distanceFromPosition(this.game.player!.position!, e.position) >
         this.game.player!.viewshed!.range
       ) {
         continue;

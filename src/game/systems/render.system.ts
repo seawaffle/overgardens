@@ -59,7 +59,7 @@ export class RenderSystem extends System {
     ) {
       target = this.game.examinePosition;
     } else if (this.game.player) {
-      target = this.game.player.position!.pos;
+      target = this.game.player.position!;
     } else {
       target = { x: 0, y: 0 };
     }
@@ -141,11 +141,11 @@ export class RenderSystem extends System {
     if (level) {
       for (const { position, renderable } of this.renderQuery) {
         if (
-          level.visibleTiles.get(position.pos) &&
-          this.isInCamera(position.pos)
+          level.visibleTiles.get(position) &&
+          this.isInCamera(position)
         ) {
-          const tile = level.tiles.get(position.pos);
-          const pos = this.transformToCameraCoords(position.pos);
+          const tile = level.tiles.get(position);
+          const pos = this.transformToCameraCoords(position);
           let fg = Palette.GreyNurse;
           let bg = tile ? tile.bg_color_light : Palette.Ebony;
           if (renderable.glyph.fg) {
@@ -156,8 +156,8 @@ export class RenderSystem extends System {
           }
           if (
             this.game.gameState.state === GameState.Examine &&
-            position.pos.x === this.game.examinePosition.x &&
-            position.pos.y === this.game.examinePosition.y
+            position.x === this.game.examinePosition.x &&
+            position.y === this.game.examinePosition.y
           ) {
             bg = Palette.Mulberry;
           }

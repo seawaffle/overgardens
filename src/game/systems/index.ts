@@ -5,3 +5,4 @@ export * from "./initiative.system";
 export * from "./ai.system";
 export * from "./damage.system";
 export * from "./death.system";
+export * from "./zone-change.system";

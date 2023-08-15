@@ -8,4 +8,5 @@ export enum GameState {
   HelpScreen,
   Examine,
   GameOver,
+  ZoneChange,
 }
