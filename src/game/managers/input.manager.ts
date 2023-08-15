@@ -9,6 +9,7 @@ import {
   HelpContext,
   EscapeContext,
   ExamineContext,
+  GameOverContext,
 } from "../input";
 
 export class InputManager extends Manager {
@@ -50,6 +51,10 @@ export class InputManager extends Manager {
       }
       case GameState.Examine: {
         this.keyboardHandler.setContext(new ExamineContext(this.game));
+        break;
+      }
+      case GameState.GameOver: {
+        this.keyboardHandler.setContext(new GameOverContext(this.game));
         break;
       }
       default: {

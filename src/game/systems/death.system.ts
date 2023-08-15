@@ -2,7 +2,7 @@ import { Query, With } from "miniplex";
 import { Entity } from "../components";
 import { System } from "./system";
 import { Game } from "../game";
-import { Palette } from "../data";
+import { GameState, Palette } from "../data";
 
 export class DeathSystem extends System {
   statsQuery: Query<With<Entity, "body">>;
@@ -22,6 +22,9 @@ export class DeathSystem extends System {
     }
     for (const d of dead) {
       this.game.log.addMessage(`${d.name} has died`);
+      if (d.player) {
+        this.game.gameState.setState(GameState.GameOver);
+      }
       if (level) {
         const tile = level.tiles.get(d.position!.pos)!;
         const bloodStain = tile.bg_color_light.blend(

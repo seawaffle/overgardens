@@ -7,4 +7,5 @@ export enum GameState {
   EscapeMenu,
   HelpScreen,
   Examine,
+  GameOver,
 }

@@ -5,3 +5,4 @@ export * from "./main-menu.screen";
 export * from "./screen";
 export * from "./hud.screen";
 export * from "./log.screen";
+export * from "./game-over.screen";

@@ -15,6 +15,7 @@ export class RenderSystem extends System {
   inventoryScreen: Screens.InventoryScreen;
   hudScreen: Screens.HUDScreen;
   logScreen: Screens.LogScreen;
+  gameOverScreen: Screens.GameOverScreen;
 
   screenWidth: number;
   screenHeight: number;
@@ -32,6 +33,7 @@ export class RenderSystem extends System {
     this.inventoryScreen = new Screens.InventoryScreen(this.game);
     this.hudScreen = new Screens.HUDScreen(this.game);
     this.logScreen = new Screens.LogScreen(this.game);
+    this.gameOverScreen = new Screens.GameOverScreen(this.game);
   }
 
   renderScreens() {
@@ -41,6 +43,7 @@ export class RenderSystem extends System {
     this.inventoryScreen.render();
     this.helpScreen.render();
     this.escapeScreen.render();
+    this.gameOverScreen.render();
   }
 
   update(): void {

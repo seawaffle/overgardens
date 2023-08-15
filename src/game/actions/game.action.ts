@@ -16,3 +16,7 @@ export function loadGame(game: Game) {
 export function saveGame(game: Game) {
   game.database.saveGame();
 }
+
+export function gameOver(game: Game) {
+  game.gameState.setState(GameState.MainMenu);
+}
