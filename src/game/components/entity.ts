@@ -18,5 +18,5 @@ export interface Entity {
   currentTurn?: true;
   goal?: Goal;
   incomingDamage?: number;
-  travelable?: Destination;
+  destination?: Destination;
 }

@@ -1,5 +1,5 @@
 import { Game } from "../game";
-import { findOpenGround, mixNoise, randomOpenTile, randomTileShading, range, reshape } from "../utils";
+import { findOpenGround, findOpenNearCoord, isReachable, mixNoise, randomOpenTile, randomTileShading, range, reshape } from "../utils";
 import { Manager } from "./manager";
 import * as Prefabs from "../prefabs";
 import { nanoid } from "nanoid";
@@ -33,13 +33,16 @@ export class ProcGenManager extends Manager {
   generateArea(id: number): Area {
     const area = new Area(id, this.game.map.areaWidth, this.game.map.areaHeight);
     area.rootNote = MusicManager.getRandomRoot();
-    for (const i of range(0, this.game.rng.nextInt(this.MIN_LEVELS, this.MAX_LEVELS))) {
+    const levelCount = this.game.rng.nextInt(this.MIN_LEVELS, this.MAX_LEVELS);
+    console.log(`generating ${levelCount} levels`)
+    for (const i of range(0, levelCount)) {
       if (i === 0) {
         area.levels.push(this.generateLevel(i, area.rootNote));
       } else {
         area.levels.push(this.generateLevel(i, area.rootNote, area.levels[i - 1]));
       }
     }
+    // this.populateStairs(area);
     return area;
   }
 
@@ -81,7 +84,7 @@ export class ProcGenManager extends Manager {
         n = reshape(n, d);
         let tile: Tile;
         if (n >= 0.6) {
-          if (this.game.rng.next() > 0.9) {
+          if (this.game.rng.next() > 0.95) {
             tile = randomTileShading(this.game.rng, { ...Tile.Tree });
           } else {
             tile = randomTileShading(this.game.rng, { ...Tile.Grass });
@@ -108,15 +111,22 @@ export class ProcGenManager extends Manager {
 
   generateDungeon(level: Level, previousLevel: Level) {
     const builder = new Generation.CellularAutomataBuilder({
-      width: this.game.map.areaWidth,
-      height: this.game.map.areaHeight,
+      width: level.width,
+      height: level.height,
       wallValue: 1,
-      floorValue: 0
+      floorValue: 0,
+      rng: this.game.rng,
     })
-    builder.randomize(0.6);
+    builder.randomize(0.5);
     builder.doSimulationStep(3);
     builder.connect(0);
     const map = builder.getMap();
+    const noiseMap = mixNoise(
+      level.width,
+      level.height,
+      [1, 1 / 2, 1 / 4, 1 / 8, 1 / 16],
+      2,
+    );    
     // set all previous sky tiles to sky, to preserve the shape of the island
     const cloudMap = mixNoise(
       level.width,
@@ -124,11 +134,12 @@ export class ProcGenManager extends Manager {
       [1, 1 / 2, 1 / 4, 1 / 8, 1 / 16],
       2,
     );
-    for (let x = 0; x < this.game.map.areaWidth; x++) {
-      for (let y = 0; y < this.game.map.areaHeight; y++) {
+    for (let x = 0; x < level.width; x++) {
+      for (let y = 0; y < level.height; y++) {
         const position = {x, y};
         const prevTile = previousLevel.tiles.get(position)!;
-        const genTile = map.get(position)
+        let genTile = map.get(position)
+        const noise = noiseMap.get(position)!;
         let tile: Tile;
         if (prevTile.type === "sky" || prevTile.type === "cloud") {
           const cloudCover = cloudMap.get({ x, y })!;
@@ -143,11 +154,82 @@ export class ProcGenManager extends Manager {
             tile = randomTileShading(this.game.rng, { ...Tile.Sky });
           }
         } else {
+          if (noise > 0.8) {
+            genTile = 0;
+          }
           tile = randomTileShading(this.game.rng, genTile === 0 ? { ...Tile.Floor} : { ...Tile.Wall});
         }
         level.tiles.set(position, tile);
       }
     }
+  }
+
+  populateStairs(area: Area) {
+    for (let i = 0; i < area.levels.length; i++) {
+      const level = area.levels[i];
+      if (i === 0) {
+        let pos = randomOpenTile(this.game.rng, level);
+        while(!isReachable(level, this.game.player!.position!, pos) && pos !== this.game.player!.position!) {
+          pos = randomOpenTile(this.game.rng, level);
+        }
+        const tile = randomTileShading(this.game.rng, { ...Tile.DownStairs});
+        tile.destination = { area: area.id, level: i + 1};
+        level.tiles.set(pos, tile);        
+        console.log(`${area.id}.${level.id} ${tile.type} = ${JSON.stringify(pos)} to ${tile.destination.area}.${tile.destination.level}`)
+      } else {
+        // place up stairs based on previous level's position
+        const previousLevel = area.levels[i - 1];
+        let upPos = findOpenNearCoord(level, this.findStairPosition(previousLevel, "down stairs")!)!;
+        let validPosition = false;
+        while(!validPosition) {
+          let openCount = 0;
+          const neighbors = level.tiles.getNeighbors(upPos)!;
+          for (const nPos of neighbors) {
+            const n = level.tiles.get(nPos)!;
+            if (n.walkable) {
+              openCount++;
+              if (openCount > 2) {
+                validPosition = true;
+                break; 
+              }
+            }
+          }
+          if (!validPosition) {
+            upPos = randomOpenTile(this.game.rng, level);
+          }
+        }
+        const tile = randomTileShading(this.game.rng, { ...Tile.UpStairs});
+        tile.destination = { area: area.id, level: i - 1};
+        level.tiles.set(upPos, tile);
+        console.log(`${area.id}.${level.id} ${tile.type} = ${JSON.stringify(upPos)} to ${tile.destination.area}.${tile.destination.level}`)
+        // place down stairs on any level that isn't the bottom
+        if (i + 1 < area.levels.length) {
+          let pos = randomOpenTile(this.game.rng, level);
+          while(!isReachable(level, upPos, pos)) {
+            pos = randomOpenTile(this.game.rng, level);
+          }
+          const downTile = randomTileShading(this.game.rng, { ...Tile.DownStairs});
+          downTile.destination = { area: area.id, level: i + 1};
+          level.tiles.set(pos, downTile);
+          console.log(`${area.id}.${level.id} ${downTile.type} = ${JSON.stringify(pos)} to ${downTile.destination.area}.${downTile.destination.level}`)
+        }  
+      }
+    }
+  }
+
+
+
+  findStairPosition(level: Level, type: string): Vector2 | undefined {
+    for (let x = 0; x < level.width; x++) {
+      for (let y = 0; y < level.height; y++) {
+        const position = {x, y};
+        const tile = level.tiles.get(position)!;
+        if (tile.type === type) {
+          return position;
+        }
+      }
+    }
+    return undefined;
   }
 
   placePlayer(level: Level, stairs?: Vector2) {
@@ -165,34 +247,34 @@ export class ProcGenManager extends Manager {
     }
   }
 
-  generateEntities(level: Level, previousLevel?: Level, nextLevel?: Level) {
+  generateEntities(level: Level) {
     for (const _ of range(0, this.game.rng.nextInt(3, 10))) {
       this.game.mapIndexingSystem.update();
       const rat: Entity = JSON.parse(JSON.stringify(Prefabs.Rat));
       rat.id = nanoid();
-      rat.position = randomOpenTile(level);
+      rat.position = randomOpenTile(this.game.rng, level);
       this.game.ecs.addEntity(rat);
     }
     for (const _ of range(0, this.game.rng.nextInt(1, 2))) {
       this.game.mapIndexingSystem.update();
       const ooze: Entity = JSON.parse(JSON.stringify(Prefabs.Ooze));
       ooze.id = nanoid();
-      ooze.position = randomOpenTile(level);
+      ooze.position = randomOpenTile(this.game.rng, level);
       this.game.ecs.addEntity(ooze);
     }
-    if (nextLevel) {
-      // if there's a place to go down to, put some stairs
-      const downstairs: Entity = JSON.parse(JSON.stringify(Prefabs.DownStairs));
-      downstairs.travelable = { destArea: 0, destLevel: nextLevel.id };
-      downstairs.position = randomOpenTile(level);
-      this.game.ecs.addEntity(downstairs);
-    }
-    if (previousLevel) {
-      // if there's a place to go up to, put some stairs
-      const upstairs: Entity = JSON.parse(JSON.stringify(Prefabs.UpStairs));
-      upstairs.travelable = { destArea: 0, destLevel: previousLevel.id };
-      upstairs.position = randomOpenTile(level);
-      this.game.ecs.addEntity(upstairs);
-    }
+    // if (nextLevel) {
+    //   // if there's a place to go down to, put some stairs
+    //   const downstairs: Tile = { ...Tile.DownStairs };
+    //   downstairs.destination = { destArea: 0, destLevel: nextLevel.id };
+    //   constposition = randomOpenTile(level);
+    //   this.game.ecs.addEntity(downstairs);
+    // }
+    // if (previousLevel) {
+    //   // if there's a place to go up to, put some stairs
+    //   const upstairs: Entity = JSON.parse(JSON.stringify(Prefabs.UpStairs));
+    //   upstairs.travelable = { destArea: 0, destLevel: previousLevel.id };
+    //   upstairs.position = randomOpenTile(level);
+    //   this.game.ecs.addEntity(upstairs);
+    // }
   }
 }

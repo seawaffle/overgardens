@@ -1,5 +1,6 @@
 import { CharCode, Color } from "malwoden";
 import { Palette } from ".";
+import { Destination } from "../components";
 
 export class Tile {
   constructor(
@@ -11,6 +12,7 @@ export class Tile {
     public bg_color_dark: Color,
     public walkable: boolean,
     public transparent: boolean,
+    public destination?: Destination
   ) {}
 
   static Nothing = new Tile(
@@ -102,5 +104,25 @@ export class Tile {
     Palette.KaitokeGreen,
     false,
     false,
+  );
+  static UpStairs = new Tile(
+    "up stairs",
+    CharCode.lessThan,
+    Palette.Ebony,
+    Palette.Ebony,
+    Palette.Submarine,
+    Palette.William,
+    true,
+    true,
+  );
+  static DownStairs = new Tile(
+    "down stairs",
+    CharCode.greaterThan,
+    Palette.Ebony,
+    Palette.Ebony,
+    Palette.Submarine,
+    Palette.William,
+    true,
+    true,
   );
 }

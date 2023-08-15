@@ -1,4 +1,4 @@
-import { Color, Rand, Struct, Vector2 } from "malwoden";
+import { Color, Pathfinding, Rand, Struct, Vector2 } from "malwoden";
 import { Noise } from "rot-js";
 import { Level, Tile } from "./data";
 import { ColorTranslator } from "colortranslator";
@@ -83,7 +83,7 @@ export function reshape(e: number, d: number) {
 
 export function findOpenGround(level: Level, edge?: string) {
   const mapCenter = { x: level.width / 2, y: level.height / 2 };
-  let position = { x: 0, y: 0 };
+  let position: Vector2 | undefined = undefined
   switch (edge) {
     case "north": {
       for (let y = 0; y < level.height; y++) {
@@ -126,36 +126,58 @@ export function findOpenGround(level: Level, edge?: string) {
       break;
     }
     default: {
-      const coords: Vector2[] = [];
-      const badCoords: Vector2[] = [];
-      coords.push(mapCenter);
-      while (coords.length > 0) {
-        const coord = coords.pop()!;
-        if (!level.isBlocked(coord)) {
-          position = coord;
-          break;
-        } else {
-          for (const c of level.tiles.getNeighbors(coord)) {
-            if (!badCoords.includes(c)) {
-              coords.push(c);
-            }
-          }
-        }
-      }
+      position = findOpenNearCoord(level, mapCenter);
       break;
     }
   }
   return position;
 }
 
-export function randomOpenTile(level: Level): Vector2 {
-  const rng = new Rand.AleaRNG();
+export function isReachable(level: Level, start: Vector2, pos: Vector2): boolean {
+  const astar = new Pathfinding.AStar({
+    topology: "eight",
+    isBlockedCallback: (p) => {
+      // if (p === destination) return false;
+      return !level.tiles.get(p)!.walkable;
+    },
+  });
+  const path = astar.compute(start, pos);
+  return path !== undefined && path.length > 1;
+}
+
+export function findOpenNearCoord(level: Level, pos: Vector2) {
+  const coords: Vector2[] = [];
+  const badCoords: Vector2[] = [];
+  let position: Vector2 | undefined = undefined;
+  coords.push(pos);
+  while (coords.length > 0) {
+    const coord = coords.pop();
+    if (!coord || coord.x < 0 || coord.x > level.width || coord.y < 0 || coord.y > level.height) {
+      continue;
+    }
+    if (!level.isBlocked(coord)) {
+      position = coord;
+      break;
+    } else {
+      badCoords.push(coord);
+      for (const c of level.tiles.getNeighbors(coord)) {
+        if (!badCoords.includes(c)) {
+          coords.push(c);
+        }
+      }
+    }
+  }
+  return position;
+}
+
+export function randomOpenTile(rng: Rand.AleaRNG, level: Level): Vector2 {
   while (true) {
     const pos = {
       x: rng.nextInt(0, level.width),
       y: rng.nextInt(0, level.height),
     };
-    if (!level.isBlocked(pos)) {
+    const tile = level.tiles.get(pos);
+    if (!level.isBlocked(pos) && tile!.walkable) {
       return pos;
     }
   }
