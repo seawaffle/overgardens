@@ -117,7 +117,7 @@ export class ProcGenManager extends Manager {
       floorValue: 0,
       rng: this.game.rng,
     })
-    builder.randomize(0.5);
+    builder.randomize(this.game.rng.next(0.5, 0.85));
     builder.doSimulationStep(3);
     builder.connect(0);
     const map = builder.getMap();
@@ -154,7 +154,7 @@ export class ProcGenManager extends Manager {
             tile = randomTileShading(this.game.rng, { ...Tile.Sky });
           }
         } else {
-          if (noise > 0.8) {
+          if (noise > 0.9) {
             genTile = 0;
           }
           tile = randomTileShading(this.game.rng, genTile === 0 ? { ...Tile.Floor} : { ...Tile.Wall});

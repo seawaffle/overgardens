@@ -74,7 +74,7 @@ export class DijkstraMap {
     } 
     
     let next = this.start;
-    let cost = this.computed.get(`${this.start.x},${this.start.y}`)!.cost;
+    let cost = 1;
     const neighbors = this.getNeighbors(this.start);
     let first = true;
     for (const n of neighbors) {

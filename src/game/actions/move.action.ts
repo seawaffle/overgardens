@@ -53,7 +53,6 @@ export function approach(game: Game, entity: Entity, destination: Vector2) {
   const astar = new Pathfinding.AStar({
     topology: "eight",
     isBlockedCallback: (p) => {
-      // if (p === destination) return false;
       return !level.tiles.get(p)!.walkable;
     },
   });
@@ -78,13 +77,47 @@ export function flee(game: Game, entity: Entity, target: Vector2) {
     flee: true,
     isBlockedCallback: (p) => {
       const tile = level.tiles.get(p)!;
-      // if (p === destination) return false;
       return !tile.walkable;
     },
   });
   djikstraMap.add(target, 100, true)
   const next = djikstraMap.compute();
   if (next) {
+    tryMoveEntity(game, entity, next, true);
+  }
+}
+
+export function autoExplore(game: Game, entity: Entity) {
+  if (!entity) return;
+  if (!entity.position) {
+    console.warn("Attempted to move an entity without position");
+    return;
+  }
+  const level = game.map.getCurrentLevel();
+  if (!level) return;
+  const pos = entity.position;
+  const djikstraMap = new DijkstraMap({
+    start: pos,
+    topology: "eight",
+    isBlockedCallback: (p) => {
+      const tile = level.tiles.get(p)!;
+      return !tile || !tile.walkable;
+    },
+  });
+  const targets: Vector2[] = [];
+  for (let x = 0; x < level.width; x++) {
+    for (let y = 0; y < level.height; y++) {
+      if (level.exploredTiles.get({x, y}) === false) {
+        targets.push({x, y});
+      }
+    }
+  }
+  if (targets.length === 0) { return; }
+  for (const t of targets) {
+    djikstraMap.add(t, 0, true)
+  }
+  const next = djikstraMap.compute();
+  if (next && next !== pos) {
     tryMoveEntity(game, entity, next, true);
   }
 }
