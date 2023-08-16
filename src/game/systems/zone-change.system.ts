@@ -7,7 +7,6 @@ import { Game } from "../game";
 export class ZoneChangeSystem extends System {
   hereQuery: Query<With<Entity, "position">>;
   nextQuery: Query<With<Entity, "outOfLevel">>;
-  
 
   constructor(game: Game) {
     super(game);
@@ -34,8 +33,15 @@ export class ZoneChangeSystem extends System {
     this.unfreezeEntities(dest.area, dest.level);
     player.destination = undefined;
     const newLevel = this.game.map.getCurrentLevel()!;
-    const stairPosition = this.game.procgen.findStairPosition(newLevel, upOrDown);
-    console.log(`Moving to area: ${dest.area}.${dest.level}. Stair position: ${JSON.stringify(stairPosition)}`)
+    const stairPosition = this.game.procgen.findStairPosition(
+      newLevel,
+      upOrDown,
+    );
+    console.log(
+      `Moving to area: ${dest.area}.${
+        dest.level
+      }. Stair position: ${JSON.stringify(stairPosition)}`,
+    );
     this.game.procgen.placePlayer(newLevel, stairPosition);
     player.viewshed!.dirty = true;
     this.game.gameState.setState(GameState.AwaitingInput);

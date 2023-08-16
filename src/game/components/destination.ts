@@ -1,4 +1,4 @@
 export interface Destination {
-    area: number;
-    level: number;
+  area: number;
+  level: number;
 }

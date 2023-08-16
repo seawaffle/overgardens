@@ -83,7 +83,7 @@ export function reshape(e: number, d: number) {
 
 export function findOpenGround(level: Level, edge?: string) {
   const mapCenter = { x: level.width / 2, y: level.height / 2 };
-  let position: Vector2 | undefined = undefined
+  let position: Vector2 | undefined = undefined;
   switch (edge) {
     case "north": {
       for (let y = 0; y < level.height; y++) {
@@ -133,7 +133,11 @@ export function findOpenGround(level: Level, edge?: string) {
   return position;
 }
 
-export function isReachable(level: Level, start: Vector2, pos: Vector2): boolean {
+export function isReachable(
+  level: Level,
+  start: Vector2,
+  pos: Vector2,
+): boolean {
   const astar = new Pathfinding.AStar({
     topology: "eight",
     isBlockedCallback: (p) => {
@@ -152,7 +156,13 @@ export function findOpenNearCoord(level: Level, pos: Vector2) {
   coords.push(pos);
   while (coords.length > 0) {
     const coord = coords.pop();
-    if (!coord || coord.x < 0 || coord.x > level.width || coord.y < 0 || coord.y > level.height) {
+    if (
+      !coord ||
+      coord.x < 0 ||
+      coord.x > level.width ||
+      coord.y < 0 ||
+      coord.y > level.height
+    ) {
       continue;
     }
     if (!level.isBlocked(coord)) {

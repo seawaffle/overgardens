@@ -33,8 +33,8 @@ export class MapManager extends Manager {
         for (const t of level.tiles.items) {
           t.bg_color_dark = this.deserializeColor(t.bg_color_dark);
           t.bg_color_light = this.deserializeColor(t.bg_color_light);
-          t.fg_color_dark = this.deserializeColor(t.fg_color_dark)
-          t.fg_color_light = this.deserializeColor(t.fg_color_light)
+          t.fg_color_dark = this.deserializeColor(t.fg_color_dark);
+          t.fg_color_light = this.deserializeColor(t.fg_color_light);
         }
         level.blockedTiles.items = l.blockedTiles.items;
         level.exploredTiles.items = l.exploredTiles.items;
@@ -62,7 +62,7 @@ export class MapManager extends Manager {
     return new Color(color.r, color.g, color.b);
   }
 
-  getCurrentArea(): Area | undefined{
+  getCurrentArea(): Area | undefined {
     if (this.map) {
       return this.map.getCurrentArea();
     }

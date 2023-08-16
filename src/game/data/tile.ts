@@ -12,7 +12,7 @@ export class Tile {
     public bg_color_dark: Color,
     public walkable: boolean,
     public transparent: boolean,
-    public destination?: Destination
+    public destination?: Destination,
   ) {}
 
   static Nothing = new Tile(

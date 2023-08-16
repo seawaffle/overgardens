@@ -140,10 +140,7 @@ export class RenderSystem extends System {
     const level = this.game.map.getCurrentLevel();
     if (level) {
       for (const { position, renderable } of this.renderQuery) {
-        if (
-          level.visibleTiles.get(position) &&
-          this.isInCamera(position)
-        ) {
+        if (level.visibleTiles.get(position) && this.isInCamera(position)) {
           const tile = level.tiles.get(position);
           const pos = this.transformToCameraCoords(position);
           let fg = Palette.GreyNurse;

@@ -80,7 +80,7 @@ export function flee(game: Game, entity: Entity, target: Vector2) {
       return !tile.walkable;
     },
   });
-  djikstraMap.add(target, 100, true)
+  djikstraMap.add(target, 100, true);
   const next = djikstraMap.compute();
   if (next) {
     tryMoveEntity(game, entity, next, true);
@@ -107,14 +107,16 @@ export function autoExplore(game: Game, entity: Entity) {
   const targets: Vector2[] = [];
   for (let x = 0; x < level.width; x++) {
     for (let y = 0; y < level.height; y++) {
-      if (level.exploredTiles.get({x, y}) === false) {
-        targets.push({x, y});
+      if (level.exploredTiles.get({ x, y }) === false) {
+        targets.push({ x, y });
       }
     }
   }
-  if (targets.length === 0) { return; }
+  if (targets.length === 0) {
+    return;
+  }
   for (const t of targets) {
-    djikstraMap.add(t, 0, true)
+    djikstraMap.add(t, 0, true);
   }
   const next = djikstraMap.compute();
   if (next && next !== pos) {

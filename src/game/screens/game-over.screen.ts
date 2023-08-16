@@ -59,7 +59,9 @@ export class GameOverScreen extends Screen {
       },
     }).setParent(panelWidget);
     const buttonText = "[Q]uit to Main Menu";
-    const buttonX = Math.round(GameOverScreen.WIDTH / 2 - buttonText.length / 2);
+    const buttonX = Math.round(
+      GameOverScreen.WIDTH / 2 - buttonText.length / 2,
+    );
     new GUI.ButtonWidget({
       origin: { x: buttonX, y: 8 },
       initialState: {

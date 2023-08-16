@@ -22,7 +22,6 @@ export class Map {
     const area = this.getCurrentArea();
     return area.levels[area.currentLevel];
   }
-
 }
 
 export class Area {
