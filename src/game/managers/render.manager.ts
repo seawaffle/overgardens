@@ -1,6 +1,7 @@
 import { Glyph, Terminal, Vector2 } from "malwoden";
 import { Game } from "../game";
 import { Manager } from "./manager";
+import { GameState } from "../data";
 
 export class RenderManager extends Manager {
   terminal: Terminal.RetroTerminal;
@@ -40,5 +41,46 @@ export class RenderManager extends Manager {
 
   draw(pos: Vector2, glyph: Glyph) {
     this.terminal.drawGlyph(pos, glyph);
+  }
+
+  getViewportCorner(): Vector2 {
+    let target: Vector2;
+    if (
+      this.game.gameState.state === GameState.Examine &&
+      this.game.examinePosition
+    ) {
+      target = this.game.examinePosition;
+    } else if (this.game.player) {
+      target = this.game.player.position!;
+    } else {
+      target = { x: 0, y: 0 };
+    }
+    const x = target.x - this.viewportWidth / 2;
+    const y = target.y - this.viewportHeight / 2;
+    return { x, y };
+  }
+
+  isInViewport(pos: Vector2) {
+    const corner = this.getViewportCorner();
+    return (
+      pos.x >= corner.x &&
+      pos.x < corner.x + this.viewportWidth &&
+      pos.y >= corner.y &&
+      pos.y < corner.y + this.viewportHeight
+    );
+  }
+
+  convertViewportToAbsolute(pos: Vector2) {
+    const corner = this.getViewportCorner();
+    return { x: pos.x + corner.x, y: pos.y + corner.y };
+  }
+
+  convertAbsoluteToViewport(pos: Vector2) {
+    const corner = this.getViewportCorner();
+    return { x: pos.x - corner.x, y: pos.y - corner.y };
+  }
+
+  convertMouseToMapPosition(pos: Vector2): Vector2 {
+    return this.convertViewportToAbsolute(this.terminal.windowToTilePoint(pos));
   }
 }

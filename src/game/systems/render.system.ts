@@ -1,4 +1,4 @@
-import { Glyph, Vector2 } from "malwoden";
+import { Glyph } from "malwoden";
 import { System } from "./system";
 import { Game } from "../game";
 import { Query, With } from "miniplex";
@@ -51,57 +51,14 @@ export class RenderSystem extends System {
     this.renderScreens();
   }
 
-  getCameraCorner(width: number, height: number): Vector2 {
-    let target: Vector2;
-    if (
-      this.game.gameState.state === GameState.Examine &&
-      this.game.examinePosition
-    ) {
-      target = this.game.examinePosition;
-    } else if (this.game.player) {
-      target = this.game.player.position!;
-    } else {
-      target = { x: 0, y: 0 };
-    }
-    const x = target.x - width / 2;
-    const y = target.y - height / 2;
-    return { x, y };
-  }
-
-  isInCamera(pos: Vector2) {
-    const cameraCorner = this.getCameraCorner(
-      this.screenWidth,
-      this.screenHeight,
-    );
-    return (
-      pos.x >= cameraCorner.x &&
-      pos.x < cameraCorner.x + this.screenWidth &&
-      pos.y >= cameraCorner.y &&
-      pos.y < cameraCorner.y + this.screenHeight
-    );
-  }
-
-  transformToCameraCoords(pos: Vector2) {
-    const cameraCorner = this.getCameraCorner(
-      this.screenWidth,
-      this.screenHeight,
-    );
-    return { x: pos.x - cameraCorner.x, y: pos.y - cameraCorner.y };
-  }
-
   renderTiles() {
     const level = this.game.map.getCurrentLevel();
-    const cameraCorner = this.getCameraCorner(
-      this.screenWidth,
-      this.screenHeight,
-    );
     if (level) {
       const blank = Tile.Nothing.bg_color_dark;
-      // const bg_blank = Tile.Nothing.bg_color_dark;
       for (let x = 0; x < this.screenWidth; x++) {
         for (let y = 0; y < this.screenHeight; y++) {
           const displayPos = { x, y };
-          const mapPos = { x: cameraCorner.x + x, y: cameraCorner.y + y };
+          const mapPos = this.game.render.convertViewportToAbsolute(displayPos);
           const explored = level.exploredTiles.get(mapPos)!;
           const visible = level.visibleTiles.get(mapPos)!;
           const tile = level.tiles.get(mapPos) || Tile.Nothing;
@@ -111,7 +68,6 @@ export class RenderSystem extends System {
           const bg_colorDark = tile.bg_color_dark;
           let fg = blank;
           let bg = blank;
-          // let bg = bg_blank;
           if (visible) {
             fg = fg_colorLight;
             bg = bg_colorLight;
@@ -140,9 +96,12 @@ export class RenderSystem extends System {
     const level = this.game.map.getCurrentLevel();
     if (level) {
       for (const { position, renderable } of this.renderQuery) {
-        if (level.visibleTiles.get(position) && this.isInCamera(position)) {
+        if (
+          level.visibleTiles.get(position) &&
+          this.game.render.isInViewport(position)
+        ) {
           const tile = level.tiles.get(position);
-          const pos = this.transformToCameraCoords(position);
+          const pos = this.game.render.convertAbsoluteToViewport(position);
           let fg = Palette.GreyNurse;
           let bg = tile ? tile.bg_color_light : Palette.Ebony;
           if (renderable.glyph.fg) {

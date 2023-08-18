@@ -77,7 +77,6 @@ export class Game {
     // We'll put more code here later
     // For now, let's just write to the terminal every frame
     this.render.clear();
-    this.input.update();
     this.updateSystems();
     this.render.render();
   }
@@ -113,7 +112,6 @@ export class Game {
     this.map.generateMap();
     this.log.clearLogs();
     this.gameState.setState(GameState.AwaitingInput);
-    this.input.update();
     this.player!.viewshed!.dirty = true;
     this.mapIndexingSystem = new MapIndexingSystem(this);
     this.visibilitySystem = new VisibilitySystem(this);
@@ -146,7 +144,6 @@ export class Game {
     this.aiSystem = new AISystem(this);
     this.damageSystem = new DamageSystem(this);
     this.deathSystem = new DeathSystem(this);
-    this.input.update();
     this.updateSystems();
     this.render.render();
   }

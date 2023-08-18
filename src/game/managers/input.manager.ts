@@ -1,7 +1,7 @@
 import { Input } from "malwoden";
 import { Manager } from "./manager";
 import { Game } from "../game";
-import { GameState } from "../data";
+import { GameState, StateListener } from "../data";
 import {
   AdventureContext,
   InventoryContext,
@@ -10,29 +10,25 @@ import {
   EscapeContext,
   ExamineContext,
   GameOverContext,
+  AdventureMouseContext,
 } from "../input";
 
-export class InputManager extends Manager {
+export class InputManager extends Manager implements StateListener {
   keyboardHandler: Input.KeyboardHandler;
   mouseContext: Input.MouseContext;
   mouseHandler: Input.MouseHandler;
-  currentState: GameState;
 
   constructor(game: Game) {
     super(game);
 
+    this.game.gameState.registerListener(this);
+
     this.keyboardHandler = new Input.KeyboardHandler();
     this.mouseContext = new Input.MouseContext();
     this.mouseHandler = new Input.MouseHandler().setContext(this.mouseContext);
-    this.currentState = GameState.Init;
   }
-
-  update() {
-    const newState = this.game.gameState.state;
-    if (newState === this.currentState) {
-      return;
-    }
-    switch (newState) {
+  notify(state: GameState): void {
+    switch (state) {
       case GameState.MainMenu: {
         this.keyboardHandler.setContext(new MainMenuContext(this.game));
         break;
@@ -59,8 +55,8 @@ export class InputManager extends Manager {
       }
       default: {
         this.keyboardHandler.setContext(new AdventureContext(this.game));
+        this.mouseHandler.setContext(new AdventureMouseContext(this.game));
       }
     }
-    this.currentState = newState;
   }
 }
