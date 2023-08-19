@@ -18,5 +18,6 @@ export function saveGame(game: Game) {
 }
 
 export function gameOver(game: Game) {
+  game.quitGame();
   game.gameState.setState(GameState.MainMenu);
 }

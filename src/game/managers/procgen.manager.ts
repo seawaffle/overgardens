@@ -16,20 +16,33 @@ import { Area, Level, Map, Tile } from "../data";
 import { MusicManager } from "./music.manager";
 import { CharCode, Generation, Vector2 } from "malwoden";
 import { Entity } from "../components";
+import { StringGenerator } from "rot-js";
+import NameData from "../prefabs/names.json";
 
 export class ProcGenManager extends Manager {
   readonly AREA_NUMBER = 10;
   readonly MAX_LEVELS = 7;
   readonly MIN_LEVELS = 4;
+  stringGen: StringGenerator
 
   constructor(game: Game) {
     super(game);
+
+    this.stringGen = new StringGenerator({});
+    for (const name of NameData) {
+      this.stringGen.observe(name);
+    }
+    console.log(this.stringGen.getStats());
   }
 
   generate() {
     this.generateMap();
     this.game.mapIndexingSystem.update();
     this.game.ecs.world.clear();
+  }
+
+  generateName() {
+    return this.stringGen.generate();
   }
 
   generateMap(): Map {
@@ -282,6 +295,9 @@ export class ProcGenManager extends Manager {
     } else {
       const player = { ...Prefabs.Player };
       player.id = nanoid();
+      const name = this.generateName();
+      player.name = name[0].toUpperCase() + name.slice(1);
+      console.log(player.name);
       player.position = findOpenGround(level, "south");
       this.game.player = this.game.ecs.addEntity(player);
     }

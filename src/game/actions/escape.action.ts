@@ -22,5 +22,6 @@ export function quitToMainMenu(game: Game) {
     return;
   }
 
+  game.quitGame();
   game.gameState.setState(GameState.MainMenu);
 }

@@ -130,6 +130,12 @@ export class Game {
     return data;
   }
 
+  quitGame() {
+    this.gameId = "";
+    this.ecs.world.clear();
+    this.player = undefined;
+  }
+
   loadSaveData(data: Record<string, any>) {
     this.gameId = data.gameId;
     this.ecs.reset(data.entities);
