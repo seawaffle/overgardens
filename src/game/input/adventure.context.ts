@@ -8,11 +8,11 @@ export class AdventureContext extends Input.KeyboardContext {
     super();
 
     this.onAnyDown((keyEvent) => {
+      // if an extended action is happening, pressing a key should end it
+      if (this.game.extendedActionSystem.hasAction()) {
+        this.game.extendedActionSystem.endAction();
+      }
       if (this.game.gameState.state === GameState.AwaitingInput) {
-        // if an extended action is happening, pressing a key should end it
-        if (this.game.extendedActionSystem.hasAction()) {
-          this.game.extendedActionSystem.endAction();
-        }
         switch (keyEvent.key) {
           case Input.KeyCode.Numpad4:
           case Input.KeyCode.LeftArrow: {

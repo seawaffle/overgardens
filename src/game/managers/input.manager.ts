@@ -11,6 +11,7 @@ import {
   ExamineContext,
   GameOverContext,
   AdventureMouseContext,
+  ExamineMouseContext,
 } from "../input";
 
 export class InputManager extends Manager implements StateListener {
@@ -47,6 +48,7 @@ export class InputManager extends Manager implements StateListener {
       }
       case GameState.Examine: {
         this.keyboardHandler.setContext(new ExamineContext(this.game));
+        this.mouseHandler.setContext(new ExamineMouseContext(this.game));
         break;
       }
       case GameState.GameOver: {
