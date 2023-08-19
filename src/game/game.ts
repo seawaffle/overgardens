@@ -17,6 +17,7 @@ import {
   DamageSystem,
   DeathSystem,
   ZoneChangeSystem,
+  ExtendedActionSystem,
 } from "./systems";
 import { Entity } from "./components";
 import { GameState } from "./data";
@@ -43,12 +44,13 @@ export class Game {
   deathSystem: DeathSystem;
   aiSystem: AISystem;
   zoneChangeSystem: ZoneChangeSystem;
+  extendedActionSystem: ExtendedActionSystem;
   player: Entity | undefined;
   rng: Rand.AleaRNG;
   fpsTicks: number[] = [];
   avgFps: number = 0;
   examinePosition: Vector2 = { x: -1, y: -1 };
-
+  
   constructor(id?: string) {
     this.gameId = id || Date.now().toString();
     this.rng = new Rand.AleaRNG(this.gameId);
@@ -69,13 +71,12 @@ export class Game {
     this.damageSystem = new DamageSystem(this);
     this.deathSystem = new DeathSystem(this);
     this.zoneChangeSystem = new ZoneChangeSystem(this);
+    this.extendedActionSystem = new ExtendedActionSystem(this);
     this.player = undefined;
     this.gameState.setState(GameState.MainMenu);
   }
 
   tick(_delta: number, _time: number) {
-    // We'll put more code here later
-    // For now, let's just write to the terminal every frame
     this.render.clear();
     this.updateSystems();
     this.render.render();
@@ -86,6 +87,7 @@ export class Game {
     this.visibilitySystem.update();
     this.initiativeSystem.update();
     this.aiSystem.update();
+    this.extendedActionSystem.update();
     this.damageSystem.update();
     this.deathSystem.update();
     this.zoneChangeSystem.update();

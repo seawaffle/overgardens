@@ -11,7 +11,7 @@ export class AdventureMouseContext extends Input.MouseContext {
         x: mouseEvent.x,
         y: mouseEvent.y,
       });
-      Actions.tryMoveEntity(this.game, this.game.player, mapPos, true);
+      this.game.extendedActionSystem.setAction(Actions.approach, [this.game, this.game.player, mapPos]);
     });
   }
 }

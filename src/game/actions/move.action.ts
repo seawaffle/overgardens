@@ -121,5 +121,9 @@ export function autoExplore(game: Game, entity: Entity) {
   const next = djikstraMap.compute();
   if (next && next !== pos) {
     tryMoveEntity(game, entity, next, true);
+
+    game.extendedActionSystem.setAction(autoExplore, [game, entity])
+  } else {
+    game.extendedActionSystem.endAction();
   }
 }
