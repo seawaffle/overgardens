@@ -23,7 +23,7 @@ export class ProcGenManager extends Manager {
   readonly AREA_NUMBER = 10;
   readonly MAX_LEVELS = 7;
   readonly MIN_LEVELS = 4;
-  stringGen: StringGenerator
+  stringGen: StringGenerator;
 
   constructor(game: Game) {
     super(game);

@@ -50,7 +50,7 @@ export class Game {
   fpsTicks: number[] = [];
   avgFps: number = 0;
   examinePosition: Vector2 = { x: -1, y: -1 };
-  
+
   constructor(id?: string) {
     this.gameId = id || Date.now().toString();
     this.rng = new Rand.AleaRNG(this.gameId);

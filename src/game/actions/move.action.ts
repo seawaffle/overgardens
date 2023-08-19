@@ -122,7 +122,7 @@ export function autoExplore(game: Game, entity: Entity) {
   if (next && next !== pos) {
     tryMoveEntity(game, entity, next, true);
 
-    game.extendedActionSystem.setAction(autoExplore, [game, entity])
+    game.extendedActionSystem.setAction(autoExplore, [game, entity]);
   } else {
     game.extendedActionSystem.endAction();
   }
