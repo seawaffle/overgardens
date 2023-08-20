@@ -2,6 +2,7 @@ import { GUI } from "malwoden";
 import { Screen } from "./screen";
 import { Game } from "../game";
 import { Palette } from "../data";
+import * as Actions from "../actions";
 
 export class HUDScreen extends Screen {
   static HUD_HEIGHT = 10;
@@ -47,6 +48,19 @@ export class HUDScreen extends Screen {
         return { text };
       })
       .setParent(panelWidget);
+    // menu button
+    new GUI.ButtonWidget({
+      origin: { x: hudWidth - 2, y: 0 },
+      initialState: {
+        backColor: Palette.Ebony,
+        foreColor: Palette.GreyNurse,
+        hoverColor: Palette.Atomic,
+        onClick: () => {
+          Actions.openContextMenu(this.game);
+        },
+        text: "≡",
+      }
+    }).setParent(panelWidget);
     // hp
     new GUI.TextWidget({
       origin: { x: 1, y: 2 },

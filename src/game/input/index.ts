@@ -7,3 +7,4 @@ export * from "./examine.context";
 export * from "./game-over.context";
 export * from "./adventure.mouse.context";
 export * from "./examine.mouse.context";
+export * from "./context-menu.context";

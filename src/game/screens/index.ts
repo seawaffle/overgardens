@@ -6,3 +6,4 @@ export * from "./screen";
 export * from "./hud.screen";
 export * from "./log.screen";
 export * from "./game-over.screen";
+export * from "./context-menu.screen";

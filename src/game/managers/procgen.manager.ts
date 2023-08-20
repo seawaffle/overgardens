@@ -23,6 +23,7 @@ export class ProcGenManager extends Manager {
   readonly MAX_LEVELS = 7;
   readonly MIN_LEVELS = 4;
   stringGen: StringGenerator;
+  readonly MAX_NAME_SIZE = 9;
 
   constructor(game: Game) {
     super(game);
@@ -40,8 +41,9 @@ export class ProcGenManager extends Manager {
     this.game.ecs.world.clear();
   }
 
-  generateName() {
-    return this.stringGen.generate();
+  generateName(): string {
+    const name = this.stringGen.generate();
+    return name.length <= this.MAX_NAME_SIZE ? name : this.generateName();
   }
 
   generateMap(): Map {

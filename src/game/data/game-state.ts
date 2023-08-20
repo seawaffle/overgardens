@@ -9,4 +9,5 @@ export enum GameState {
   Examine,
   GameOver,
   ZoneChange,
+  ContextMenu,
 }
