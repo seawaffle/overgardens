@@ -54,6 +54,7 @@ export class MapManager extends Manager {
     const currentArea = this.map!.getCurrentArea()!;
     if (currentArea.levels.length > level) {
       currentArea.currentLevel = level;
+      this.game.music.generate();
     }
   }
 

@@ -23,6 +23,7 @@ import { Entity } from "./components";
 import { GameState } from "./data";
 import { Rand, Vector2 } from "malwoden";
 import { FactionManager } from "./managers/faction.manager";
+import { MusicManager } from "./managers/music.manager";
 
 export class Game {
   lastTime = performance.now(); // We add a field to keep track of the last time the loop ran
@@ -35,6 +36,7 @@ export class Game {
   render: RenderManager;
   database: DatabaseManager;
   log: LogManager;
+  music: MusicManager;
   faction: FactionManager;
   renderSystem: RenderSystem;
   visibilitySystem: VisibilitySystem;
@@ -62,6 +64,7 @@ export class Game {
     this.database = new DatabaseManager(this);
     this.procgen = new ProcGenManager(this);
     this.log = new LogManager(this);
+    this.music = new MusicManager(this);
     this.faction = new FactionManager(this);
     this.renderSystem = new RenderSystem(this);
     this.visibilitySystem = new VisibilitySystem(this);
@@ -108,7 +111,7 @@ export class Game {
     window.requestAnimationFrame(this.run.bind(this));
   }
 
-  startNewGame(seed?: string) {
+  async startNewGame(seed?: string) {
     this.gameId = seed || Date.now.toString();
     this.rng = new Rand.AleaRNG(this.gameId);
     this.map.generateMap();
@@ -118,6 +121,8 @@ export class Game {
     this.mapIndexingSystem = new MapIndexingSystem(this);
     this.visibilitySystem = new VisibilitySystem(this);
     this.renderSystem = new RenderSystem(this);
+    await this.music.startAudio();
+    this.music.generate();
     this.updateSystems();
     this.render.render();
   }
@@ -138,7 +143,7 @@ export class Game {
     this.player = undefined;
   }
 
-  loadSaveData(data: Record<string, any>) {
+  async loadSaveData(data: Record<string, any>) {
     this.gameId = data.gameId;
     this.ecs.reset(data.entities);
     this.player = this.ecs.world.with("player").first;
@@ -152,6 +157,8 @@ export class Game {
     this.aiSystem = new AISystem(this);
     this.damageSystem = new DamageSystem(this);
     this.deathSystem = new DeathSystem(this);
+    await this.music.startAudio();
+    this.music.generate();
     this.updateSystems();
     this.render.render();
   }

@@ -13,7 +13,6 @@ import { Manager } from "./manager";
 import * as Prefabs from "../prefabs";
 import { nanoid } from "nanoid";
 import { Area, Level, Map, Tile } from "../data";
-import { MusicManager } from "./music.manager";
 import { CharCode, Generation, Vector2 } from "malwoden";
 import { Entity } from "../components";
 import { StringGenerator } from "rot-js";
@@ -58,7 +57,7 @@ export class ProcGenManager extends Manager {
       this.game.map.areaWidth,
       this.game.map.areaHeight,
     );
-    area.rootNote = MusicManager.getRandomRoot();
+    area.rootNote = this.game.music.getRandomRoot();
     const levelCount = this.game.rng.nextInt(this.MIN_LEVELS, this.MAX_LEVELS);
     console.log(`generating ${levelCount} levels`);
     for (const i of range(0, levelCount)) {
@@ -81,7 +80,7 @@ export class ProcGenManager extends Manager {
       this.game.map.areaHeight,
     );
     level.rootNote = rootNote;
-    level.mode = MusicManager.getRandomScale();
+    level.mode = this.game.music.getRandomScale();
     if (previousLevel) {
       this.generateDungeon(level, previousLevel);
     } else {
