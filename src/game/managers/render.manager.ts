@@ -24,7 +24,7 @@ export class RenderManager extends Manager {
     return new Terminal.RetroTerminal({
       width: this.displayWidth,
       height: this.displayHeight,
-      imageURL: "font_16.png",
+      imageURL: "16.png",
       charWidth: this.tileWidth,
       charHeight: this.tileHeight,
       mountNode,

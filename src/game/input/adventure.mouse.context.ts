@@ -15,11 +15,13 @@ export class AdventureMouseContext extends Input.MouseContext {
         x: mouseEvent.x,
         y: mouseEvent.y,
       });
-      this.game.extendedActionSystem.setAction(Actions.approach, [
-        this.game,
-        this.game.player,
-        mapPos,
-      ]);
+      if (this.game.render.isInViewport(mapPos)) {
+        this.game.extendedActionSystem.setAction(Actions.approach, [
+          this.game,
+          this.game.player,
+          mapPos,
+        ]);
+      }
     });
   }
 }

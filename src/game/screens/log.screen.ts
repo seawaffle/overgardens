@@ -3,6 +3,7 @@ import { Screen } from "./screen";
 import { Game } from "../game";
 import { Palette } from "../data";
 import { HUDScreen } from ".";
+import * as Actions from "../actions";
 
 export class LogScreen extends Screen {
   guiContainer: GUI.ContainerWidget;
@@ -33,13 +34,19 @@ export class LogScreen extends Screen {
         foreColor: Palette.GreyNurse,
       },
     }).setParent(container);
-    // unsure about this, maybe at some point?
-    // const expand = new GUI.ButtonWidget({
-    //   origin: { x: logWidth - 1, y: 0 },
-    //   initialState: {
-    //     text: "‼"
-    //   }
-    // }).setParent(panelWidget)
+    // expand to open full log
+    new GUI.ButtonWidget({
+      origin: { x: logWidth - 2, y: 0 },
+      initialState: {
+        text: "‼",
+        backColor: Palette.Ebony,
+        foreColor: Palette.GreyNurse,
+        hoverColor: Palette.Atomic,
+        onClick: () => {
+          Actions.openFullLog(this.game);
+        },
+      },
+    }).setParent(panelWidget);
     const logTextWidth = logWidth - 2;
     new GUI.TextWidget({
       origin: { x: 1, y: 1 },

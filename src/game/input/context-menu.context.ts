@@ -18,9 +18,13 @@ export class ContextMenuContext extends Input.KeyboardContext {
             Actions.openInventory(game);
             break;
           }
+          case Input.KeyCode.L: {
+            Actions.openFullLog(game);
+            break;
+          }
           case Input.KeyCode.ForwardSlash: {
             if (keyEvent.shiftKey) {
-                Actions.openHelp(game);
+              Actions.openHelp(game);
             }
             break;
           }

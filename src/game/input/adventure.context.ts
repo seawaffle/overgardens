@@ -89,6 +89,10 @@ export class AdventureContext extends Input.KeyboardContext {
             Actions.autoExplore(game, game.player!);
             break;
           }
+          case Input.KeyCode.L: {
+            Actions.openFullLog(game);
+            break;
+          }
         }
       }
     });

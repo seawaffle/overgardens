@@ -26,6 +26,9 @@ import { FactionManager } from "./managers/faction.manager";
 import { MusicManager } from "./managers/music.manager";
 
 export class Game {
+  // should music be playing
+  readonly MUSIC = false;
+
   lastTime = performance.now(); // We add a field to keep track of the last time the loop ran
   gameId: string;
   ecs: ECSManager;

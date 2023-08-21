@@ -6,17 +6,30 @@ import { Entity } from "../components";
 import * as Screens from "../screens";
 import { GameState, Palette, Tile } from "../data";
 import { hexToColor } from "../utils";
+import { Screen } from "../screens";
 
 export class RenderSystem extends System {
   renderQuery: Query<With<Entity, "position" | "renderable">>;
-  mainMenuScreen: Screens.MainMenuScreen;
-  helpScreen: Screens.HelpScreen;
-  escapeScreen: Screens.EscapeScreen;
-  inventoryScreen: Screens.InventoryScreen;
-  hudScreen: Screens.HUDScreen;
-  logScreen: Screens.LogScreen;
-  gameOverScreen: Screens.GameOverScreen;
-  contextMenuScreen: Screens.ContextMenuScreen;
+  screens: Screen[] = [
+    new Screens.HUDScreen(this.game),
+    new Screens.LogScreen(this.game),
+    new Screens.MainMenuScreen(this.game),
+    new Screens.HelpScreen(this.game),
+    new Screens.EscapeScreen(this.game),
+    new Screens.InventoryScreen(this.game),
+    new Screens.GameOverScreen(this.game),
+    new Screens.ContextMenuScreen(this.game),
+    new Screens.FullLogScreen(this.game),
+  ];
+  // mainMenuScreen: Screens.MainMenuScreen;
+  // helpScreen: Screens.HelpScreen;
+  // escapeScreen: Screens.EscapeScreen;
+  // inventoryScreen: Screens.InventoryScreen;
+  // hudScreen: Screens.HUDScreen;
+  // logScreen: Screens.LogScreen;
+  // gameOverScreen: Screens.GameOverScreen;
+  // contextMenuScreen: Screens.ContextMenuScreen;
+  // fullLogScreen: Screens.FullLogScreen;
 
   screenWidth: number;
   screenHeight: number;
@@ -28,25 +41,30 @@ export class RenderSystem extends System {
     this.screenWidth = this.game.render.viewportWidth;
 
     this.renderQuery = this.game.ecs.world.with("position", "renderable");
-    this.mainMenuScreen = new Screens.MainMenuScreen(this.game);
-    this.helpScreen = new Screens.HelpScreen(this.game);
-    this.escapeScreen = new Screens.EscapeScreen(this.game);
-    this.inventoryScreen = new Screens.InventoryScreen(this.game);
-    this.hudScreen = new Screens.HUDScreen(this.game);
-    this.logScreen = new Screens.LogScreen(this.game);
-    this.gameOverScreen = new Screens.GameOverScreen(this.game);
-    this.contextMenuScreen = new Screens.ContextMenuScreen(this.game);
+    // this.mainMenuScreen = new Screens.MainMenuScreen(this.game);
+    // this.helpScreen = new Screens.HelpScreen(this.game);
+    // this.escapeScreen = new Screens.EscapeScreen(this.game);
+    // this.inventoryScreen = new Screens.InventoryScreen(this.game);
+    // this.hudScreen = new Screens.HUDScreen(this.game);
+    // this.logScreen = new Screens.LogScreen(this.game);
+    // this.gameOverScreen = new Screens.GameOverScreen(this.game);
+    // this.contextMenuScreen = new Screens.ContextMenuScreen(this.game);
+    // this.fullLogScreen = new Screens.FullLogScreen(this.game);
   }
 
   renderScreens() {
-    this.hudScreen.render();
-    this.logScreen.render();
-    this.mainMenuScreen.render();
-    this.inventoryScreen.render();
-    this.helpScreen.render();
-    this.escapeScreen.render();
-    this.gameOverScreen.render();
-    this.contextMenuScreen.render();
+    for (const screen of this.screens) {
+      screen.render();
+    }
+    // this.hudScreen.render();
+    // this.logScreen.render();
+    // this.mainMenuScreen.render();
+    // this.inventoryScreen.render();
+    // this.helpScreen.render();
+    // this.escapeScreen.render();
+    // this.gameOverScreen.render();
+    // this.contextMenuScreen.render();
+    // this.fullLogScreen.render();
   }
 
   update(): void {

@@ -2,7 +2,7 @@ import { Manager } from "./manager";
 
 export class LogManager extends Manager {
   logs: string[] = [];
-  maxHistory = 50;
+  maxHistory = 100;
   overrideMessage: string[] = [];
 
   addMessage(...msgs: string[]) {

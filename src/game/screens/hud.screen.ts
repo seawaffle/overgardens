@@ -59,8 +59,24 @@ export class HUDScreen extends Screen {
           Actions.openContextMenu(this.game);
         },
         text: "≡",
-      }
+      },
     }).setParent(panelWidget);
+    // area indicator
+    new GUI.TextWidget({
+      origin: { x: 1, y: 1 },
+      initialState: {
+        text: "",
+      },
+    })
+      .setUpdateFunc(() => {
+        let text = "";
+        const area = this.game.map.getCurrentArea();
+        if (area) {
+          text = `Island: ${area.id}.${area.currentLevel}`;
+        }
+        return { text };
+      })
+      .setParent(panelWidget);
     // hp
     new GUI.TextWidget({
       origin: { x: 1, y: 2 },

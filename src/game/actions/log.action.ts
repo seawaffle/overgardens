@@ -1,7 +1,15 @@
-export function openFullLog() {
+import { GameState } from "../data";
+import { Game } from "../game";
 
+export function openFullLog(game: Game) {
+  if (game.gameState.state === GameState.Ticking) return;
+  game.gameState.setState(GameState.FullLog);
 }
 
-export function closeFullLog() {
+export function closeFullLog(game: Game) {
+  if (game.gameState.state !== GameState.FullLog) {
+    return;
+  }
 
+  game.gameState.setState(GameState.AwaitingInput);
 }

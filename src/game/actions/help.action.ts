@@ -2,6 +2,7 @@ import { Game } from "../game";
 import { GameState } from "../data/game-state";
 
 export function openHelp(game: Game) {
+  if (game.gameState.state === GameState.Ticking) return;
   game.gameState.setState(GameState.HelpScreen);
 }
 

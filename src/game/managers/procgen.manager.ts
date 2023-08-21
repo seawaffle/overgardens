@@ -32,7 +32,6 @@ export class ProcGenManager extends Manager {
     for (const name of NameData) {
       this.stringGen.observe(name);
     }
-    console.log(this.stringGen.getStats());
   }
 
   generate() {
@@ -71,7 +70,6 @@ export class ProcGenManager extends Manager {
         );
       }
     }
-    // this.populateStairs(area);
     return area;
   }
 
@@ -298,7 +296,6 @@ export class ProcGenManager extends Manager {
       player.id = nanoid();
       const name = this.generateName();
       player.name = name[0].toUpperCase() + name.slice(1);
-      console.log(player.name);
       player.position = findOpenGround(level, "south");
       this.game.player = this.game.ecs.addEntity(player);
     }
@@ -319,19 +316,5 @@ export class ProcGenManager extends Manager {
       ooze.position = randomOpenTile(this.game.rng, level);
       this.game.ecs.addEntity(ooze);
     }
-    // if (nextLevel) {
-    //   // if there's a place to go down to, put some stairs
-    //   const downstairs: Tile = { ...Tile.DownStairs };
-    //   downstairs.destination = { destArea: 0, destLevel: nextLevel.id };
-    //   constposition = randomOpenTile(level);
-    //   this.game.ecs.addEntity(downstairs);
-    // }
-    // if (previousLevel) {
-    //   // if there's a place to go up to, put some stairs
-    //   const upstairs: Entity = JSON.parse(JSON.stringify(Prefabs.UpStairs));
-    //   upstairs.travelable = { destArea: 0, destLevel: previousLevel.id };
-    //   upstairs.position = randomOpenTile(level);
-    //   this.game.ecs.addEntity(upstairs);
-    // }
   }
 }
