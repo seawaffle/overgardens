@@ -42,6 +42,7 @@ export class ContextMenuScreen extends Screen {
         backColor: Palette.Ebony,
         foreColor: Palette.GreyNurse,
         hoverColor: Palette.Atomic,
+        downColor: Palette.William,
         onClick: () => {
           Actions.closeContextMenu(this.game);
         },
@@ -55,6 +56,7 @@ export class ContextMenuScreen extends Screen {
         backColor: Palette.Ebony,
         foreColor: Palette.GreyNurse,
         hoverColor: Palette.Atomic,
+        downColor: Palette.William,
         onClick: () => {
           Actions.openInventory(this.game);
         },
@@ -68,6 +70,7 @@ export class ContextMenuScreen extends Screen {
         backColor: Palette.Ebony,
         foreColor: Palette.GreyNurse,
         hoverColor: Palette.Atomic,
+        downColor: Palette.William,
         onClick: () => {
           Actions.openFullLog(this.game);
         },
@@ -81,6 +84,7 @@ export class ContextMenuScreen extends Screen {
         backColor: Palette.Ebony,
         foreColor: Palette.GreyNurse,
         hoverColor: Palette.Atomic,
+        downColor: Palette.William,
         onClick: () => {
           Actions.openHelp(this.game);
         },

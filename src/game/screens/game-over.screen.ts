@@ -40,6 +40,7 @@ export class GameOverScreen extends Screen {
         backColor: Palette.Ebony,
         foreColor: Palette.GreyNurse,
         hoverColor: Palette.Atomic,
+        downColor: Palette.William,
         onClick: () => {
           Actions.gameOver(this.game);
         },
@@ -69,6 +70,7 @@ export class GameOverScreen extends Screen {
         backColor: Palette.Ebony,
         foreColor: Palette.GreyNurse,
         hoverColor: Palette.Atomic,
+        downColor: Palette.William,
         onClick: () => {
           Actions.gameOver(this.game);
         },

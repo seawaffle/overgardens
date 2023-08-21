@@ -14,6 +14,14 @@ export class FullLogContext extends Input.KeyboardContext {
             Actions.closeFullLog(game);
             break;
           }
+          case Input.KeyCode.UpArrow: {
+            Actions.scrollUpFullLog(game);
+            break;
+          }
+          case Input.KeyCode.DownArrow: {
+            Actions.scrollDownFullLog(game);
+            break;
+          }
         }
       }
     });

@@ -51,6 +51,7 @@ export class HelpScreen extends Screen {
         backColor: Palette.Ebony,
         foreColor: Palette.GreyNurse,
         hoverColor: Palette.Atomic,
+        downColor: Palette.William,
         onClick: () => {
           Actions.closeHelp(this.game);
         },

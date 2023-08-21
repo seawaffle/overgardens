@@ -55,6 +55,7 @@ export class HUDScreen extends Screen {
         backColor: Palette.Ebony,
         foreColor: Palette.GreyNurse,
         hoverColor: Palette.Atomic,
+        downColor: Palette.William,
         onClick: () => {
           Actions.openContextMenu(this.game);
         },

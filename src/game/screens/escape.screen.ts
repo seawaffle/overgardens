@@ -42,6 +42,7 @@ export class EscapeScreen extends Screen {
         backColor: Palette.Ebony,
         foreColor: Palette.GreyNurse,
         hoverColor: Palette.Atomic,
+        downColor: Palette.William,
         onClick: () => {
           Actions.closeEscapeMenu(this.game);
         },
@@ -55,6 +56,7 @@ export class EscapeScreen extends Screen {
         backColor: Palette.Ebony,
         foreColor: Palette.GreyNurse,
         hoverColor: Palette.Atomic,
+        downColor: Palette.William,
         onClick: () => {
           Actions.saveGame(this.game);
         },
@@ -68,6 +70,7 @@ export class EscapeScreen extends Screen {
         backColor: Palette.Ebony,
         foreColor: Palette.GreyNurse,
         hoverColor: Palette.Atomic,
+        downColor: Palette.William,
         onClick: () => {
           Actions.quitToMainMenu(this.game);
         },

@@ -37,13 +37,15 @@ export class ZoneChangeSystem extends System {
       newLevel,
       upOrDown,
     );
-    console.log(
-      `Moving to area: ${dest.area}.${
-        dest.level
-      }. Stair position: ${JSON.stringify(stairPosition)}`,
-    );
+    // console.log(
+    //   `Moving to area: ${dest.area}.${
+    //     dest.level
+    //   }. Stair position: ${JSON.stringify(stairPosition)}`,
+    // );
     this.game.procgen.placePlayer(newLevel, stairPosition);
     player.viewshed!.dirty = true;
+    const message = `${player.name} goes ${upOrDown === "up stairs" ? "down" : "up"} the stairs.`
+    this.game.log.addMessage(message);
     this.game.gameState.setState(GameState.AwaitingInput);
   }
 

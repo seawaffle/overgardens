@@ -13,3 +13,21 @@ export function closeFullLog(game: Game) {
 
   game.gameState.setState(GameState.AwaitingInput);
 }
+
+export function scrollUpFullLog(game: Game) {
+    if (game.gameState.state !== GameState.FullLog) {
+        return;
+      }
+      if (game.logLineNumber > 0) {
+        game.logLineNumber--;
+      }
+}
+
+export function scrollDownFullLog(game: Game) {
+    if (game.gameState.state !== GameState.FullLog) {
+        return;
+      }
+    if (game.logLineNumber < game.log.logs.length) {
+        game.logLineNumber++;
+    }
+}

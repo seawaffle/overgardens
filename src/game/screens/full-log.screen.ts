@@ -6,6 +6,9 @@ import * as Actions from "../actions";
 
 export class FullLogScreen extends Screen {
   guiContainer: GUI.ContainerWidget;
+  totalLines = 0;
+  upButton: GUI.ButtonWidget | undefined;
+  downButton: GUI.ButtonWidget | undefined;
 
   constructor(game: Game) {
     super(game);
@@ -45,11 +48,47 @@ export class FullLogScreen extends Screen {
         backColor: Palette.Ebony,
         foreColor: Palette.GreyNurse,
         hoverColor: Palette.Atomic,
+        downColor: Palette.William,
         onClick: () => {
           Actions.closeFullLog(this.game);
         },
       },
     }).setParent(panelWidget);
+    // scroll up button
+    this.upButton = new GUI.ButtonWidget({
+      origin: { x: this.game.render.viewportWidth - 1, y: 1 },
+      initialState: {
+        text: "↑",
+        backColor: Palette.Ebony,
+        foreColor: Palette.GreyNurse,
+        hoverColor: Palette.Atomic,
+        downColor: Palette.William,
+        onClick: () => {
+          if (this.game.logLineNumber > 0) {
+            this.game.logLineNumber--;
+          }
+        },
+      },
+    })
+    .setParent(panelWidget);
+    // scroll down button
+    this.downButton = new GUI.ButtonWidget({
+      origin: { x: this.game.render.viewportWidth - 1, y: this.game.render.viewportHeight - 2 },
+      initialState: {
+        text: "↓",
+        backColor: Palette.Ebony,
+        foreColor: Palette.GreyNurse,
+        hoverColor: Palette.Atomic,
+        downColor: Palette.William,
+        onClick: () => {
+          if (this.game.logLineNumber < this.totalLines) {
+            this.game.logLineNumber++;
+          }
+        },
+      },
+    })
+    .setParent(panelWidget);
+    // log text
     const logTextWidth = this.game.render.viewportWidth - 2;
     new GUI.TextWidget({
       origin: { x: 1, y: 1 },
@@ -60,9 +99,11 @@ export class FullLogScreen extends Screen {
     })
       .setUpdateFunc(() => {
         const logs = this.game.log.contents(this.game.log.maxHistory);
+        this.totalLines = logs.length;
         let text = "";
         let lines = 0;
-        for (const l of logs) {
+        for (let i = this.game.logLineNumber; i < logs.length; i++) {
+          const l = logs[i];
           const length = l.length;
           let padAmount = 0;
           if (length > logTextWidth) {
