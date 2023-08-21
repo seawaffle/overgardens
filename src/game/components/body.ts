@@ -1,8 +1,10 @@
+import { Attribute } from ".";
+
 export interface Body {
-  strength: number;
-  agility: number;
-  constitution: number;
-  intellect: number;
+  might: Attribute;
+  agility: Attribute;
+  stability: Attribute;
+  intellect: Attribute;
   hp: number;
   maxHp: number;
 }

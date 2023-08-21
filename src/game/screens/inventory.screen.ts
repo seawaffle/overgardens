@@ -21,8 +21,8 @@ export class InventoryScreen extends Screen {
     const panelWidget = new GUI.PanelWidget({
       origin: { x: 0, y: 0 },
       initialState: {
-        width: this.game.render.displayWidth,
-        height: this.game.render.displayHeight,
+        width: this.game.render.viewportWidth,
+        height: this.game.render.viewportHeight,
         borderStyle: "double-bar",
         backColor: Palette.Ebony,
         foreColor: Palette.GreyNurse,
@@ -39,7 +39,7 @@ export class InventoryScreen extends Screen {
     }).setParent(panelWidget);
     // close button
     new GUI.ButtonWidget({
-      origin: { x: this.game.render.displayWidth - 1, y: 0 },
+      origin: { x: this.game.render.viewportWidth - 1, y: 0 },
       initialState: {
         text: "X",
         backColor: Palette.Ebony,

@@ -10,4 +10,5 @@ export enum GameState {
   GameOver,
   ZoneChange,
   ContextMenu,
+  FullLog,
 }
