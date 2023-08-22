@@ -23,7 +23,7 @@ export const Player: Entity = {
     agility: { base: 1, modifier: 0, bonus: 0 },
     stability: { base: 1, modifier: 0, bonus: 0 },
     intellect: { base: 1, modifier: 0, bonus: 0 },
-    hp: 30,
-    maxHp: 30,
+    hp: { current: 30, max: 30 },
   },
+  inventory: { items: [] },
 };

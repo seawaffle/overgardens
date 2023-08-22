@@ -23,7 +23,6 @@ export const Rat: Entity = {
     agility: { base: 1, modifier: 0, bonus: 0 },
     stability: { base: 1, modifier: 0, bonus: 0 },
     intellect: { base: 1, modifier: 0, bonus: 0 },
-    hp: 5,
-    maxHp: 5,
+    hp: { current: 5, max: 5 },
   },
 };

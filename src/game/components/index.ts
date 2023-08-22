@@ -5,3 +5,5 @@ export * from "./viewshed";
 export * from "./body";
 export * from "./destination";
 export * from "./attribute";
+export * from "./inventory";
+export * from "./pool";

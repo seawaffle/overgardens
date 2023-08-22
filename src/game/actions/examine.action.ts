@@ -43,7 +43,7 @@ export function moveExamine(game: Game, pos: Vector2, absolute = false) {
       for (const e of tileContent) {
         if (visible && e.body) {
           strings.push(`Name: ${e.name}`);
-          const health = e.body.hp / e.body.maxHp;
+          const health = e.body.hp.current / e.body.hp.max;
           let status = "Uninjured";
           if (health < 0.25) {
             status = "Near Death";

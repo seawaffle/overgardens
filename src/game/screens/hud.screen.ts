@@ -88,8 +88,8 @@ export class HUDScreen extends Screen {
       .setUpdateFunc(() => {
         let text = "";
         if (this.game.player) {
-          text = `HP: ${this.game.player.body!.hp} / ${
-            this.game.player.body!.maxHp
+          text = `HP: ${this.game.player.body!.hp.current} / ${
+            this.game.player.body!.hp.max
           }`;
         }
         return { text };

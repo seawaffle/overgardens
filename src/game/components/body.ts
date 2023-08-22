@@ -1,10 +1,11 @@
-import { Attribute } from ".";
+import { Attribute, Pool } from ".";
 
 export interface Body {
-  might: Attribute;
-  agility: Attribute;
-  stability: Attribute;
-  intellect: Attribute;
-  hp: number;
-  maxHp: number;
+  might?: Attribute;
+  agility?: Attribute;
+  stability?: Attribute;
+  intellect?: Attribute;
+  hp: Pool;
+  xp?: Pool;
+  level?: Pool;
 }

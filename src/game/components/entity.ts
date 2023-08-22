@@ -1,5 +1,12 @@
 import { Vector2 } from "malwoden";
-import { Renderable, Body, Viewshed, Destination, OutOfLevel } from ".";
+import {
+  Renderable,
+  Body,
+  Viewshed,
+  Destination,
+  OutOfLevel,
+  Inventory,
+} from ".";
 import { Goal } from "../ai/goals";
 
 export interface Entity {
@@ -19,4 +26,5 @@ export interface Entity {
   goal?: Goal;
   incomingDamage?: number;
   destination?: Destination;
+  inventory?: Inventory;
 }

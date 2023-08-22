@@ -51,6 +51,13 @@ export class InventoryScreen extends Screen {
         },
       },
     }).setParent(panelWidget);
+    // inventory items
+    new GUI.TextWidget({
+      origin: { x: 1, y: 1 },
+      initialState: {
+        text: "-- Nothing --",
+      },
+    }).setParent(panelWidget);
     container.setDisabled(true);
     return container;
   }

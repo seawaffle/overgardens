@@ -69,11 +69,13 @@ export class FullLogScreen extends Screen {
           }
         },
       },
-    })
-    .setParent(panelWidget);
+    }).setParent(panelWidget);
     // scroll down button
     this.downButton = new GUI.ButtonWidget({
-      origin: { x: this.game.render.viewportWidth - 1, y: this.game.render.viewportHeight - 2 },
+      origin: {
+        x: this.game.render.viewportWidth - 1,
+        y: this.game.render.viewportHeight - 2,
+      },
       initialState: {
         text: "↓",
         backColor: Palette.Ebony,
@@ -86,8 +88,7 @@ export class FullLogScreen extends Screen {
           }
         },
       },
-    })
-    .setParent(panelWidget);
+    }).setParent(panelWidget);
     // log text
     const logTextWidth = this.game.render.viewportWidth - 2;
     new GUI.TextWidget({

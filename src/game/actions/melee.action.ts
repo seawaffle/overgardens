@@ -9,7 +9,7 @@ export function meleeCombat(game: Game, attacker: Entity, defender: Entity) {
   if (!attackerStats) throw new Error("no attacker stats");
   if (!defenderStats) throw new Error("no defender stats");
 
-  const damage = Math.max(0, attackerStats.might.base);
+  const damage = Math.max(0, attackerStats.might!.base);
   if (damage === 0) {
     console.log("unable to do damage");
   } else {

@@ -16,7 +16,7 @@ export class DeathSystem extends System {
     const dead: Entity[] = [];
     const level = this.game.map.getCurrentLevel();
     for (const e of this.statsQuery) {
-      if (e.body.hp <= 0) {
+      if (e.body.hp.current <= 0) {
         dead.push(e);
       }
     }

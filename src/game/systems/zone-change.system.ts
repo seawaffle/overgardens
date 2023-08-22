@@ -44,7 +44,9 @@ export class ZoneChangeSystem extends System {
     // );
     this.game.procgen.placePlayer(newLevel, stairPosition);
     player.viewshed!.dirty = true;
-    const message = `${player.name} goes ${upOrDown === "up stairs" ? "down" : "up"} the stairs.`
+    const message = `${player.name} goes ${
+      upOrDown === "up stairs" ? "down" : "up"
+    } the stairs.`;
     this.game.log.addMessage(message);
     this.game.gameState.setState(GameState.AwaitingInput);
   }
