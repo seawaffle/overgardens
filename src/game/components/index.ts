@@ -7,3 +7,5 @@ export * from "./destination";
 export * from "./attribute";
 export * from "./inventory";
 export * from "./pool";
+export * from "./slot";
+export * from "./item-properties";

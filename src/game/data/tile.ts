@@ -87,9 +87,9 @@ export class Tile {
   );
   static Grass = new Tile(
     "grass",
-    CharCode.space,
-    Palette.JapaneseLaurel,
+    CharCode.doubleQuote,
     Palette.KaitokeGreen,
+    Palette.CardinGreen,
     Palette.JapaneseLaurel,
     Palette.KaitokeGreen,
     true,

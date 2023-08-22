@@ -206,10 +206,14 @@ export function hexToColor(hex: string): Color {
   return new Color(c.R, c.G, c.B);
 }
 
-export function randomTileShading(rng: Rand.AleaRNG, tile: Tile): Tile {
-  const randR = rng.nextInt(-4, 5);
-  const randG = rng.nextInt(-4, 5);
-  const randB = rng.nextInt(-4, 5);
+export function randomTileShading(
+  rng: Rand.AleaRNG,
+  tile: Tile,
+  range: number,
+): Tile {
+  const randR = rng.nextInt(range * -1, range);
+  const randG = rng.nextInt(range * -1, range);
+  const randB = rng.nextInt(range * -1, range);
   tile.fg_color_light = adjustColor(tile.fg_color_light, randR, randG, randB);
   tile.bg_color_light = adjustColor(tile.bg_color_light, randR, randG, randB);
   tile.fg_color_dark = adjustColor(tile.fg_color_dark, randR, randG, randB);

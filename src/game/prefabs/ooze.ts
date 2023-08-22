@@ -1,5 +1,6 @@
-import { Entity } from "../components";
+import { Entity, SlotType } from "../components";
 import { Palette } from "../data";
+import { Fist } from ".";
 
 export const Ooze: Entity = {
   name: "Ooze",
@@ -19,10 +20,14 @@ export const Ooze: Entity = {
   faction: "mindless",
   initiative: 8,
   body: {
-    might: { base: 1, modifier: 0, bonus: 0 },
-    agility: { base: 1, modifier: 0, bonus: 0 },
-    stability: { base: 1, modifier: 0, bonus: 0 },
-    intellect: { base: 1, modifier: 0, bonus: 0 },
-    hp: { current: 5, max: 5 },
+    damageReduction: 1,
+    slots: [
+      {
+        name: "Head",
+        type: SlotType.Head,
+        ableToEquipItems: true,
+        equippedItem: { ...Fist },
+      },
+    ],
   },
 };

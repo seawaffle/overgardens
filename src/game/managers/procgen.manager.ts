@@ -17,6 +17,7 @@ import { CharCode, Generation, Vector2 } from "malwoden";
 import { Entity } from "../components";
 import { StringGenerator } from "rot-js";
 import NameData from "../prefabs/names.json";
+import { populateBodyStats } from "../mechanics";
 
 export class ProcGenManager extends Manager {
   readonly AREA_NUMBER = 10;
@@ -116,23 +117,23 @@ export class ProcGenManager extends Manager {
         let tile: Tile;
         if (n >= 0.6) {
           if (this.game.rng.next() > 0.95) {
-            tile = randomTileShading(this.game.rng, { ...Tile.Tree });
+            tile = randomTileShading(this.game.rng, { ...Tile.Tree }, 5);
           } else {
-            tile = randomTileShading(this.game.rng, { ...Tile.Grass });
+            tile = randomTileShading(this.game.rng, { ...Tile.Grass }, 8);
           }
         } else if (n >= 0.5) {
-          tile = randomTileShading(this.game.rng, { ...Tile.Ground });
+          tile = randomTileShading(this.game.rng, { ...Tile.Ground }, 6);
         } else {
           const cloudCover = cloudMap.get({ x, y })!;
           if (cloudCover >= 0.5) {
-            tile = randomTileShading(this.game.rng, { ...Tile.Cloud });
+            tile = randomTileShading(this.game.rng, { ...Tile.Cloud }, 5);
             if (cloudCover >= 0.6) {
               tile.character = CharCode.darkShade;
             } else if (cloudCover >= 0.55) {
               tile.character = CharCode.mediumShade;
             }
           } else {
-            tile = randomTileShading(this.game.rng, { ...Tile.Sky });
+            tile = randomTileShading(this.game.rng, { ...Tile.Sky }, 5);
           }
         }
         level.tiles.set({ x, y }, tile);
@@ -175,14 +176,14 @@ export class ProcGenManager extends Manager {
         if (prevTile.type === "sky" || prevTile.type === "cloud") {
           const cloudCover = cloudMap.get({ x, y })!;
           if (cloudCover >= 0.5) {
-            tile = randomTileShading(this.game.rng, { ...Tile.Cloud });
+            tile = randomTileShading(this.game.rng, { ...Tile.Cloud }, 5);
             if (cloudCover >= 0.6) {
               tile.character = CharCode.darkShade;
             } else if (cloudCover >= 0.55) {
               tile.character = CharCode.mediumShade;
             }
           } else {
-            tile = randomTileShading(this.game.rng, { ...Tile.Sky });
+            tile = randomTileShading(this.game.rng, { ...Tile.Sky }, 5);
           }
         } else {
           // if (noise > 0.9) {
@@ -191,6 +192,7 @@ export class ProcGenManager extends Manager {
           tile = randomTileShading(
             this.game.rng,
             genTile === 0 ? { ...Tile.Floor } : { ...Tile.Wall },
+            7,
           );
         }
         level.tiles.set(position, tile);
@@ -209,7 +211,11 @@ export class ProcGenManager extends Manager {
         ) {
           pos = randomOpenTile(this.game.rng, level);
         }
-        const tile = randomTileShading(this.game.rng, { ...Tile.DownStairs });
+        const tile = randomTileShading(
+          this.game.rng,
+          { ...Tile.DownStairs },
+          5,
+        );
         tile.destination = { area: area.id, level: i + 1 };
         level.tiles.set(pos, tile);
         console.log(
@@ -242,7 +248,7 @@ export class ProcGenManager extends Manager {
             upPos = randomOpenTile(this.game.rng, level);
           }
         }
-        const tile = randomTileShading(this.game.rng, { ...Tile.UpStairs });
+        const tile = randomTileShading(this.game.rng, { ...Tile.UpStairs }, 5);
         tile.destination = { area: area.id, level: i - 1 };
         level.tiles.set(upPos, tile);
         console.log(
@@ -256,9 +262,11 @@ export class ProcGenManager extends Manager {
           while (!isReachable(level, upPos, pos)) {
             pos = randomOpenTile(this.game.rng, level);
           }
-          const downTile = randomTileShading(this.game.rng, {
-            ...Tile.DownStairs,
-          });
+          const downTile = randomTileShading(
+            this.game.rng,
+            { ...Tile.DownStairs },
+            5,
+          );
           downTile.destination = { area: area.id, level: i + 1 };
           level.tiles.set(pos, downTile);
           console.log(
@@ -297,6 +305,7 @@ export class ProcGenManager extends Manager {
       const name = this.generateName();
       player.name = name[0].toUpperCase() + name.slice(1);
       player.position = findOpenGround(level, "south");
+      populateBodyStats(player);
       this.game.player = this.game.ecs.addEntity(player);
     }
   }
@@ -307,6 +316,7 @@ export class ProcGenManager extends Manager {
       const rat: Entity = JSON.parse(JSON.stringify(Prefabs.Rat));
       rat.id = nanoid();
       rat.position = randomOpenTile(this.game.rng, level);
+      populateBodyStats(rat);
       this.game.ecs.addEntity(rat);
     }
     for (const _ of range(0, this.game.rng.nextInt(1, 2))) {
@@ -314,6 +324,7 @@ export class ProcGenManager extends Manager {
       const ooze: Entity = JSON.parse(JSON.stringify(Prefabs.Ooze));
       ooze.id = nanoid();
       ooze.position = randomOpenTile(this.game.rng, level);
+      populateBodyStats(ooze);
       this.game.ecs.addEntity(ooze);
     }
   }

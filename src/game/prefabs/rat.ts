@@ -1,5 +1,6 @@
-import { Entity } from "../components";
+import { Entity, SlotType } from "../components";
 import { Palette } from "../data";
+import { Bite } from ".";
 
 export const Rat: Entity = {
   name: "Rat",
@@ -19,10 +20,17 @@ export const Rat: Entity = {
   faction: "herbivores",
   initiative: 2,
   body: {
-    might: { base: 1, modifier: 0, bonus: 0 },
-    agility: { base: 1, modifier: 0, bonus: 0 },
-    stability: { base: 1, modifier: 0, bonus: 0 },
-    intellect: { base: 1, modifier: 0, bonus: 0 },
-    hp: { current: 5, max: 5 },
+    might: { base: 8, modifier: 0, bonus: 0 },
+    agility: { base: 16, modifier: 0, bonus: 0 },
+    stability: { base: 6, modifier: 0, bonus: 0 },
+    dodgeValue: 12,
+    slots: [
+      {
+        name: "Head",
+        type: SlotType.Head,
+        ableToEquipItems: true,
+        equippedItem: { ...Bite },
+      },
+    ],
   },
 };

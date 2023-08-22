@@ -6,6 +6,7 @@ import {
   Destination,
   OutOfLevel,
   Inventory,
+  ItemProperties,
 } from ".";
 import { Goal } from "../ai/goals";
 
@@ -27,4 +28,5 @@ export interface Entity {
   incomingDamage?: number;
   destination?: Destination;
   inventory?: Inventory;
+  itemProperties?: ItemProperties;
 }

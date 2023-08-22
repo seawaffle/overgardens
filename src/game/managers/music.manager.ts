@@ -1,7 +1,6 @@
 import { Manager } from "./manager";
 import * as Tone from "tone";
 import { Scale, ScaleType } from "tonal";
-import { Rand } from "malwoden";
 
 export class MusicManager extends Manager {
   leftSynth: Tone.MonoSynth = this.makeSynth();
@@ -52,8 +51,7 @@ export class MusicManager extends Manager {
   }
 
   getRandomRoot(): string {
-    const rng = new Rand.AleaRNG(`${Math.random() * 100000}`);
-    const note = rng.nextItem<string>([
+    const note = this.game.rng.nextItem<string>([
       "C",
       "C#",
       "D",
@@ -67,13 +65,12 @@ export class MusicManager extends Manager {
       "A#",
       "B",
     ]);
-    const octave = rng.nextItem<string>(["3", "4"]);
+    const octave = this.game.rng.nextItem<string>(["3", "4"]);
     return `${note}${octave}`;
   }
 
   getRandomScale(): string {
-    const rng = new Rand.AleaRNG(`${Math.random() * 100000}`);
-    return rng.nextItem<string>(ScaleType.names())!;
+    return this.game.rng.nextItem<string>(ScaleType.names())!;
   }
 
   generate() {

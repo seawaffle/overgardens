@@ -23,7 +23,18 @@ export function tryMoveEntity(
   if (level) {
     for (const e of level.getTileContent(destination)) {
       if (entity.player && e.body) {
-        meleeCombat(game, entity, e);
+        if (entity.body && entity.body.slots) {
+          for (const slot of entity.body.slots) {
+            const weapon = slot.equippedItem;
+            if (
+              weapon &&
+              weapon.itemProperties &&
+              weapon.itemProperties.melee
+            ) {
+              meleeCombat(game, entity, weapon, e);
+            }
+          }
+        }
         return;
       }
     }

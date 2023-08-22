@@ -13,7 +13,7 @@ export class DamageSystem extends System {
 
   update(): void {
     for (const e of this.damageQuery) {
-      e.body.hp.current -= e.incomingDamage;
+      e.body.hp!.current -= e.incomingDamage;
       this.game.ecs.world.removeComponent(e, "incomingDamage");
     }
   }
