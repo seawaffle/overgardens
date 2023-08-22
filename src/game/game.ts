@@ -116,7 +116,7 @@ export class Game {
   }
 
   async startNewGame(seed?: string) {
-    this.gameId = seed || Date.now.toString();
+    this.gameId = seed || Date.now().toString();
     this.rng = new Rand.AleaRNG(this.gameId);
     this.map.generateMap();
     this.log.clearLogs();

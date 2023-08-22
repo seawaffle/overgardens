@@ -8,6 +8,11 @@ export class AdventureMouseContext extends Input.MouseContext {
     super();
 
     this.onMouseDown((mouseEvent) => {
+      // if an extended action is happening, pressing a key should end it
+      if (this.game.extendedActionSystem.hasAction()) {
+        this.game.extendedActionSystem.endAction();
+      }
+
       if (this.game.gameState.state !== GameState.AwaitingInput) {
         return;
       }
