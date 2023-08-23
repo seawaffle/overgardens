@@ -302,8 +302,10 @@ export class ProcGenManager extends Manager {
     } else {
       const player = { ...Prefabs.Player };
       player.id = nanoid();
-      const name = this.generateName();
-      player.name = name[0].toUpperCase() + name.slice(1);
+      player.name = this.generateName()
+        .split(" ")
+        .map((word) => word[0].toUpperCase() + word.slice(1))
+        .join(" ");
       player.position = findOpenGround(level, "south");
       populateBodyStats(player);
       this.game.player = this.game.ecs.addEntity(player);

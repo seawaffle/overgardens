@@ -9,7 +9,7 @@ export function hpPerLevel(stability: number, player = false) {
   if (player) {
     return 15 + attributeBonus(stability);
   }
-  return 5 + attributeBonus(stability);
+  return 10 + attributeBonus(stability);
 }
 
 export function hpAtLevel(level: number, stability: number, player = false) {

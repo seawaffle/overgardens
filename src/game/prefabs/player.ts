@@ -25,6 +25,8 @@ export const Player: Entity = {
     stability: { base: 12, modifier: 0, bonus: 0 },
     intellect: { base: 12, modifier: 0, bonus: 0 },
     hp: { current: 30, max: 30 },
+    level: { current: 1, max: 100 },
+    xp: { current: 0, max: 100 },
     slots: [
       {
         name: "Head",
