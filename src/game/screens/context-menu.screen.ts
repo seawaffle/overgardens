@@ -48,9 +48,37 @@ export class ContextMenuScreen extends Screen {
         },
       },
     }).setParent(panelWidget);
-    // inventory
+    // character
     new GUI.ButtonWidget({
       origin: { x: 2, y: 2 },
+      initialState: {
+        text: "[C] Character",
+        backColor: Palette.Ebony,
+        foreColor: Palette.GreyNurse,
+        hoverColor: Palette.Atomic,
+        downColor: Palette.William,
+        onClick: () => {
+          Actions.openCharacterSheet(this.game);
+        },
+      },
+    }).setParent(panelWidget);
+    // equipment
+    new GUI.ButtonWidget({
+      origin: { x: 2, y: 3 },
+      initialState: {
+        text: "[E] Equipment",
+        backColor: Palette.Ebony,
+        foreColor: Palette.GreyNurse,
+        hoverColor: Palette.Atomic,
+        downColor: Palette.William,
+        onClick: () => {
+          Actions.openEquipment(this.game);
+        },
+      },
+    }).setParent(panelWidget);
+    // inventory
+    new GUI.ButtonWidget({
+      origin: { x: 2, y: 4 },
       initialState: {
         text: "[I] Inventory",
         backColor: Palette.Ebony,
@@ -64,7 +92,7 @@ export class ContextMenuScreen extends Screen {
     }).setParent(panelWidget);
     // full log
     new GUI.ButtonWidget({
-      origin: { x: 2, y: 3 },
+      origin: { x: 2, y: 5 },
       initialState: {
         text: "[L] Full Log",
         backColor: Palette.Ebony,
@@ -78,7 +106,7 @@ export class ContextMenuScreen extends Screen {
     }).setParent(panelWidget);
     // help
     new GUI.ButtonWidget({
-      origin: { x: 2, y: 4 },
+      origin: { x: 2, y: 6 },
       initialState: {
         text: "[?] Help",
         backColor: Palette.Ebony,

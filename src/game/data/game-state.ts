@@ -11,4 +11,6 @@ export enum GameState {
   ZoneChange,
   ContextMenu,
   FullLog,
+  Equipment,
+  Character,
 }

@@ -10,3 +10,5 @@ export * from "./examine.action";
 export * from "./level.action";
 export * from "./context-menu.action";
 export * from "./log.action";
+export * from "./equipment.action";
+export * from "./character.action";

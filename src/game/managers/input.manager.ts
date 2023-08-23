@@ -14,6 +14,8 @@ import {
   ExamineMouseContext,
   ContextMenuContext,
   FullLogContext,
+  CharacterContext,
+  EquipmentContext,
 } from "../input";
 
 export class InputManager extends Manager implements StateListener {
@@ -47,6 +49,18 @@ export class InputManager extends Manager implements StateListener {
       }
       case GameState.Inventory: {
         this.keyboardHandler.setContext(new InventoryContext(this.game));
+        this.mouseContext = this.adventureMouseContext;
+        this.mouseHandler.setContext(this.mouseContext);
+        break;
+      }
+      case GameState.Character: {
+        this.keyboardHandler.setContext(new CharacterContext(this.game));
+        this.mouseContext = this.adventureMouseContext;
+        this.mouseHandler.setContext(this.mouseContext);
+        break;
+      }
+      case GameState.Equipment: {
+        this.keyboardHandler.setContext(new EquipmentContext(this.game));
         this.mouseContext = this.adventureMouseContext;
         this.mouseHandler.setContext(this.mouseContext);
         break;

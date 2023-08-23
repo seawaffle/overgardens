@@ -93,6 +93,14 @@ export class AdventureContext extends Input.KeyboardContext {
             Actions.openFullLog(game);
             break;
           }
+          case Input.KeyCode.E: {
+            Actions.openEquipment(game);
+            break;
+          }
+          case Input.KeyCode.C: {
+            Actions.openCharacterSheet(game);
+            break;
+          }
         }
       }
     });

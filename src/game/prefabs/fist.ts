@@ -8,7 +8,7 @@ export const Fist: Entity = {
     droppedOnDeath: false,
     slotType: SlotType.Hand,
     consumable: false,
-    damage: "1d4",
+    damage: "1d4-1",
     melee: true,
   },
 };
