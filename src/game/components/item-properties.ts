@@ -9,4 +9,5 @@ export interface ItemProperties {
   armorReduction?: number;
   damage?: string;
   melee?: true;
+  twoHanded?: true;
 }

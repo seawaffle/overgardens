@@ -101,6 +101,10 @@ export class AdventureContext extends Input.KeyboardContext {
             Actions.openCharacterSheet(game);
             break;
           }
+          case Input.KeyCode.P: {
+            Actions.pickUp(game, game.player!);
+            break;
+          }
         }
       }
     });
