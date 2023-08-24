@@ -50,12 +50,13 @@ export class Game {
   aiSystem: AISystem;
   zoneChangeSystem: ZoneChangeSystem;
   extendedActionSystem: ExtendedActionSystem;
-  player: Entity | undefined;
+  player?: Entity;
   rng: Rand.AleaRNG;
   fpsTicks: number[] = [];
   avgFps: number = 0;
   examinePosition: Vector2 = { x: -1, y: -1 };
   logLineNumber = 0;
+  itemToDescribe?: Entity;
 
   constructor(id?: string) {
     this.gameId = id || Date.now().toString();

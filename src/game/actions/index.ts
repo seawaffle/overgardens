@@ -12,4 +12,3 @@ export * from "./context-menu.action";
 export * from "./log.action";
 export * from "./equipment.action";
 export * from "./character.action";
-export * from "./pick-up.action";

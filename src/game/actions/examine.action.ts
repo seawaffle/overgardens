@@ -54,6 +54,8 @@ export function moveExamine(game: Game, pos: Vector2, absolute = false) {
           }
           strings.push(`Status: ${status}`);
           strings.push(spacer);
+        } else if (visible && e.itemProperties) {
+          strings.push(`Item: ${e.name}`);
         }
       }
     }

@@ -3,6 +3,7 @@ import { Screen } from "./screen";
 import * as Actions from "../actions";
 import { Game } from "../game";
 import { GameState, Palette } from "../data";
+import { TextWidget } from "./text-widget";
 
 export class InventoryScreen extends Screen {
   guiContainer: GUI.ContainerWidget;
@@ -52,18 +53,40 @@ export class InventoryScreen extends Screen {
       },
     }).setParent(panelWidget);
     // inventory items
-    new GUI.TextWidget({
-      origin: { x: 1, y: 1 },
-      initialState: {
-        text: "-- Nothing --",
-      },
-    }).setParent(panelWidget);
+    const items = this.game.player?.inventory?.items;
+    if (items && items.length > 0) {
+      let y = 2;
+      for (const item of items) {
+        new TextWidget({
+          origin: { x: 2, y },
+          initialState: {
+            text: item.name,
+            onClick: () => {
+              Actions.openItemDetails(this.game, item);
+            }
+          }
+        }).setParent(panelWidget);
+        y++;
+      }
+    } else {
+      new TextWidget({
+        origin: { x: 2, y: 2 },
+        initialState: {
+          text: "-- Nothing --",
+        }
+      }).setParent(panelWidget);
+    }
     container.setDisabled(true);
     return container;
   }
 
   notify(state: GameState): void {
-    this.guiContainer.setDisabled(state !== GameState.Inventory);
+    if (state === GameState.Inventory) {
+      this.guiContainer = this.constructGui();
+      this.guiContainer.setDisabled(false);
+    } else {
+      this.guiContainer.setDisabled(true);
+    }
   }
   render(): void {
     this.guiContainer.cascadeDraw();

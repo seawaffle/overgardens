@@ -1,5 +1,4 @@
-export * from "./bite";
-export * from "./fist";
+export * from "./weapons";
 export * from "./rat";
 export * from "./player";
 export * from "./factions";

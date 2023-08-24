@@ -26,12 +26,16 @@ export function tryMoveEntity(
         if (entity.body && entity.body.slots) {
           for (const slot of entity.body.slots) {
             const weapon = slot.equippedItem;
+            let firstAttack = true;
             if (
               weapon &&
               weapon.itemProperties &&
               weapon.itemProperties.melee
             ) {
-              meleeCombat(game, entity, weapon, e);
+              if (firstAttack || game.rng.nextBoolean()) {
+                meleeCombat(game, entity, weapon, e);
+                firstAttack = false;
+              }
             }
           }
         }

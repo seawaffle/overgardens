@@ -1,5 +1,6 @@
 import { Game } from "../game";
 import { GameState } from "../data/game-state";
+import { Entity } from "../components";
 
 export function openEquipment(game: Game) {
   if (game.gameState.state === GameState.Ticking) return;
@@ -12,4 +13,12 @@ export function closeEquipment(game: Game) {
   }
 
   game.gameState.setState(GameState.AwaitingInput);
+}
+
+export function equipItem(game: Game, me: Entity, item: Entity) {
+  
+}
+
+export function unequipItem(game: Game, me: Entity, item: Entity) {
+  
 }

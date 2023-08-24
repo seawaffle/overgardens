@@ -23,8 +23,8 @@ export const Ooze: Entity = {
     damageReduction: 1,
     slots: [
       {
-        name: "Head",
-        type: SlotType.Head,
+        name: "Pseudopod",
+        type: SlotType.Hand,
         ableToEquipItems: true,
         equippedItem: { ...Fist },
       },

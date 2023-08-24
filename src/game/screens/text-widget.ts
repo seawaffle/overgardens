@@ -1,4 +1,6 @@
 import { GUI, Rect } from "malwoden";
+import { TextWidgetState } from "malwoden/dist/types/gui";
+import { MouseHandlerEvent } from "malwoden/dist/types/input";
 
 export enum HoverState {
   None = 0,
@@ -6,7 +8,30 @@ export enum HoverState {
   Down = 2,
 }
 
-export class TextWidget extends GUI.TextWidget {
+export interface TextState extends TextWidgetState {
+    onClick?: () => void;
+}
+
+export class TextWidget extends GUI.Widget<TextState> {
+  onDraw(): void {
+    if (!this.terminal) return;
+
+    const origin = this.getAbsoluteOrigin();
+
+    const text = this.text();
+    const lines = this.lines(text);
+
+    for (let y = 0; y < lines.length; y++) {
+      const line = lines[y];
+      this.terminal.writeAt(
+        { x: origin.x, y: origin.y + y },
+        line,
+        this.state.foreColor,
+        this.state.backColor
+      );
+    }
+  }
+
   truncateText(config: {
     text: string;
     truncateAfter: number;
@@ -19,10 +44,20 @@ export class TextWidget extends GUI.TextWidget {
     }
   }
 
+  onMouseClick(event: MouseHandlerEvent): boolean {
+    if (!this.terminal || !this.state.onClick) return false;
+    const tilePos = this.terminal.windowToTilePoint(event);
+    if (this.getBounds().contains(tilePos)) {
+      this.state.onClick();
+      return true;
+    }
+    return false;
+  }
+
+
   wrapText(config: { text: string; wrapAt: number }): string[] {
     const lines: string[] = [];
     const words = config.text.split(" ");
-
     let current = "";
     while (words.length) {
       const next = words.shift()!;

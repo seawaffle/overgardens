@@ -56,12 +56,12 @@ export class EquipmentScreen extends Screen {
     if (this.game.player) {
       const slots = this.game.player.body!.slots!;
       // head slots
-      let y = 1;
+      let y = 2;
       const headSlots = slots.filter((slot) => slot.type === SlotType.Head);
       for (const slot of headSlots) {
         let equipment = this.createItemText(slot.equippedItem);
         new TextWidget({
-          origin: { x: 1, y },
+          origin: { x: 2, y },
           initialState: {
             text: `${slot.name}${equipment}`,
           },
@@ -73,7 +73,7 @@ export class EquipmentScreen extends Screen {
       for (const slot of bodySlots) {
         let equipment = this.createItemText(slot.equippedItem);
         new TextWidget({
-          origin: { x: 1, y },
+          origin: { x: 2, y },
           initialState: {
             text: `${slot.name}${equipment}`,
           },
@@ -85,7 +85,7 @@ export class EquipmentScreen extends Screen {
       for (const slot of handSlots) {
         let equipment = this.createItemText(slot.equippedItem);
         new TextWidget({
-          origin: { x: 1, y },
+          origin: { x: 2, y },
           initialState: {
             text: `${slot.name}${equipment}`,
           },
@@ -97,7 +97,7 @@ export class EquipmentScreen extends Screen {
       for (const slot of gloveSlots) {
         let equipment = this.createItemText(slot.equippedItem);
         new TextWidget({
-          origin: { x: 1, y },
+          origin: { x: 2, y },
           initialState: {
             text: `${slot.name}${equipment}`,
           },
@@ -109,7 +109,7 @@ export class EquipmentScreen extends Screen {
       for (const slot of feetSlots) {
         let equipment = this.createItemText(slot.equippedItem);
         new TextWidget({
-          origin: { x: 1, y },
+          origin: { x: 2, y },
           initialState: {
             text: `${slot.name}${equipment}`,
           },

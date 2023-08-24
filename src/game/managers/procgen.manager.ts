@@ -313,6 +313,11 @@ export class ProcGenManager extends Manager {
   }
 
   generateEntities(level: Level) {
+    this.generateCreatures(level);
+    this.generateItems(level);
+  }
+
+  generateCreatures(level: Level) {
     for (const _ of range(0, this.game.rng.nextInt(3, 10))) {
       this.game.mapIndexingSystem.update();
       const rat: Entity = JSON.parse(JSON.stringify(Prefabs.Rat));
@@ -328,6 +333,18 @@ export class ProcGenManager extends Manager {
       ooze.position = randomOpenTile(this.game.rng, level);
       populateBodyStats(ooze);
       this.game.ecs.addEntity(ooze);
+    }
+  }
+
+  generateItems(level: Level) {
+    for (const _ of range(0, this.game.rng.nextInt(2, 4))) {
+      const type = this.game.rng.nextItem([Prefabs.Knife, Prefabs.ShortSword]);
+      if (type) {
+        const item: Entity = { ...type };
+        item.id = nanoid();
+        item.position = randomOpenTile(this.game.rng, level);
+        this.game.ecs.addEntity(item);  
+      }
     }
   }
 }
