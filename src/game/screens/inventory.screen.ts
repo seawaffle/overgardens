@@ -57,10 +57,14 @@ export class InventoryScreen extends Screen {
     if (items && items.length > 0) {
       let y = 2;
       for (const item of items) {
+        let itemText = `${item.name}`;
+        if (item.itemProperties!.equipped) {
+          itemText += " (Equipped)";
+        }
         new TextWidget({
           origin: { x: 2, y },
           initialState: {
-            text: item.name,
+            text: itemText,
             onClick: () => {
               Actions.openItemDetails(this.game, item);
             },
@@ -89,7 +93,10 @@ export class InventoryScreen extends Screen {
     }
   }
   render(): void {
-    if (this.game.updateScreen && this.game.gameState.state === GameState.Inventory) {
+    if (
+      this.game.updateScreen &&
+      this.game.gameState.state === GameState.Inventory
+    ) {
       this.guiContainer = this.constructGui();
       this.guiContainer.setDisabled(false);
       this.game.updateScreen = false;

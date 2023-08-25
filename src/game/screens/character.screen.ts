@@ -259,6 +259,43 @@ export class CharacterScreen extends Screen {
         return { text };
       })
       .setParent(panelWidget);
+    // dr
+    new GUI.TextWidget({
+      origin: { x: 2, y: 11 },
+      initialState: {
+        text: "DR:",
+        backColor: Palette.Ebony,
+        foreColor: Palette.GreyNurse,
+      },
+    })
+      .setUpdateFunc(() => {
+        let text = "";
+        if (this.game.player) {
+          const value = this.game.player.body!.damageReduction!;
+          text = `DR: ${value}`;
+        }
+        return { text };
+      })
+      .setParent(panelWidget);
+
+    // dv
+    new GUI.TextWidget({
+      origin: { x: 2, y: 12 },
+      initialState: {
+        text: "DV:",
+        backColor: Palette.Ebony,
+        foreColor: Palette.GreyNurse,
+      },
+    })
+      .setUpdateFunc(() => {
+        let text = "";
+        if (this.game.player) {
+          const value = this.game.player.body!.dodgeValue!;
+          text = `DV: ${value}`;
+        }
+        return { text };
+      })
+      .setParent(panelWidget);
     container.setDisabled(true);
     return container;
   }
@@ -270,7 +307,7 @@ export class CharacterScreen extends Screen {
     if (!this.guiContainer.isDisabled()) {
       this.game.log.clearOverride();
       this.guiContainer.cascadeUpdate();
-      this.guiContainer.cascadeDraw();  
+      this.guiContainer.cascadeDraw();
     }
   }
 }

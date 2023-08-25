@@ -1,5 +1,6 @@
 import { Game } from "../game";
 import {
+  deepCopy,
   findOpenGround,
   findOpenNearCoord,
   isReachable,
@@ -42,7 +43,7 @@ export class ProcGenManager extends Manager {
   }
 
   generateName(): string {
-    const name = this.stringGen.generate();
+    const name = this.stringGen.generate().trim();
     return name.length <= this.MAX_NAME_SIZE ? name : this.generateName();
   }
 
@@ -300,7 +301,7 @@ export class ProcGenManager extends Manager {
         this.game.player.position = findOpenGround(level, "south");
       }
     } else {
-      const player = { ...Prefabs.Player };
+      const player = deepCopy(Prefabs.Player);
       player.id = nanoid();
       player.name = this.generateName()
         .split(" ")
@@ -320,7 +321,7 @@ export class ProcGenManager extends Manager {
   generateCreatures(level: Level) {
     for (const _ of range(0, this.game.rng.nextInt(3, 10))) {
       this.game.mapIndexingSystem.update();
-      const rat: Entity = JSON.parse(JSON.stringify(Prefabs.Rat));
+      const rat: Entity = deepCopy(Prefabs.Rat);
       rat.id = nanoid();
       rat.position = randomOpenTile(this.game.rng, level);
       populateBodyStats(rat);
@@ -328,7 +329,7 @@ export class ProcGenManager extends Manager {
     }
     for (const _ of range(0, this.game.rng.nextInt(1, 2))) {
       this.game.mapIndexingSystem.update();
-      const ooze: Entity = JSON.parse(JSON.stringify(Prefabs.Ooze));
+      const ooze: Entity = deepCopy(Prefabs.Ooze);
       ooze.id = nanoid();
       ooze.position = randomOpenTile(this.game.rng, level);
       populateBodyStats(ooze);
@@ -340,7 +341,20 @@ export class ProcGenManager extends Manager {
     for (const _ of range(0, this.game.rng.nextInt(2, 4))) {
       const type = this.game.rng.nextItem([Prefabs.Knife, Prefabs.ShortSword]);
       if (type) {
-        const item: Entity = { ...type };
+        const item: Entity = deepCopy(type);
+        item.id = nanoid();
+        item.position = randomOpenTile(this.game.rng, level);
+        this.game.ecs.addEntity(item);
+      }
+    }
+    for (const _ of range(0, this.game.rng.nextInt(2, 4))) {
+      const type = this.game.rng.nextItem([
+        Prefabs.Shirt,
+        Prefabs.Pants,
+        Prefabs.LeatherArmor,
+      ]);
+      if (type) {
+        const item: Entity = deepCopy(type);
         item.id = nanoid();
         item.position = randomOpenTile(this.game.rng, level);
         this.game.ecs.addEntity(item);

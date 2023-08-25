@@ -51,6 +51,7 @@ export const Fist: Entity = {
     consumable: false,
     damage: "1d4-1",
     melee: true,
+    natural: true,
   },
 };
 
@@ -64,5 +65,6 @@ export const Bite: Entity = {
     consumable: false,
     damage: "1d4-1",
     melee: true,
+    natural: true,
   },
 };

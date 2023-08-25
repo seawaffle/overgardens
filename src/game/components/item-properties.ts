@@ -7,8 +7,9 @@ export interface ItemProperties {
   slotType?: SlotType;
   consumable?: boolean;
   dodgeValue?: number;
-  armorReduction?: number;
+  damageReduction?: number;
   damage?: string;
   melee?: true;
   twoHanded?: true;
+  natural?: true;
 }

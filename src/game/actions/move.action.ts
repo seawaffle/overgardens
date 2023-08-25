@@ -24,9 +24,9 @@ export function tryMoveEntity(
     for (const e of level.getTileContent(destination)) {
       if (entity.player && e.body) {
         if (entity.body && entity.body.slots) {
+          let firstAttack = true;
           for (const slot of entity.body.slots) {
             const weapon = slot.equippedItem;
-            let firstAttack = true;
             if (
               weapon &&
               weapon.itemProperties &&

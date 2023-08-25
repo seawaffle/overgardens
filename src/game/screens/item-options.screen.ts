@@ -72,9 +72,9 @@ export class ItemOptionsScreen extends Screen {
             downColor: Palette.William,
             onClick: () => {
               if (equipped) {
-                Actions.equipItem(this.game, this.game.player!, item);
-              } else {
                 Actions.unequipItem(this.game, this.game.player!, item);
+              } else {
+                Actions.equipItem(this.game, this.game.player!, item);
               }
               this.game.updateScreen = true;
               Actions.closeItemDetails(this.game);
