@@ -76,6 +76,7 @@ export class ItemOptionsScreen extends Screen {
               } else {
                 Actions.unequipItem(this.game, this.game.player!, item);
               }
+              this.game.updateScreen = true;
               Actions.closeItemDetails(this.game);
             },
           },
@@ -92,6 +93,7 @@ export class ItemOptionsScreen extends Screen {
           downColor: Palette.William,
           onClick: () => {
             Actions.dropItem(this.game, this.game.player!, item);
+            this.game.updateScreen = true;
             Actions.closeItemDetails(this.game);
           },
         },

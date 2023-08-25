@@ -267,8 +267,10 @@ export class CharacterScreen extends Screen {
     this.guiContainer.setDisabled(state !== GameState.Character);
   }
   render(): void {
-    this.game.log.clearOverride();
-    this.guiContainer.cascadeUpdate();
-    this.guiContainer.cascadeDraw();
+    if (!this.guiContainer.isDisabled()) {
+      this.game.log.clearOverride();
+      this.guiContainer.cascadeUpdate();
+      this.guiContainer.cascadeDraw();  
+    }
   }
 }

@@ -57,6 +57,7 @@ export class Game {
   examinePosition: Vector2 = { x: -1, y: -1 };
   logLineNumber = 0;
   itemToDescribe?: Entity;
+  updateScreen = false;
 
   constructor(id?: string) {
     this.gameId = id || Date.now().toString();

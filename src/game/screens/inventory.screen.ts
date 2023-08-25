@@ -89,6 +89,11 @@ export class InventoryScreen extends Screen {
     }
   }
   render(): void {
+    if (this.game.updateScreen && this.game.gameState.state === GameState.Inventory) {
+      this.guiContainer = this.constructGui();
+      this.guiContainer.setDisabled(false);
+      this.game.updateScreen = false;
+    }
     this.guiContainer.cascadeDraw();
   }
 }
