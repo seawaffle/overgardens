@@ -63,8 +63,8 @@ export class InventoryScreen extends Screen {
             text: item.name,
             onClick: () => {
               Actions.openItemDetails(this.game, item);
-            }
-          }
+            },
+          },
         }).setParent(panelWidget);
         y++;
       }
@@ -73,7 +73,7 @@ export class InventoryScreen extends Screen {
         origin: { x: 2, y: 2 },
         initialState: {
           text: "-- Nothing --",
-        }
+        },
       }).setParent(panelWidget);
     }
     container.setDisabled(true);

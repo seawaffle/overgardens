@@ -9,7 +9,7 @@ export enum HoverState {
 }
 
 export interface TextState extends TextWidgetState {
-    onClick?: () => void;
+  onClick?: () => void;
 }
 
 export class TextWidget extends GUI.Widget<TextState> {
@@ -27,7 +27,7 @@ export class TextWidget extends GUI.Widget<TextState> {
         { x: origin.x, y: origin.y + y },
         line,
         this.state.foreColor,
-        this.state.backColor
+        this.state.backColor,
       );
     }
   }
@@ -53,7 +53,6 @@ export class TextWidget extends GUI.Widget<TextState> {
     }
     return false;
   }
-
 
   wrapText(config: { text: string; wrapAt: number }): string[] {
     const lines: string[] = [];

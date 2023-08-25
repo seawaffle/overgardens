@@ -343,7 +343,7 @@ export class ProcGenManager extends Manager {
         const item: Entity = { ...type };
         item.id = nanoid();
         item.position = randomOpenTile(this.game.rng, level);
-        this.game.ecs.addEntity(item);  
+        this.game.ecs.addEntity(item);
       }
     }
   }

@@ -15,10 +15,16 @@ export function closeEquipment(game: Game) {
   game.gameState.setState(GameState.AwaitingInput);
 }
 
-export function equipItem(game: Game, me: Entity, item: Entity) {
-  
+export function equipItem(_game: Game, me: Entity, item: Entity) {
+  if (me.inventory && me.inventory.items.includes(item)) {
+  }
 }
 
-export function unequipItem(game: Game, me: Entity, item: Entity) {
-  
+export function unequipItem(_game: Game, me: Entity, item: Entity) {
+  if (
+    me.inventory &&
+    me.inventory.items.includes(item) &&
+    item.itemProperties!.equipped
+  ) {
+  }
 }

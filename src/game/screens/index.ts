@@ -10,3 +10,4 @@ export * from "./context-menu.screen";
 export * from "./full-log.screen";
 export * from "./character.screen";
 export * from "./equipment.screen";
+export * from "./item-options.screen";

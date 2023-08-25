@@ -18,7 +18,7 @@ export const Knife: Entity = {
       fg: Palette.GreyNurseHex,
     },
     renderOrder: 2,
-  }
+  },
 };
 
 export const ShortSword: Entity = {
@@ -38,7 +38,7 @@ export const ShortSword: Entity = {
       fg: Palette.GreyNurseHex,
     },
     renderOrder: 2,
-  }
+  },
 };
 
 export const Fist: Entity = {

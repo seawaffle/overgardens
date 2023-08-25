@@ -22,6 +22,7 @@ export class RenderSystem extends System {
     new Screens.FullLogScreen(this.game),
     new Screens.CharacterScreen(this.game),
     new Screens.EquipmentScreen(this.game),
+    new Screens.ItemOptionsScreen(this.game),
   ];
 
   screenWidth: number;
