@@ -11,3 +11,4 @@ export * from "./full-log.screen";
 export * from "./character.screen";
 export * from "./equipment.screen";
 export * from "./item-options.screen";
+export * from "./item-picker.screen";

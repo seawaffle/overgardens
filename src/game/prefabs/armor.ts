@@ -2,12 +2,13 @@ import { Entity, SlotType } from "../components";
 import { Palette } from "../data";
 
 export const Shirt: Entity = {
-  name: "Shirt",
+  name: "Clothes",
   mobile: false,
   itemProperties: {
     equippable: true,
     droppedOnDeath: true,
     slotType: SlotType.Body,
+    dodgeValue: 1,
   },
   renderable: {
     glyph: {
@@ -17,12 +18,14 @@ export const Shirt: Entity = {
     renderOrder: 2,
   },
 };
-export const Pants: Entity = {
-  name: "Pants",
+export const LeatherHelm: Entity = {
+  name: "Leather Helm",
   mobile: false,
   itemProperties: {
     equippable: true,
     droppedOnDeath: true,
+    slotType: SlotType.Head,
+    damageReduction: 1,
   },
   renderable: {
     glyph: {

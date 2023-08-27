@@ -50,6 +50,7 @@ export class Level {
   mode: string;
   rootNote: string;
   visited = false;
+  difficulty: number;
 
   constructor(
     public id: number,
@@ -67,6 +68,7 @@ export class Level {
 
     this.mode = "";
     this.rootNote = "";
+    this.difficulty = 0;
   }
 
   populateBlocked() {

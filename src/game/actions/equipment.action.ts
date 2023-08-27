@@ -1,6 +1,6 @@
 import { Game } from "../game";
 import { GameState } from "../data/game-state";
-import { Entity } from "../components";
+import { Entity, Slot } from "../components";
 import { applyEquipmentStats } from "../mechanics";
 
 export function openEquipment(game: Game) {
@@ -16,7 +16,12 @@ export function closeEquipment(game: Game) {
   game.gameState.setState(GameState.AwaitingInput);
 }
 
-export function equipItem(game: Game, me: Entity, item: Entity) {
+export function equipItem(
+  game: Game,
+  me: Entity,
+  item: Entity,
+  chosenSlot?: Slot,
+) {
   if (me.inventory && me.inventory.items.includes(item)) {
     for (const slot of me.body!.slots!) {
       if (slot.type === item.itemProperties!.slotType) {
@@ -24,11 +29,21 @@ export function equipItem(game: Game, me: Entity, item: Entity) {
           slot.ableToEquipItems &&
           (!slot.equippedItem || slot.equippedItem.itemProperties!.natural)
         ) {
-          slot.equippedItem = item;
-          item.itemProperties!.equipped = true;
-          applyEquipmentStats(me);
-          game.log.addMessage(`${me.name} equipped ${item.name}`);
-          return;
+          if (chosenSlot) {
+            if (slot === chosenSlot) {
+              slot.equippedItem = item;
+              item.itemProperties!.equipped = true;
+              applyEquipmentStats(me);
+              game.log.addMessage(`${me.name} equipped ${item.name}`);
+              return;
+            }
+          } else {
+            slot.equippedItem = item;
+            item.itemProperties!.equipped = true;
+            applyEquipmentStats(me);
+            game.log.addMessage(`${me.name} equipped ${item.name}`);
+            return;
+          }
         }
       }
     }
@@ -51,4 +66,12 @@ export function unequipItem(game: Game, me: Entity, item: Entity) {
       }
     }
   }
+}
+
+export function openItemPicker(game: Game, slot: Slot) {
+  game.slotToEquip = slot;
+}
+
+export function closeItemPicker(game: Game) {
+  game.slotToEquip = undefined;
 }

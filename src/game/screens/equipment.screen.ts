@@ -88,8 +88,13 @@ export class EquipmentScreen extends Screen {
               foreColor: Palette.GreyNurse,
               text: `${slot.name}${equipment}`,
               onClick: () => {
-                if (slot.equippedItem) {
-                  this.game.itemToDescribe = slot.equippedItem;
+                if (
+                  slot.equippedItem &&
+                  !slot.equippedItem!.itemProperties!.natural
+                ) {
+                  Actions.openItemDetails(this.game, slot.equippedItem);
+                } else {
+                  Actions.openItemPicker(this.game, slot);
                 }
               },
             },
@@ -125,8 +130,13 @@ export class EquipmentScreen extends Screen {
               backColor: Palette.Ebony,
               foreColor: Palette.GreyNurse,
               onClick: () => {
-                if (slot.equippedItem) {
-                  this.game.itemToDescribe = slot.equippedItem;
+                if (
+                  slot.equippedItem &&
+                  !slot.equippedItem!.itemProperties!.natural
+                ) {
+                  Actions.openItemDetails(this.game, slot.equippedItem);
+                } else {
+                  Actions.openItemPicker(this.game, slot);
                 }
               },
             },
@@ -161,8 +171,13 @@ export class EquipmentScreen extends Screen {
               foreColor: Palette.GreyNurse,
               text: `${slot.name}${equipment}`,
               onClick: () => {
-                if (slot.equippedItem) {
-                  this.game.itemToDescribe = slot.equippedItem;
+                if (
+                  slot.equippedItem &&
+                  !slot.equippedItem!.itemProperties!.natural
+                ) {
+                  Actions.openItemDetails(this.game, slot.equippedItem);
+                } else {
+                  Actions.openItemPicker(this.game, slot);
                 }
               },
             },
@@ -200,8 +215,13 @@ export class EquipmentScreen extends Screen {
               foreColor: Palette.GreyNurse,
               text: `${slot.name}${equipment}`,
               onClick: () => {
-                if (slot.equippedItem) {
-                  this.game.itemToDescribe = slot.equippedItem;
+                if (
+                  slot.equippedItem &&
+                  !slot.equippedItem!.itemProperties!.natural
+                ) {
+                  Actions.openItemDetails(this.game, slot.equippedItem);
+                } else {
+                  Actions.openItemPicker(this.game, slot);
                 }
               },
             },
@@ -239,9 +259,11 @@ export class EquipmentScreen extends Screen {
               onClick: () => {
                 if (
                   slot.equippedItem &&
-                  !slot.equippedItem.itemProperties!.natural
+                  !slot.equippedItem!.itemProperties!.natural
                 ) {
-                  this.game.itemToDescribe = slot.equippedItem;
+                  Actions.openItemDetails(this.game, slot.equippedItem);
+                } else {
+                  Actions.openItemPicker(this.game, slot);
                 }
               },
             },

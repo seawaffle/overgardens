@@ -13,6 +13,8 @@ export class EquipmentContext extends Input.KeyboardContext {
           case Input.KeyCode.Escape: {
             if (this.game.itemToDescribe) {
               Actions.closeItemDetails(game);
+            } else if (this.game.slotToEquip) {
+              Actions.closeItemPicker(game);
             } else {
               Actions.closeEquipment(game);
             }

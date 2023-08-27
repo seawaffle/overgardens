@@ -19,7 +19,7 @@ import {
   ZoneChangeSystem,
   ExtendedActionSystem,
 } from "./systems";
-import { Entity } from "./components";
+import { Entity, Slot } from "./components";
 import { GameState } from "./data";
 import { Rand, Vector2 } from "malwoden";
 import { FactionManager } from "./managers/faction.manager";
@@ -57,6 +57,7 @@ export class Game {
   examinePosition: Vector2 = { x: -1, y: -1 };
   logLineNumber = 0;
   itemToDescribe?: Entity;
+  slotToEquip?: Slot;
   updateScreen = false;
 
   constructor(id?: string) {

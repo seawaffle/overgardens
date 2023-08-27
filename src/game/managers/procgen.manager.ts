@@ -64,18 +64,24 @@ export class ProcGenManager extends Manager {
     const levelCount = this.game.rng.nextInt(this.MIN_LEVELS, this.MAX_LEVELS);
     console.log(`generating ${levelCount} levels`);
     for (const i of range(0, levelCount)) {
+      const difficulty = area.id + i;
       if (i === 0) {
-        area.levels.push(this.generateLevel(i, area.rootNote));
+        area.levels.push(this.generateLevel(i, area.rootNote, difficulty));
       } else {
         area.levels.push(
-          this.generateLevel(i, area.rootNote, area.levels[i - 1]),
+          this.generateLevel(i, area.rootNote, difficulty, area.levels[i - 1]),
         );
       }
     }
     return area;
   }
 
-  generateLevel(id: number, rootNote: string, previousLevel?: Level): Level {
+  generateLevel(
+    id: number,
+    rootNote: string,
+    difficulty: number,
+    previousLevel?: Level,
+  ): Level {
     const level = new Level(
       id,
       this.game.map.areaWidth,
@@ -83,6 +89,7 @@ export class ProcGenManager extends Manager {
     );
     level.rootNote = rootNote;
     level.mode = this.game.music.getRandomScale();
+    level.difficulty = difficulty;
     if (previousLevel) {
       this.generateDungeon(level, previousLevel);
     } else {
@@ -350,7 +357,7 @@ export class ProcGenManager extends Manager {
     for (const _ of range(0, this.game.rng.nextInt(2, 4))) {
       const type = this.game.rng.nextItem([
         Prefabs.Shirt,
-        Prefabs.Pants,
+        Prefabs.LeatherHelm,
         Prefabs.LeatherArmor,
       ]);
       if (type) {
