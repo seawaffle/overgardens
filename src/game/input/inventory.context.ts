@@ -11,7 +11,11 @@ export class InventoryContext extends Input.KeyboardContext {
       if (this.game.gameState.state === GameState.Inventory) {
         switch (keyEvent.key) {
           case Input.KeyCode.Escape: {
-            Actions.closeInventory(game);
+            if (this.game.itemToDescribe) {
+              Actions.closeItemDetails(game);
+            } else {
+              Actions.closeInventory(game);
+            }
             break;
           }
         }

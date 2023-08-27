@@ -87,6 +87,11 @@ export class EquipmentScreen extends Screen {
               backColor: Palette.Ebony,
               foreColor: Palette.GreyNurse,
               text: `${slot.name}${equipment}`,
+              onClick: () => {
+                if (slot.equippedItem) {
+                  this.game.itemToDescribe = slot.equippedItem;
+                }
+              },
             },
           }).setParent(panelWidget);
           y++;
@@ -119,6 +124,11 @@ export class EquipmentScreen extends Screen {
               text: `${slot.name}${equipment}`,
               backColor: Palette.Ebony,
               foreColor: Palette.GreyNurse,
+              onClick: () => {
+                if (slot.equippedItem) {
+                  this.game.itemToDescribe = slot.equippedItem;
+                }
+              },
             },
           }).setParent(panelWidget);
           y++;
@@ -150,6 +160,11 @@ export class EquipmentScreen extends Screen {
               backColor: Palette.Ebony,
               foreColor: Palette.GreyNurse,
               text: `${slot.name}${equipment}`,
+              onClick: () => {
+                if (slot.equippedItem) {
+                  this.game.itemToDescribe = slot.equippedItem;
+                }
+              },
             },
           }).setParent(panelWidget);
           y++;
@@ -184,6 +199,11 @@ export class EquipmentScreen extends Screen {
               backColor: Palette.Ebony,
               foreColor: Palette.GreyNurse,
               text: `${slot.name}${equipment}`,
+              onClick: () => {
+                if (slot.equippedItem) {
+                  this.game.itemToDescribe = slot.equippedItem;
+                }
+              },
             },
           }).setParent(panelWidget);
           y++;
@@ -216,6 +236,14 @@ export class EquipmentScreen extends Screen {
               backColor: Palette.Ebony,
               foreColor: Palette.GreyNurse,
               text: `${slot.name}${equipment}`,
+              onClick: () => {
+                if (
+                  slot.equippedItem &&
+                  !slot.equippedItem.itemProperties!.natural
+                ) {
+                  this.game.itemToDescribe = slot.equippedItem;
+                }
+              },
             },
           }).setParent(panelWidget);
           y++;

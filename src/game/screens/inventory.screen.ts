@@ -86,6 +86,7 @@ export class InventoryScreen extends Screen {
 
   notify(state: GameState): void {
     if (state === GameState.Inventory) {
+      this.guiContainer.clearMouseContext();
       this.guiContainer = this.constructGui();
       this.guiContainer.setDisabled(false);
     } else {
@@ -93,13 +94,14 @@ export class InventoryScreen extends Screen {
     }
   }
   render(): void {
-    if (
-      this.game.updateScreen &&
-      this.game.gameState.state === GameState.Inventory
-    ) {
-      this.guiContainer = this.constructGui();
-      this.guiContainer.setDisabled(false);
-      this.game.updateScreen = false;
+    if (this.game.gameState.state === GameState.Inventory) {
+      this.game.log.clearOverride();
+      if (this.game.updateScreen) {
+        this.guiContainer.clearMouseContext();
+        this.guiContainer = this.constructGui();
+        this.guiContainer.setDisabled(false);
+        this.game.updateScreen = false;
+      }
     }
     this.guiContainer.cascadeDraw();
   }

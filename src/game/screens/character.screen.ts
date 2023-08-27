@@ -301,6 +301,10 @@ export class CharacterScreen extends Screen {
   }
 
   notify(state: GameState): void {
+    if (state !== GameState.Character) {
+      // not sure about this
+      this.game.log.clearOverride();
+    }
     this.guiContainer.setDisabled(state !== GameState.Character);
   }
   render(): void {

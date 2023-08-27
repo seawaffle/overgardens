@@ -11,7 +11,11 @@ export class EquipmentContext extends Input.KeyboardContext {
       if (this.game.gameState.state === GameState.Equipment) {
         switch (keyEvent.key) {
           case Input.KeyCode.Escape: {
-            Actions.closeEquipment(game);
+            if (this.game.itemToDescribe) {
+              Actions.closeItemDetails(game);
+            } else {
+              Actions.closeEquipment(game);
+            }
             break;
           }
         }
