@@ -14,10 +14,12 @@ export class MapManager extends Manager {
 
   generateMap() {
     this.map = this.game.procgen.generateMap();
-    // const area = this.map.getCurrentArea();
-    this.game.procgen.generateEntities(this.map.getCurrentLevel());
+    const area = this.map.getCurrentArea();
+    for (const level of area.levels) {
+      this.game.procgen.generateEntities(area, level);
+    }
     this.game.procgen.placePlayer(this.map.getCurrentLevel());
-    this.game.procgen.populateStairs(this.map.getCurrentArea());
+    this.game.procgen.populateStairs(area);
   }
 
   loadMap(data: Record<string, any>) {

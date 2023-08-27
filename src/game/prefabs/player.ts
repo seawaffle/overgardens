@@ -1,4 +1,4 @@
-import { Fist } from ".";
+import { Weapons } from ".";
 import { Entity, SlotType } from "../components";
 
 export const Player: Entity = {
@@ -56,13 +56,13 @@ export const Player: Entity = {
         name: "Right Hand",
         type: SlotType.Hand,
         ableToEquipItems: true,
-        equippedItem: { ...Fist },
+        equippedItem: { ...Weapons.get("fist")! },
       },
       {
         name: "Left Hand",
         type: SlotType.Hand,
         ableToEquipItems: true,
-        equippedItem: { ...Fist },
+        equippedItem: { ...Weapons.get("fist")! },
       },
     ],
   },

@@ -3,6 +3,7 @@ import {
   deepCopy,
   findOpenGround,
   findOpenNearCoord,
+  getWeightedValue,
   isReachable,
   mixNoise,
   randomOpenTile,
@@ -15,7 +16,6 @@ import * as Prefabs from "../prefabs";
 import { nanoid } from "nanoid";
 import { Area, Level, Map, Tile } from "../data";
 import { CharCode, Generation, Vector2 } from "malwoden";
-import { Entity } from "../components";
 import { StringGenerator } from "rot-js";
 import NameData from "../prefabs/names.json";
 import { populateBodyStats } from "../mechanics";
@@ -320,51 +320,71 @@ export class ProcGenManager extends Manager {
     }
   }
 
-  generateEntities(level: Level) {
-    this.generateCreatures(level);
-    this.generateItems(level);
+  generateEntities(area: Area, level: Level) {
+    this.generateCreatures(area, level);
+    this.generateItems(area, level);
   }
 
-  generateCreatures(level: Level) {
-    for (const _ of range(0, this.game.rng.nextInt(3, 10))) {
-      this.game.mapIndexingSystem.update();
-      const rat: Entity = deepCopy(Prefabs.Rat);
-      rat.id = nanoid();
-      rat.position = randomOpenTile(this.game.rng, level);
-      populateBodyStats(rat);
-      this.game.ecs.addEntity(rat);
-    }
-    for (const _ of range(0, this.game.rng.nextInt(1, 2))) {
-      this.game.mapIndexingSystem.update();
-      const ooze: Entity = deepCopy(Prefabs.Ooze);
-      ooze.id = nanoid();
-      ooze.position = randomOpenTile(this.game.rng, level);
-      populateBodyStats(ooze);
-      this.game.ecs.addEntity(ooze);
-    }
-  }
-
-  generateItems(level: Level) {
-    for (const _ of range(0, this.game.rng.nextInt(2, 4))) {
-      const type = this.game.rng.nextItem([Prefabs.Knife, Prefabs.ShortSword]);
-      if (type) {
-        const item: Entity = deepCopy(type);
-        item.id = nanoid();
-        item.position = randomOpenTile(this.game.rng, level);
-        this.game.ecs.addEntity(item);
+  generateCreatures(area: Area, level: Level) {
+    const entities: Record<string, number> = {};
+    for (const i of Prefabs.CreatureTable.keys()) {
+      const spawnTable = Prefabs.CreatureTable.get(i)!;
+      if (
+        spawnTable.minDifficulty <= level.difficulty &&
+        spawnTable.maxDifficulty >= level.difficulty
+      ) {
+        entities[i] = spawnTable.weight;
       }
     }
-    for (const _ of range(0, this.game.rng.nextInt(2, 4))) {
-      const type = this.game.rng.nextItem([
-        Prefabs.Shirt,
-        Prefabs.LeatherHelm,
-        Prefabs.LeatherArmor,
-      ]);
-      if (type) {
-        const item: Entity = deepCopy(type);
-        item.id = nanoid();
-        item.position = randomOpenTile(this.game.rng, level);
-        this.game.ecs.addEntity(item);
+    const creatureAmount = this.game.rng.nextInt(5, 10);
+    for (const _ of range(0, creatureAmount)) {
+      const entityType = getWeightedValue(this.game.rng, entities)!;
+      if (entityType) {
+        const entity = deepCopy(Prefabs.Creatures.get(entityType));
+        entity.id = nanoid();
+        if (level === this.game.map.getCurrentLevel()) {
+          entity.position = randomOpenTile(this.game.rng, level);
+        } else {
+          entity.outOfLevel = {
+            area: area.id,
+            level: level.id,
+            pos: randomOpenTile(this.game.rng, level),
+          };
+        }
+        populateBodyStats(entity);
+        this.game.ecs.addEntity(entity);
+        this.game.mapIndexingSystem.update();
+      }
+    }
+  }
+
+  generateItems(area: Area, level: Level) {
+    const entities: Record<string, number> = {};
+    for (const i of Prefabs.ItemTable.keys()) {
+      const spawnTable = Prefabs.ItemTable.get(i)!;
+      if (
+        spawnTable.minDifficulty <= level.difficulty &&
+        spawnTable.maxDifficulty >= level.difficulty
+      ) {
+        entities[i] = spawnTable.weight;
+      }
+    }
+    const itemAmount = this.game.rng.nextInt(5, 10);
+    for (const _ of range(0, itemAmount)) {
+      const entityType = getWeightedValue(this.game.rng, entities)!;
+      if (entityType) {
+        const entity = deepCopy(Prefabs.AllItems.get(entityType));
+        entity.id = nanoid();
+        if (level === this.game.map.getCurrentLevel()) {
+          entity.position = randomOpenTile(this.game.rng, level);
+        } else {
+          entity.outOfLevel = {
+            area: area.id,
+            level: level.id,
+            pos: randomOpenTile(this.game.rng, level),
+          };
+        }
+        this.game.ecs.addEntity(entity);
       }
     }
   }

@@ -88,7 +88,7 @@ export function findOpenGround(level: Level, edge?: string) {
     case "north": {
       for (let y = 0; y < level.height; y++) {
         const coord = { x: mapCenter.x, y };
-        if (!level.isBlocked(coord)) {
+        if (!level.isBlocked(coord) && level.tiles.get(coord)!.walkable) {
           position = coord;
           break;
         }
@@ -98,7 +98,7 @@ export function findOpenGround(level: Level, edge?: string) {
     case "south": {
       for (let y = level.height - 1; y > 0; y--) {
         const coord = { x: mapCenter.x, y };
-        if (!level.isBlocked(coord)) {
+        if (!level.isBlocked(coord) && level.tiles.get(coord)!.walkable) {
           position = coord;
           break;
         }
@@ -108,7 +108,7 @@ export function findOpenGround(level: Level, edge?: string) {
     case "east": {
       for (let x = level.width - 1; x > 0; x--) {
         const coord = { x, y: mapCenter.y };
-        if (!level.isBlocked(coord)) {
+        if (!level.isBlocked(coord) && level.tiles.get(coord)!.walkable) {
           position = coord;
           break;
         }
@@ -118,7 +118,7 @@ export function findOpenGround(level: Level, edge?: string) {
     case "west": {
       for (let x = 0; x < level.width; x++) {
         const coord = { x, y: mapCenter.y };
-        if (!level.isBlocked(coord)) {
+        if (!level.isBlocked(coord) && level.tiles.get(coord)!.walkable) {
           position = coord;
           break;
         }
@@ -141,8 +141,11 @@ export function isReachable(
   const astar = new Pathfinding.AStar({
     topology: "eight",
     isBlockedCallback: (p) => {
-      // if (p === destination) return false;
-      return !level.tiles.get(p)!.walkable;
+      const tile = level.tiles.get(p);
+      if (tile) {
+        return !tile.walkable;
+      }
+      return true;
     },
   });
   const path = astar.compute(start, pos);
@@ -165,7 +168,7 @@ export function findOpenNearCoord(level: Level, pos: Vector2) {
     ) {
       continue;
     }
-    if (!level.isBlocked(coord)) {
+    if (!level.isBlocked(coord) && level.tiles.get(coord)!.walkable) {
       position = coord;
       break;
     } else {
@@ -233,4 +236,30 @@ function adjustColor(color: Color, r: number, g: number, b: number): Color {
 
 export function deepCopy(item: any): any {
   return JSON.parse(JSON.stringify(item));
+}
+
+// stolen out of rot.js, modified to work with malwoden rand object
+export function getWeightedValue(
+  rng: Rand.AleaRNG,
+  data: { [key: string]: number; [key: number]: number },
+) {
+  let total = 0;
+
+  for (let id in data) {
+    total += data[id];
+  }
+  let random = rng.next() * total;
+
+  let id,
+    part = 0;
+  for (id in data) {
+    part += data[id];
+    if (random < part) {
+      return id;
+    }
+  }
+
+  // If by some floating-point annoyance we have
+  // random >= total, just return the last id.
+  return id;
 }

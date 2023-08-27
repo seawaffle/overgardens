@@ -1,7 +1,8 @@
 import { Entity, SlotType } from "../components";
 import { Palette } from "../data";
 
-export const Knife: Entity = {
+export const Weapons: Map<string, Entity> = new Map<string, Entity>();
+Weapons.set("knife", {
   name: "Knife",
   mobile: false,
   itemProperties: {
@@ -19,9 +20,9 @@ export const Knife: Entity = {
     },
     renderOrder: 2,
   },
-};
+});
 
-export const ShortSword: Entity = {
+Weapons.set("short-sword", {
   name: "Short Sword",
   mobile: false,
   itemProperties: {
@@ -39,9 +40,9 @@ export const ShortSword: Entity = {
     },
     renderOrder: 2,
   },
-};
+});
 
-export const Fist: Entity = {
+Weapons.set("fist", {
   name: "Fist",
   mobile: false,
   itemProperties: {
@@ -53,9 +54,9 @@ export const Fist: Entity = {
     melee: true,
     natural: true,
   },
-};
+});
 
-export const Bite: Entity = {
+Weapons.set("bite", {
   name: "Bite",
   mobile: false,
   itemProperties: {
@@ -67,4 +68,4 @@ export const Bite: Entity = {
     melee: true,
     natural: true,
   },
-};
+});

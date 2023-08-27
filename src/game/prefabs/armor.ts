@@ -1,7 +1,8 @@
 import { Entity, SlotType } from "../components";
 import { Palette } from "../data";
 
-export const Shirt: Entity = {
+export const Armor: Map<string, Entity> = new Map<string, Entity>();
+Armor.set("clothes", {
   name: "Clothes",
   mobile: false,
   itemProperties: {
@@ -17,8 +18,8 @@ export const Shirt: Entity = {
     },
     renderOrder: 2,
   },
-};
-export const LeatherHelm: Entity = {
+});
+Armor.set("leather-helm", {
   name: "Leather Helm",
   mobile: false,
   itemProperties: {
@@ -34,8 +35,8 @@ export const LeatherHelm: Entity = {
     },
     renderOrder: 2,
   },
-};
-export const LeatherArmor: Entity = {
+});
+Armor.set("leather-armor", {
   name: "Leather Armor",
   mobile: false,
   itemProperties: {
@@ -51,4 +52,4 @@ export const LeatherArmor: Entity = {
     },
     renderOrder: 2,
   },
-};
+});
