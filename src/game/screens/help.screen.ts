@@ -8,10 +8,14 @@ export class HelpScreen extends Screen {
   guiContainer: GUI.ContainerWidget;
   helpTexts = [
     "? - This help screen",
-    "i - Inventory screen",
-    ". - Wait 1 turn",
     "Arrow Keys - Movement",
-    "x - Examine your surroundings",
+    "Escape - Save or quit game",
+    ". - Wait 1 turn",
+    "X - Examine your surroundings",
+    "L - View the full log",
+    "C - View character sheet",
+    "I - View inventory",
+    "E - View equipment",
   ];
   constructor(game: Game) {
     super(game);
