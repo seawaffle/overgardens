@@ -11,12 +11,12 @@
   },
   "devDependencies": {
     "@types/babel__core": "^7.20.1",
-    "@typescript-eslint/eslint-plugin": "^6.2.1",
-    "@typescript-eslint/parser": "^6.2.1",
-    "astro": "^2.10.3",
+    "@typescript-eslint/eslint-plugin": "^6.4.1",
+    "@typescript-eslint/parser": "^6.4.1",
+    "astro": "^2.10.14",
     "eslint": "^8.46.0",
-    "prettier": "^3.0.0",
-    "typescript": "^5.0.2"
+    "prettier": "^3.0.2",
+    "typescript": "^5.2.2"
   },
   "dependencies": {
     "colortranslator": "^3.0.2",
