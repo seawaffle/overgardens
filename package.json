@@ -15,7 +15,7 @@
     "@typescript-eslint/parser": "^6.2.1",
     "astro": "^2.10.3",
     "eslint": "^8.46.0",
-    "prettier": "^3.0.0",
+    "prettier": "^3.0.2",
     "typescript": "^5.0.2"
   },
   "dependencies": {
