@@ -14,6 +14,7 @@ export class AdjacentAI extends AI {
           const reaction = this.game.faction.getReaction(e, other);
           if (reaction === Reaction.Attack) {
             e.goal = new MeleeGoal(this.game, other);
+            break;
           }
         }
       }

@@ -36,7 +36,7 @@ export function meleeCombat(
     );
   } else {
     game.log.addMessage(`${attacker.name} hit ${defender.name} for ${damage}`);
-    inflictDamage(game, defender, damage);
+    inflictDamage(game, attacker, defender, damage);
     if (attacker.player) {
       game.gameState.setState(GameState.Ticking);
     }

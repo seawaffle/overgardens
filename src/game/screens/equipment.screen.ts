@@ -296,6 +296,7 @@ export class EquipmentScreen extends Screen {
 
   notify(state: GameState): void {
     if (state === GameState.Equipment) {
+      this.guiContainer.clearMouseContext();
       this.guiContainer = this.constructGui();
       this.guiContainer.setDisabled(false);
     } else {
@@ -307,6 +308,7 @@ export class EquipmentScreen extends Screen {
       this.game.updateScreen &&
       this.game.gameState.state === GameState.Equipment
     ) {
+      this.guiContainer.clearMouseContext();
       this.guiContainer = this.constructGui();
       this.guiContainer.setDisabled(false);
       this.game.updateScreen = false;

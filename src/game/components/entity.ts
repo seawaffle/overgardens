@@ -9,6 +9,7 @@ import {
   ItemProperties,
 } from ".";
 import { Goal } from "../ai/goals";
+import { IncomingDamage } from "./incoming-damage";
 
 export interface Entity {
   id?: string;
@@ -25,7 +26,7 @@ export interface Entity {
   initiative?: number;
   currentTurn?: true;
   goal?: Goal;
-  incomingDamage?: number;
+  incomingDamage?: IncomingDamage;
   destination?: Destination;
   inventory?: Inventory;
   itemProperties?: ItemProperties;
