@@ -99,3 +99,17 @@ export function applyEquipmentStats(me: Entity) {
   }
   me.body!.dodgeValue += me.body!.agility!.bonus + me.body!.agility!.modifier;
 }
+
+export function determineMaxExperienceByLevel(entity: Entity): number {
+  let maxExperience = 100;
+  if (entity.body) {
+    if (entity.body.level) {
+      maxExperience = entity.body.level.current * 100;
+    }
+  }
+  return maxExperience;
+}
+
+export function experienceForKilling(entity: Entity): number {
+  return entity.body?.level ? entity.body.level.current * 50 + 50 : 100;
+}

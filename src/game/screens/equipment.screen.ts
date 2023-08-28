@@ -80,7 +80,7 @@ export class EquipmentScreen extends Screen {
       if (this.expandHead) {
         const headSlots = slots.filter((slot) => slot.type === SlotType.Head);
         for (const slot of headSlots) {
-          let equipment = this.createItemText(slot.equippedItem);
+          const equipment = this.createItemText(slot.equippedItem);
           new TextWidget({
             origin: { x: 4, y },
             initialState: {
@@ -122,7 +122,7 @@ export class EquipmentScreen extends Screen {
       if (this.expandBody) {
         const bodySlots = slots.filter((slot) => slot.type === SlotType.Body);
         for (const slot of bodySlots) {
-          let equipment = this.createItemText(slot.equippedItem);
+          const equipment = this.createItemText(slot.equippedItem);
           new TextWidget({
             origin: { x: 4, y },
             initialState: {
@@ -163,7 +163,7 @@ export class EquipmentScreen extends Screen {
       if (this.expandHand) {
         const handSlots = slots.filter((slot) => slot.type === SlotType.Hand);
         for (const slot of handSlots) {
-          let equipment = this.createItemText(slot.equippedItem);
+          const equipment = this.createItemText(slot.equippedItem);
           new TextWidget({
             origin: { x: 4, y },
             initialState: {
@@ -207,7 +207,7 @@ export class EquipmentScreen extends Screen {
           (slot) => slot.type === SlotType.Gloves,
         );
         for (const slot of gloveSlots) {
-          let equipment = this.createItemText(slot.equippedItem);
+          const equipment = this.createItemText(slot.equippedItem);
           new TextWidget({
             origin: { x: 4, y },
             initialState: {
@@ -249,7 +249,7 @@ export class EquipmentScreen extends Screen {
       if (this.expandFoot) {
         const feetSlots = slots.filter((slot) => slot.type === SlotType.Feet);
         for (const slot of feetSlots) {
-          let equipment = this.createItemText(slot.equippedItem);
+          const equipment = this.createItemText(slot.equippedItem);
           new TextWidget({
             origin: { x: 4, y },
             initialState: {

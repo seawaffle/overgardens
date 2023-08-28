@@ -26,9 +26,9 @@ export class AISystem extends System {
     for (const e of this.query) {
       // avoid a fist of the north star situation
       if (e.body) {
-        const alreadyDead = e.body.hp!.current <= 0;
+        const alreadyDead = e.dying || false;
         const aboutToDie = e.incomingDamage
-          ? e.body.hp!.current - e.incomingDamage <= 0
+          ? e.body.hp!.current - e.incomingDamage.amount <= 0
           : false;
         if (alreadyDead || aboutToDie) {
           this.game.ecs.world.removeComponent(e, "currentTurn");

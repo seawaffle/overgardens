@@ -5,22 +5,16 @@ import { Game } from "../game";
 import { GameState, Palette } from "../data";
 
 export class DeathSystem extends System {
-  statsQuery: Query<With<Entity, "body">>;
+  dyingQuery: Query<With<Entity, "dying">>;
 
   constructor(game: Game) {
     super(game);
-    this.statsQuery = this.game.ecs.world.with("body");
+    this.dyingQuery = this.game.ecs.world.with("dying");
   }
 
   update(): void {
-    const dead: Entity[] = [];
     const level = this.game.map.getCurrentLevel();
-    for (const e of this.statsQuery) {
-      if (e.body.hp!.current <= 0) {
-        dead.push(e);
-      }
-    }
-    for (const d of dead) {
+    for (const d of this.dyingQuery) {
       this.game.log.addMessage(`${d.name} has died`);
       if (d.player) {
         this.game.gameState.setState(GameState.GameOver);

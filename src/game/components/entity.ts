@@ -30,4 +30,6 @@ export interface Entity {
   destination?: Destination;
   inventory?: Inventory;
   itemProperties?: ItemProperties;
+  dying?: true;
+  gainedExperience?: number;
 }

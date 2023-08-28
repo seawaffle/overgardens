@@ -85,10 +85,10 @@ export class MusicManager extends Manager {
   schedule(root: string, scale: string) {
     console.log(`${root} ${scale}`);
     Tone.Transport.bpm.value = 80;
-    let leftPanner = new Tone.Panner(-0.5);
-    let leftLimiter = new Tone.Limiter(-12);
-    let rightPanner = new Tone.Panner(0.5);
-    let rightLimiter = new Tone.Limiter(-12);
+    const leftPanner = new Tone.Panner(-0.5);
+    const leftLimiter = new Tone.Limiter(-12);
+    const rightPanner = new Tone.Panner(0.5);
+    const rightLimiter = new Tone.Limiter(-12);
     this.leftSynth.connect(leftPanner).connect(leftLimiter).toDestination();
     this.rightSynth.connect(rightPanner).connect(rightLimiter).toDestination();
     const notes = Scale.degrees(`${root} ${scale}`);

@@ -18,6 +18,7 @@ import {
   DeathSystem,
   ZoneChangeSystem,
   ExtendedActionSystem,
+  ExperienceSystem,
 } from "./systems";
 import { Entity, Slot } from "./components";
 import { GameState } from "./data";
@@ -50,6 +51,7 @@ export class Game {
   aiSystem: AISystem;
   zoneChangeSystem: ZoneChangeSystem;
   extendedActionSystem: ExtendedActionSystem;
+  experienceSystem: ExperienceSystem;
   player?: Entity;
   rng: Rand.AleaRNG;
   fpsTicks: number[] = [];
@@ -82,6 +84,7 @@ export class Game {
     this.deathSystem = new DeathSystem(this);
     this.zoneChangeSystem = new ZoneChangeSystem(this);
     this.extendedActionSystem = new ExtendedActionSystem(this);
+    this.experienceSystem = new ExperienceSystem(this);
     this.player = undefined;
     this.gameState.setState(GameState.MainMenu);
   }
@@ -100,6 +103,7 @@ export class Game {
     this.extendedActionSystem.update();
     this.damageSystem.update();
     this.deathSystem.update();
+    this.experienceSystem.update();
     this.zoneChangeSystem.update();
     this.renderSystem.update();
   }

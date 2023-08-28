@@ -178,7 +178,7 @@ export class ProcGenManager extends Manager {
       for (let y = 0; y < level.height; y++) {
         const position = { x, y };
         const prevTile = previousLevel.tiles.get(position)!;
-        let genTile = map.get(position);
+        const genTile = map.get(position);
         // const noise = noiseMap.get(position)!;
         let tile: Tile;
         if (prevTile.type === "sky" || prevTile.type === "cloud") {

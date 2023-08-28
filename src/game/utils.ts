@@ -245,10 +245,10 @@ export function getWeightedValue(
 ) {
   let total = 0;
 
-  for (let id in data) {
+  for (const id in data) {
     total += data[id];
   }
-  let random = rng.next() * total;
+  const random = rng.next() * total;
 
   let id,
     part = 0;
