@@ -47,7 +47,10 @@ export class VisibilitySystem extends System {
             level.exploredTiles.set(v, true);
             if (this.game.extendedActionSystem.hasAction()) {
               for (const c of level.getTileContent(v)) {
-                if (c.body && this.game.faction.getReaction(c, e) === Reaction.Attack) {
+                if (
+                  c.body &&
+                  this.game.faction.getReaction(c, e) === Reaction.Attack
+                ) {
                   this.game.extendedActionSystem.endAction();
                   this.game.log.addMessage(`Spotted hostile ${c.name}`);
                 }

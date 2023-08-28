@@ -16,6 +16,8 @@ export class HelpScreen extends Screen {
     "C - View character sheet",
     "I - View inventory",
     "E - View equipment",
+    "O - Autoexplore",
+    "A - Autoattack",
   ];
   constructor(game: Game) {
     super(game);

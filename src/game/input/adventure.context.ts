@@ -109,6 +109,10 @@ export class AdventureContext extends Input.KeyboardContext {
             Actions.autoAttack(game, game.player!);
             break;
           }
+          case Input.KeyCode.W: {
+            Actions.waitUntilHealed(game, game.player!);
+            break;
+          }
         }
       }
     });

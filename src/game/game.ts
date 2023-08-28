@@ -61,6 +61,7 @@ export class Game {
   itemToDescribe?: Entity;
   slotToEquip?: Slot;
   updateScreen = false;
+  waitHealTick = false;
 
   constructor(id?: string) {
     this.gameId = id || Date.now().toString();
