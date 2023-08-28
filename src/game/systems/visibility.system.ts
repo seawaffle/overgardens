@@ -3,6 +3,7 @@ import { System } from "./system";
 import { Entity } from "../components";
 import { Game } from "../game";
 import { FOV } from "malwoden";
+import { Reaction } from "../data/faction";
 
 export class VisibilitySystem extends System {
   viewersQuery: Query<With<Entity, "position" | "viewshed">>;
@@ -44,6 +45,14 @@ export class VisibilitySystem extends System {
           e.viewshed.visibleTiles.forEach((v) => {
             level.visibleTiles.set(v, true);
             level.exploredTiles.set(v, true);
+            if (this.game.extendedActionSystem.hasAction()) {
+              for (const c of level.getTileContent(v)) {
+                if (c.body && this.game.faction.getReaction(c, e) === Reaction.Attack) {
+                  this.game.extendedActionSystem.endAction();
+                  this.game.log.addMessage(`Spotted hostile ${c.name}`);
+                }
+              }
+            }
           });
         }
       }
