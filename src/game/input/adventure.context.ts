@@ -105,6 +105,10 @@ export class AdventureContext extends Input.KeyboardContext {
             Actions.pickUp(game, game.player!);
             break;
           }
+          case Input.KeyCode.A: {
+            Actions.autoAttack(game, game.player!);
+            break;
+          }
         }
       }
     });

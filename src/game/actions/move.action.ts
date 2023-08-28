@@ -4,6 +4,7 @@ import { Game } from "../game";
 import { GameState } from "../data";
 import { meleeCombat } from ".";
 import { DijkstraMap } from "../data/djikstra-map";
+import { Reaction } from "../data/faction";
 
 export function tryMoveEntity(
   game: Game,
@@ -140,5 +141,24 @@ export function autoExplore(game: Game, entity: Entity) {
     game.extendedActionSystem.setAction(autoExplore, [game, entity]);
   } else {
     game.extendedActionSystem.endAction();
+  }
+}
+
+export function autoAttack(game: Game, entity: Entity) {
+  if (!entity) return;
+  if (!entity.position) {
+    console.warn("Attempted to move an entity without position");
+    return;
+  }
+  const level = game.map.getCurrentLevel();
+  if (!level) return;
+  for (const v of entity.viewshed!.visibleTiles!) {
+    const tileContent = level.getTileContent(v);
+    for (const c of tileContent) {
+      if (c.body && game.faction.getReaction(c, entity) === Reaction.Attack) {
+        approach(game, entity, v);
+        return;
+      }
+    }
   }
 }
