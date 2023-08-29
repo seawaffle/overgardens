@@ -323,6 +323,7 @@ export class ProcGenManager extends Manager {
   generateEntities(area: Area, level: Level) {
     this.generateCreatures(area, level);
     this.generateItems(area, level);
+    this.populateAltars(area, level);
   }
 
   generateCreatures(area: Area, level: Level) {
@@ -386,6 +387,41 @@ export class ProcGenManager extends Manager {
         }
         this.game.ecs.addEntity(entity);
       }
+    }
+  }
+
+  populateAltars(area: Area, level: Level) {
+    let chance = this.game.rng.next(0, 1);
+    // guarantee an idol on 0.0
+    if (area.id === 0 && level.id === 0) {
+      chance = 1;
+    }
+
+    if (chance > 0.9) {
+      const altar = deepCopy(Prefabs.Altar);
+      altar.id = nanoid();
+      let position = undefined;
+      const firstRun = true;
+      while (!position) {
+        if (firstRun) {
+          position = findOpenGround(level);
+        } else {
+          position = randomOpenTile(this.game.rng, level);
+        }
+        if (level.tiles.get(position!)?.destination) {
+          position = undefined;
+        }
+      }
+      if (level === this.game.map.getCurrentLevel()) {
+        altar.position = position;
+      } else {
+        altar.outOfLevel = {
+          area: area.id,
+          level: level.id,
+          pos: position,
+        }
+      }
+      this.game.ecs.addEntity(altar);
     }
   }
 }
