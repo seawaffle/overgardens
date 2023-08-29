@@ -9,16 +9,26 @@ export class EquipmentContext extends Input.KeyboardContext {
 
     this.onAnyDown((keyEvent) => {
       if (this.game.gameState.state === GameState.Equipment) {
-        switch (keyEvent.key) {
-          case Input.KeyCode.Escape: {
-            if (this.game.itemToDescribe) {
+        if (this.game.itemToDescribe) {
+          switch (keyEvent.key) {
+            case Input.KeyCode.Escape: {
               Actions.closeItemDetails(game);
-            } else if (this.game.slotToEquip) {
-              Actions.closeItemPicker(game);
-            } else {
-              Actions.closeEquipment(game);
+              break;
             }
-            break;
+          }
+        } else if (this.game.slotToEquip) {
+          switch (keyEvent.key) {
+            case Input.KeyCode.Escape: {
+              Actions.closeItemPicker(game);
+              break;
+            }
+          }
+        } else {
+          switch (keyEvent.key) {
+            case Input.KeyCode.Escape: {
+              Actions.closeEquipment(game);
+              break;
+            }
           }
         }
       }

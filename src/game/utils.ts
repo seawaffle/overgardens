@@ -2,6 +2,7 @@ import { Color, Pathfinding, Rand, Struct, Vector2 } from "malwoden";
 import { Noise } from "rot-js";
 import { Level, Tile } from "./data";
 import { ColorTranslator } from "colortranslator";
+import { KeyboardHandlerEvent } from "malwoden/dist/types/input";
 // noise related functions stolen from https://www.redblobgames.com/maps/terrain-from-noise
 export function mixNoise(
   width: number,
@@ -174,7 +175,7 @@ export function findOpenNearCoord(level: Level, pos: Vector2) {
     } else {
       badCoords.push(coord);
       for (const c of level.tiles.getNeighbors(coord)) {
-        if (!badCoords.includes(c)) {
+        if (c && !badCoords.find((item) => item.x === c.x && item.y === c.y)) {
           coords.push(c);
         }
       }
@@ -262,4 +263,50 @@ export function getWeightedValue(
   // If by some floating-point annoyance we have
   // random >= total, just return the last id.
   return id;
+}
+
+export function keyEventToIndex(event: KeyboardHandlerEvent): number {
+  let index = event.key - 65;
+  if (event.shiftKey) {
+    index += 26;
+  }
+  return index;
+}
+
+export function indexToLetter(index: number): string {
+  const letters = [
+    "a",
+    "b",
+    "c",
+    "d",
+    "e",
+    "f",
+    "g",
+    "h",
+    "i",
+    "j",
+    "k",
+    "l",
+    "m",
+    "n",
+    "o",
+    "p",
+    "q",
+    "r",
+    "s",
+    "t",
+    "u",
+    "v",
+    "w",
+    "x",
+    "y",
+    "z",
+  ];
+  let result = "";
+  if (index < letters.length) {
+    result = letters[index];
+  } else if (index < letters.length * 2) {
+    result = letters[index % letters.length].toUpperCase();
+  }
+  return result;
 }

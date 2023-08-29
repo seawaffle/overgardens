@@ -92,12 +92,23 @@ export class RenderSystem extends System {
 
   renderEntities() {
     const level = this.game.map.getCurrentLevel();
+    const renderLevel = new Map<string, number>();
     if (level) {
       for (const { position, renderable } of this.renderQuery) {
         if (
           level.visibleTiles.get(position) &&
           this.game.render.isInViewport(position)
         ) {
+          const key = `${position.x},${position.y}`;
+          if (renderLevel.has(key)) {
+            const currentRenderLevel = renderLevel.get(key)!;
+            if (renderable.renderOrder >= currentRenderLevel) {
+              // something else has a higher priority render level, so don't render this
+              // if equal, we'll just default to the first thing rendered
+              continue;
+            }
+          }
+          renderLevel.set(key, renderable.renderOrder);
           const tile = level.tiles.get(position);
           const pos = this.game.render.convertAbsoluteToViewport(position);
           let fg = Palette.GreyNurse;

@@ -64,8 +64,8 @@ export class FullLogScreen extends Screen {
         hoverColor: Palette.Atomic,
         downColor: Palette.William,
         onClick: () => {
-          if (this.game.logLineNumber > 0) {
-            this.game.logLineNumber--;
+          if (this.game.screenLineNumber > 0) {
+            this.game.screenLineNumber--;
           }
         },
       },
@@ -83,8 +83,8 @@ export class FullLogScreen extends Screen {
         hoverColor: Palette.Atomic,
         downColor: Palette.William,
         onClick: () => {
-          if (this.game.logLineNumber < this.totalLines) {
-            this.game.logLineNumber++;
+          if (this.game.screenLineNumber < this.totalLines) {
+            this.game.screenLineNumber++;
           }
         },
       },
@@ -103,7 +103,7 @@ export class FullLogScreen extends Screen {
         this.totalLines = logs.length;
         let text = "";
         let lines = 0;
-        for (let i = this.game.logLineNumber; i < logs.length; i++) {
+        for (let i = this.game.screenLineNumber; i < logs.length; i++) {
           const l = logs[i];
           const length = l.length;
           let padAmount = 0;

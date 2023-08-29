@@ -13,6 +13,7 @@ export function closeEquipment(game: Game) {
     return;
   }
 
+  game.screenLineNumber = 0;
   game.gameState.setState(GameState.AwaitingInput);
 }
 

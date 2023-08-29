@@ -12,6 +12,7 @@ export function closeInventory(game: Game) {
     return;
   }
 
+  game.screenLineNumber = 0;
   game.gameState.setState(GameState.AwaitingInput);
 }
 
@@ -21,7 +22,7 @@ export function pickUp(game: Game, me: Entity) {
     .getCurrentLevel()
     ?.getTileContent(position)
     .filter((e) => e.itemProperties);
-  if (items) {
+  if (items && items.length > 0) {
     if (items.length > 1) {
       // open pick up menu
       return;
@@ -39,8 +40,12 @@ export function addToInventory(game: Game, me: Entity, item: Entity) {
   if (!me.inventory) {
     game.ecs.world.addComponent(me, "inventory", { items: [] });
   }
-  game.ecs.world.removeComponent(item, "position");
-  me.inventory!.items.push(item);
+  if (me.inventory!.items.length < 52) {
+    game.ecs.world.removeComponent(item, "position");
+    me.inventory!.items.push(item);
+  } else {
+    game.log.addMessage("You are carrying too much");
+  }
 }
 
 export function dropItem(game: Game, me: Entity, item: Entity) {

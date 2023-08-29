@@ -4,6 +4,7 @@ import * as Actions from "../actions";
 import { Game } from "../game";
 import { GameState, Palette } from "../data";
 import { TextWidget } from "./text-widget";
+import { indexToLetter } from "../utils";
 
 export class InventoryScreen extends Screen {
   guiContainer: GUI.ContainerWidget;
@@ -52,12 +53,52 @@ export class InventoryScreen extends Screen {
         },
       },
     }).setParent(panelWidget);
-    // inventory items
     const items = this.game.player?.inventory?.items;
+
+    // scroll up button
+    new GUI.ButtonWidget({
+      origin: { x: this.game.render.viewportWidth - 1, y: 1 },
+      initialState: {
+        text: "↑",
+        backColor: Palette.Ebony,
+        foreColor: Palette.GreyNurse,
+        hoverColor: Palette.Atomic,
+        downColor: Palette.William,
+        onClick: () => {
+          if (this.game.screenLineNumber > 0) {
+            this.game.screenLineNumber--;
+            this.game.updateScreen = true;
+          }
+        },
+      },
+    }).setParent(panelWidget);
+    // scroll down button
+    new GUI.ButtonWidget({
+      origin: {
+        x: this.game.render.viewportWidth - 1,
+        y: this.game.render.viewportHeight - 2,
+      },
+      initialState: {
+        text: "↓",
+        backColor: Palette.Ebony,
+        foreColor: Palette.GreyNurse,
+        hoverColor: Palette.Atomic,
+        downColor: Palette.William,
+        onClick: () => {
+          if (this.game.screenLineNumber < (items?.length || 0) - 1) {
+            this.game.screenLineNumber++;
+            this.game.updateScreen = true;
+          }
+        },
+      },
+    }).setParent(panelWidget);
+
+    // inventory items
     if (items && items.length > 0) {
       let y = 2;
-      for (const item of items) {
-        let itemText = `${item.name}`;
+      for (let i = this.game.screenLineNumber; i < items.length; i++) {
+        const item = items[i];
+        let itemText = `${indexToLetter(i)}) ${item.name}`;
         if (item.itemProperties!.equipped) {
           itemText += " (Equipped)";
         }
