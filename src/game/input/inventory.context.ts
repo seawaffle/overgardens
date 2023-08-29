@@ -23,6 +23,12 @@ export class InventoryContext extends Input.KeyboardContext {
               Actions.closeItemDetails(game);
               break;
             }
+            case Input.KeyCode.U: {
+              Actions.unequipItem(game, game.player!, game.itemToDescribe!);
+              game.updateScreen = true;
+              Actions.closeItemDetails(game);
+              break;
+            }
             case Input.KeyCode.D: {
               Actions.dropItem(game, game.player!, game.itemToDescribe!);
               game.updateScreen = true;

@@ -4,6 +4,7 @@ import * as Actions from "../actions";
 import { Game } from "../game";
 import { GameState, Palette } from "../data";
 import { TextWidget } from "./text-widget";
+import { indexToLetter } from "../utils";
 
 export class ItemPickerScreen extends Screen {
   readonly WIDTH = 20;
@@ -48,15 +49,11 @@ export class ItemPickerScreen extends Screen {
         },
       },
     }).setParent(panelWidget);
+
     if (this.game.slotToEquip) {
       this.slotSet = true;
       const slot = this.game.slotToEquip;
-      const items = this.game
-        .player!.inventory!.items.filter(
-          (item) => item.itemProperties?.slotType === slot.type,
-        )
-        .filter((item) => item.itemProperties?.equippable)
-        .filter((item) => !item.itemProperties?.equipped);
+      const items = this.game.player!.inventory!.items;
       let y = 2;
       if (items.length === 0) {
         new TextWidget({
@@ -69,22 +66,29 @@ export class ItemPickerScreen extends Screen {
           },
         }).setParent(panelWidget);
       } else {
-        for (const item of items) {
-          new TextWidget({
-            origin: { x: 2, y },
-            initialState: {
-              backColor: Palette.Ebony,
-              foreColor: Palette.GreyNurse,
-              text: item.name,
-              onClick: () => {
-                Actions.equipItem(this.game, this.game.player!, item, slot);
-                this.game.updateScreen = true;
-                Actions.closeItemPicker(this.game);
+        for (let i = 0; i < items.length; i++) {
+          const item = items[i];
+          if (
+            item.itemProperties!.slotType === slot.type &&
+            item.itemProperties!.equippable &&
+            !item.itemProperties!.equipped
+          ) {
+            new TextWidget({
+              origin: { x: 2, y },
+              initialState: {
+                backColor: Palette.Ebony,
+                foreColor: Palette.GreyNurse,
+                text: `${indexToLetter(i)}) ${item.name}`,
+                onClick: () => {
+                  Actions.equipItem(this.game, this.game.player!, item, slot);
+                  this.game.updateScreen = true;
+                  Actions.closeItemPicker(this.game);
+                },
               },
-            },
-          }).setParent(panelWidget);
+            }).setParent(panelWidget);
 
-          y++;
+            y++;
+          }
         }
       }
     }
