@@ -1,4 +1,4 @@
 export interface AltarProperties {
-    ageless: string;
-    
+  ageless: string;
+  visited?: true;
 }

@@ -13,3 +13,4 @@ export * from "./log.action";
 export * from "./equipment.action";
 export * from "./character.action";
 export * from "./heal.action";
+export * from "./altar.action";

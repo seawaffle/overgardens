@@ -113,6 +113,10 @@ export class AdventureContext extends Input.KeyboardContext {
             Actions.waitUntilHealed(game, game.player!);
             break;
           }
+          case Input.KeyCode.K: {
+            Actions.kneelAtAltar(game, game.player!);
+            break;
+          }
         }
       }
     });

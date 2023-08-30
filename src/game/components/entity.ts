@@ -7,6 +7,7 @@ import {
   OutOfLevel,
   Inventory,
   ItemProperties,
+  AltarProperties,
 } from ".";
 import { Goal } from "../ai/goals";
 import { IncomingDamage } from "./incoming-damage";
@@ -32,4 +33,5 @@ export interface Entity {
   itemProperties?: ItemProperties;
   dying?: true;
   gainedExperience?: number;
+  altarProperties?: AltarProperties;
 }

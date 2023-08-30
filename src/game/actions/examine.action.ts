@@ -56,6 +56,12 @@ export function moveExamine(game: Game, pos: Vector2, absolute = false) {
           strings.push(spacer);
         } else if (visible && e.itemProperties) {
           strings.push(`Item: ${e.name}`);
+        } else if (visible && e.altarProperties) {
+          let desc = `An altar to ${e.altarProperties.ageless}`;
+          if (e.altarProperties.visited) {
+            desc += " (Visited)";
+          }
+          strings.push(desc);
         }
       }
     }

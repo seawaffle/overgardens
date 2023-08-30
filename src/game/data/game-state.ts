@@ -13,4 +13,5 @@ export enum GameState {
   FullLog,
   Equipment,
   Character,
+  Communion,
 }

@@ -8,7 +8,7 @@ export class HelpScreen extends Screen {
   guiContainer: GUI.ContainerWidget;
   helpTexts = [
     "? - This help screen",
-    "Arrow Keys - Movement",
+    "Arrow Keys/Numpad - Movement",
     "Escape - Save or quit game",
     ". - Wait 1 turn",
     "X - Examine your surroundings",
@@ -18,6 +18,8 @@ export class HelpScreen extends Screen {
     "E - View equipment",
     "O - Autoexplore",
     "A - Autoattack",
+    "P - Pick up an item",
+    "K - Kneel at an altar",
   ];
   constructor(game: Game) {
     super(game);

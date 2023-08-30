@@ -1,7 +1,9 @@
 import { Game } from "../game";
 import { GameState } from "../data/game-state";
-import { Entity, Slot } from "../components";
+import { Entity, Slot, SlotType } from "../components";
 import { applyEquipmentStats } from "../mechanics";
+import { deepCopy } from "../utils";
+import * as Prefabs from "../prefabs";
 
 export function openEquipment(game: Game) {
   if (game.gameState.state === GameState.Ticking) return;
@@ -61,6 +63,9 @@ export function unequipItem(game: Game, me: Entity, item: Entity) {
       if (slot.equippedItem === item) {
         slot.equippedItem = undefined;
         item.itemProperties!.equipped = undefined;
+        if (slot.type === SlotType.Hand) {
+          slot.equippedItem = deepCopy(Prefabs.Weapons.get("fist"));
+        }
         applyEquipmentStats(me);
         game.log.addMessage(`${me.name} removed ${item.name}`);
         return;

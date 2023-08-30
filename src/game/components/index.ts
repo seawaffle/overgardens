@@ -9,3 +9,4 @@ export * from "./inventory";
 export * from "./pool";
 export * from "./slot";
 export * from "./item-properties";
+export * from "./altar-properties";

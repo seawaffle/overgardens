@@ -13,6 +13,7 @@ export class MapManager extends Manager {
   }
 
   generateMap() {
+    this.game.pantheon.establishPantheon();
     this.map = this.game.procgen.generateMap();
     const area = this.map.getCurrentArea();
     for (const level of area.levels) {

@@ -25,6 +25,7 @@ import { GameState } from "./data";
 import { Rand, Vector2 } from "malwoden";
 import { FactionManager } from "./managers/faction.manager";
 import { MusicManager } from "./managers/music.manager";
+import { PantheonManager } from "./managers/pantheon.manager";
 
 export class Game {
   // should music be playing
@@ -42,6 +43,7 @@ export class Game {
   log: LogManager;
   music: MusicManager;
   faction: FactionManager;
+  pantheon: PantheonManager;
   renderSystem: RenderSystem;
   visibilitySystem: VisibilitySystem;
   mapIndexingSystem: MapIndexingSystem;
@@ -76,6 +78,7 @@ export class Game {
     this.log = new LogManager(this);
     this.music = new MusicManager(this);
     this.faction = new FactionManager(this);
+    this.pantheon = new PantheonManager(this);
     this.renderSystem = new RenderSystem(this);
     this.visibilitySystem = new VisibilitySystem(this);
     this.mapIndexingSystem = new MapIndexingSystem(this);

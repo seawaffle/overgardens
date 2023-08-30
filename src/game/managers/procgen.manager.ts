@@ -14,7 +14,7 @@ import {
 import { Manager } from "./manager";
 import * as Prefabs from "../prefabs";
 import { nanoid } from "nanoid";
-import { Area, Level, Map, Tile } from "../data";
+import { Ageless, Area, Level, Map, Tile } from "../data";
 import { CharCode, Generation, Vector2 } from "malwoden";
 import { StringGenerator } from "rot-js";
 import NameData from "../prefabs/names.json";
@@ -26,6 +26,7 @@ export class ProcGenManager extends Manager {
   readonly MIN_LEVELS = 4;
   stringGen: StringGenerator;
   readonly MAX_NAME_SIZE = 9;
+  pantheon: Ageless[] = [];
 
   constructor(game: Game) {
     super(game);
@@ -43,8 +44,14 @@ export class ProcGenManager extends Manager {
   }
 
   generateName(): string {
-    const name = this.stringGen.generate().trim();
-    return name.length <= this.MAX_NAME_SIZE ? name : this.generateName();
+    let name = this.stringGen.generate().trim();
+    if (name.length >= this.MAX_NAME_SIZE) {
+      name = this.generateName();
+    }
+    if ([...name].some((char) => char.charCodeAt(0) > 127)) {
+      name = this.generateName();
+    }
+    return name;
   }
 
   generateMap(): Map {
@@ -396,10 +403,11 @@ export class ProcGenManager extends Manager {
     if (area.id === 0 && level.id === 0) {
       chance = 1;
     }
-
     if (chance > 0.9) {
+      const ageless = this.game.pantheon.pickRandomAgeless();
       const altar = deepCopy(Prefabs.Altar);
       altar.id = nanoid();
+      altar.altarProperties = { ageless: ageless.name };
       let position = undefined;
       const firstRun = true;
       while (!position) {
@@ -419,7 +427,7 @@ export class ProcGenManager extends Manager {
           area: area.id,
           level: level.id,
           pos: position,
-        }
+        };
       }
       this.game.ecs.addEntity(altar);
     }
