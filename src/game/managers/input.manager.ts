@@ -17,6 +17,7 @@ import {
   CharacterContext,
   EquipmentContext,
 } from "../input";
+import { CommunionContext } from "../input/communion.context";
 
 export class InputManager extends Manager implements StateListener {
   keyboardHandler: Input.KeyboardHandler;
@@ -97,6 +98,12 @@ export class InputManager extends Manager implements StateListener {
       }
       case GameState.FullLog: {
         this.keyboardHandler.setContext(new FullLogContext(this.game));
+        this.mouseContext = this.adventureMouseContext;
+        this.mouseHandler.setContext(this.mouseContext);
+        break;
+      }
+      case GameState.Communion: {
+        this.keyboardHandler.setContext(new CommunionContext(this.game));
         this.mouseContext = this.adventureMouseContext;
         this.mouseHandler.setContext(this.mouseContext);
         break;

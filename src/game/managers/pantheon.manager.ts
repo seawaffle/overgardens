@@ -1,4 +1,4 @@
-import { Ageless } from "../data";
+import { Ageless, Gift, GiftFunctions } from "../data";
 import { Manager } from "./manager";
 import * as Prefabs from "../prefabs";
 import * as Actions from "../actions";
@@ -17,6 +17,8 @@ export class PantheonManager extends Manager {
   pantheon: Ageless[] = [];
   altar?: Entity = undefined;
   sacrificed = false;
+  offeredGifts: Gift[] = [];
+  giftFunctions = new GiftFunctions();
 
   establishPantheon() {
     this.pantheon = [];
@@ -123,7 +125,31 @@ export class PantheonManager extends Manager {
         }
       }
       this.sacrificed = true;
+      this.determineGifts(this.getAgelessForAltar()!);
     }
+  }
+
+  determineGifts(ageless: Ageless) {
+    const gifts = [];
+    const currentFavor = ageless.currentFavor || 0;
+    // get list of gifts for current favor
+    for (const gift of ageless.gifts) {
+      if (gift.maxFavor >= currentFavor && gift.minFavor <= currentFavor) {
+        gifts.push(gift);
+      }
+    }
+    // pick random gifts from list
+    for (let i = 0; i < 3; i++) {
+      const gift = this.game.rng.nextItem(gifts);
+      if (gift && !this.offeredGifts.find((g) => g.name === gift.name)) {
+        this.offeredGifts.push(gift);
+      }
+    }
+  }
+
+  acceptGift(entity: Entity, gift: Gift) {
+    const func = this.giftFunctions.returnFunction(gift.function);
+    func(this.game, entity, gift.args);
   }
 
   changeRelations(amount: number, name: string) {
