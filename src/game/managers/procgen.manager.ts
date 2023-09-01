@@ -328,9 +328,9 @@ export class ProcGenManager extends Manager {
   }
 
   generateEntities(area: Area, level: Level) {
+    this.populateAltars(area, level);
     this.generateCreatures(area, level);
     this.generateItems(area, level);
-    this.populateAltars(area, level);
   }
 
   generateCreatures(area: Area, level: Level) {

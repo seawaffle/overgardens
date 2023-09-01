@@ -8,7 +8,7 @@ export const Altar: Entity = {
       character: "Φ",
       fg: Palette.EbonyHex,
     },
-    renderOrder: 2,
+    renderOrder: 1,
   },
   blocksTile: true,
   mobile: false,

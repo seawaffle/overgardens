@@ -24,6 +24,7 @@ export function equipItem(
   me: Entity,
   item: Entity,
   chosenSlot?: Slot,
+  log = true,
 ) {
   if (me.inventory && me.inventory.items.includes(item)) {
     for (const slot of me.body!.slots!) {
@@ -37,14 +38,18 @@ export function equipItem(
               slot.equippedItem = item;
               item.itemProperties!.equipped = true;
               applyEquipmentStats(me);
-              game.log.addMessage(`${me.name} equipped ${item.name}`);
+              if (log) {
+                game.log.addMessage(`${me.name} equipped ${item.name}`);
+              }
               return;
             }
           } else {
             slot.equippedItem = item;
             item.itemProperties!.equipped = true;
             applyEquipmentStats(me);
-            game.log.addMessage(`${me.name} equipped ${item.name}`);
+            if (log) {
+              game.log.addMessage(`${me.name} equipped ${item.name}`);
+            }
             return;
           }
         }
@@ -53,7 +58,7 @@ export function equipItem(
   }
 }
 
-export function unequipItem(game: Game, me: Entity, item: Entity) {
+export function unequipItem(game: Game, me: Entity, item: Entity, log = true) {
   if (
     me.inventory &&
     me.inventory.items.includes(item) &&
@@ -67,7 +72,9 @@ export function unequipItem(game: Game, me: Entity, item: Entity) {
           slot.equippedItem = deepCopy(Prefabs.Weapons.get("fist"));
         }
         applyEquipmentStats(me);
-        game.log.addMessage(`${me.name} removed ${item.name}`);
+        if (log) {
+          game.log.addMessage(`${me.name} removed ${item.name}`);
+        }
         return;
       }
     }

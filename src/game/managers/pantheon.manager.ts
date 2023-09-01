@@ -1,8 +1,10 @@
 import { Ageless } from "../data";
 import { Manager } from "./manager";
 import * as Prefabs from "../prefabs";
+import * as Actions from "../actions";
 import { deepCopy } from "../utils";
 import { Entity } from "../components";
+import { populateBodyStats } from "../mechanics";
 
 export enum Sacrifice {
   Self,
@@ -13,7 +15,6 @@ export enum Sacrifice {
 export class PantheonManager extends Manager {
   readonly MAX_PANTHEON_SIZE = 3;
   pantheon: Ageless[] = [];
-  // inCommunion?: Ageless = undefined;
   altar?: Entity = undefined;
   sacrificed = false;
 
@@ -63,34 +64,67 @@ export class PantheonManager extends Manager {
     if (!this.sacrificed) {
       const player = this.game.player!;
       switch (sacrifice) {
+        // remove player stats
         case Sacrifice.Self: {
+          const attr = this.game.rng.nextItem([
+            player.body!.might,
+            player.body!.agility,
+            player.body!.stability,
+            player.body!.intellect,
+          ])!;
+          const amount = this.game.rng.nextItem([2, 3, 4])!;
+          attr.base -= amount;
+          populateBodyStats(player);
+          this.changeRelations(
+            amount * 10,
+            this.altar!.altarProperties!.ageless,
+          );
           break;
         }
+        // cut player's max hp
         case Sacrifice.Vigor: {
           const divide = this.game.rng.nextItem([2, 3, 4])!;
           player.body!.hp!.max = Math.round(player.body!.hp!.max / divide);
           if (player.body!.hp!.current > player.body!.hp!.max) {
             player.body!.hp!.current = player.body!.hp!.max;
           }
+          this.changeRelations(
+            divide * 7,
+            this.altar!.altarProperties!.ageless,
+          );
           break;
         }
+        // remove player's items
         case Sacrifice.Possessions: {
+          const amount = this.game.rng.nextItem([1, 2, 3, 4])!;
+          let actualAmount = 0;
+          for (let i = 0; i < amount; i++) {
+            const itemIndex = this.game.rng.nextInt(
+              0,
+              player.inventory!.items.length,
+            );
+            const item = player.inventory!.items[itemIndex];
+            if (item) {
+              if (item.itemProperties!.equipped) {
+                Actions.unequipItem(this.game, player, item, false);
+                player.inventory!.items = player.inventory!.items.filter(
+                  (i) => i.id !== item.id,
+                );
+                this.game.ecs.world.remove(item);
+                actualAmount++;
+              }
+            }
+          }
+          this.changeRelations(
+            actualAmount * 5,
+            this.altar!.altarProperties!.ageless,
+          );
+          break;
         }
       }
       this.sacrificed = true;
     }
   }
-
-  // beginCommunion(name: string) {
-  //     const ageless = this.findAgeless(name);
-  //     if (ageless) {
-  //         this.inCommunion = ageless;
-  //     }
-  // }
-
-  // endCommunion() {
-  //     this.inCommunion = undefined;
-  // }
 
   changeRelations(amount: number, name: string) {
     // find ageless
