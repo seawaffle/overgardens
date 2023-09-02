@@ -296,22 +296,69 @@ export class CharacterScreen extends Screen {
         return { text };
       })
       .setParent(panelWidget);
+    new GUI.TextWidget({
+      origin: { x: 2, y: 14 },
+      initialState: {
+        text: "Gifts:",
+        backColor: Palette.Ebony,
+        foreColor: Palette.GreyNurse,
+      },
+    }).setParent(panelWidget);
+    if (this.game.player?.receivedGifts) {
+      let y = 15;
+      for (const gift of this.game.player!.receivedGifts) {
+        new GUI.TextWidget({
+          origin: { x: 2, y },
+          initialState: {
+            text: gift.name,
+            backColor: Palette.Ebony,
+            foreColor: Palette.GreyNurse,
+          },
+        }).setParent(panelWidget);
+        y++;
+      }
+    }
     container.setDisabled(true);
     return container;
   }
 
+  // notify(state: GameState): void {
+  //   if (state !== GameState.Character) {
+  //     // not sure about this
+  //     this.game.log.clearOverride();
+  //   }
+  //   this.guiContainer.setDisabled(state !== GameState.Character);
+  // }
+  // render(): void {
+  //   if (!this.guiContainer.isDisabled()) {
+  //     this.game.log.clearOverride();
+  //     this.guiContainer.cascadeUpdate();
+  //     this.guiContainer.cascadeDraw();
+  //   }
+  // }
+
   notify(state: GameState): void {
-    if (state !== GameState.Character) {
-      // not sure about this
+    if (state === GameState.Character) {
+      this.guiContainer.clearMouseContext();
+      this.guiContainer = this.constructGui();
+      this.guiContainer.setDisabled(false);
+    } else {
       this.game.log.clearOverride();
+      this.guiContainer.setDisabled(true);
     }
-    this.guiContainer.setDisabled(state !== GameState.Character);
   }
   render(): void {
-    if (!this.guiContainer.isDisabled()) {
+    if (
+      this.game.updateScreen &&
+      this.game.gameState.state === GameState.Character
+    ) {
       this.game.log.clearOverride();
-      this.guiContainer.cascadeUpdate();
-      this.guiContainer.cascadeDraw();
+      this.guiContainer.clearMouseContext();
+      this.guiContainer = this.constructGui();
+      this.guiContainer.setDisabled(false);
+      this.game.updateScreen = false;
     }
+    this.guiContainer.cascadeUpdate();
+    this.guiContainer.cascadeDraw();
   }
 }

@@ -125,7 +125,7 @@ export class PantheonManager extends Manager {
             actualAmount * 5,
             this.altar!.altarProperties!.ageless,
           );
-          this.game.log.addMessage(`${player.name} pack feels lighter.`);
+          this.game.log.addMessage(`${player.name}'s pack feels lighter.`);
           break;
         }
       }
@@ -160,6 +160,9 @@ export class PantheonManager extends Manager {
   acceptGift(entity: Entity, gift: Gift) {
     const func = this.giftFunctions.returnFunction(gift.function);
     func(this.game, entity, gift.args);
+    if (gift.name !== "Nothing") {
+      entity.receivedGifts!.push(gift);
+    }
   }
 
   changeRelations(amount: number, name: string) {
