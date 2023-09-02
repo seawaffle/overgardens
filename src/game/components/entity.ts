@@ -11,6 +11,7 @@ import {
 } from ".";
 import { Goal } from "../ai/goals";
 import { IncomingDamage } from "./incoming-damage";
+import { Gift } from "../data";
 
 export interface Entity {
   id?: string;
@@ -34,4 +35,5 @@ export interface Entity {
   dying?: true;
   gainedExperience?: number;
   altarProperties?: AltarProperties;
+  receivedGifts?: Gift[];
 }

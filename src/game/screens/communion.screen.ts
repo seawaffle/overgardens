@@ -91,7 +91,9 @@ export class CommunionScreen extends Screen {
         }).setParent(panelWidget);
       } else if (this.game.pantheon.sacrificed) {
         // reward
-        text = `${ageless.name} is momentarily satisfied. They offer a gift. Will you accept?`;
+        text = `${ageless.name} is momentarily satisfied. ${
+          this.game.pantheon.offeredGift!.description
+        }`;
         new GUI.TextWidget({
           origin: { x: 2, y: 2 },
           initialState: {
@@ -101,31 +103,27 @@ export class CommunionScreen extends Screen {
             foreColor: Palette.GreyNurse,
           },
         }).setParent(panelWidget);
-        let y = 8;
-        for (const gift of this.game.pantheon.offeredGifts) {
-          new GUI.ButtonWidget({
-            origin: {
-              x:
-                Math.round(this.game.render.viewportWidth / 2) -
-                Math.round(gift.name.length / 2),
-              y,
+        const buttonText = "Leave";
+        new GUI.ButtonWidget({
+          origin: {
+            x:
+              Math.round(this.game.render.viewportWidth / 2) -
+              Math.round(buttonText.length / 2),
+            y: 8,
+          },
+          initialState: {
+            text: buttonText,
+            backColor: Palette.Ebony,
+            foreColor: Palette.GreyNurse,
+            hoverColor: Palette.Atomic,
+            downColor: Palette.William,
+            padding: 1,
+            borderStyle: "single-bar",
+            onClick: () => {
+              Actions.closeCommunion(this.game);
             },
-            initialState: {
-              text: gift.name,
-              backColor: Palette.Ebony,
-              foreColor: Palette.GreyNurse,
-              hoverColor: Palette.Atomic,
-              downColor: Palette.William,
-              padding: 1,
-              borderStyle: "single-bar",
-              onClick: () => {
-                this.game.pantheon.acceptGift(this.game.player!, gift);
-                Actions.closeCommunion(this.game);
-              },
-            },
-          }).setParent(panelWidget);
-          y += 4;
-        }
+          },
+        }).setParent(panelWidget);
       } else {
         // sacrifice
         text +=

@@ -17,7 +17,7 @@ export class HelpScreen extends Screen {
     "I - View inventory",
     "E - View equipment",
     "O - Autoexplore",
-    "A - Autoattack",
+    "M - Autoattack",
     "P - Pick up an item",
     "K - Kneel at an altar",
   ];

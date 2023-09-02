@@ -17,7 +17,7 @@ export class PantheonManager extends Manager {
   pantheon: Ageless[] = [];
   altar?: Entity = undefined;
   sacrificed = false;
-  offeredGifts: Gift[] = [];
+  offeredGift?: Gift = undefined;
   giftFunctions = new GiftFunctions();
 
   establishPantheon() {
@@ -81,6 +81,9 @@ export class PantheonManager extends Manager {
             amount * 10,
             this.altar!.altarProperties!.ageless,
           );
+          this.game.log.addMessage(
+            `${player.name} feels a piece of themselves slip away.`,
+          );
           break;
         }
         // cut player's max hp
@@ -94,6 +97,7 @@ export class PantheonManager extends Manager {
             divide * 7,
             this.altar!.altarProperties!.ageless,
           );
+          this.game.log.addMessage(`${player.name} feels weakened.`);
           break;
         }
         // remove player's items
@@ -109,27 +113,29 @@ export class PantheonManager extends Manager {
             if (item) {
               if (item.itemProperties!.equipped) {
                 Actions.unequipItem(this.game, player, item, false);
-                player.inventory!.items = player.inventory!.items.filter(
-                  (i) => i.id !== item.id,
-                );
-                this.game.ecs.world.remove(item);
-                actualAmount++;
               }
+              player.inventory!.items = player.inventory!.items.filter(
+                (i) => i.id !== item.id,
+              );
+              this.game.ecs.world.remove(item);
+              actualAmount++;
             }
           }
           this.changeRelations(
             actualAmount * 5,
             this.altar!.altarProperties!.ageless,
           );
+          this.game.log.addMessage(`${player.name} pack feels lighter.`);
           break;
         }
       }
       this.sacrificed = true;
-      this.determineGifts(this.getAgelessForAltar()!);
+      this.offeredGift = this.determineGift(player, this.getAgelessForAltar()!);
+      this.acceptGift(player, this.offeredGift);
     }
   }
 
-  determineGifts(ageless: Ageless) {
+  determineGift(entity: Entity, ageless: Ageless): Gift {
     const gifts = [];
     const currentFavor = ageless.currentFavor || 0;
     // get list of gifts for current favor
@@ -138,13 +144,17 @@ export class PantheonManager extends Manager {
         gifts.push(gift);
       }
     }
-    // pick random gifts from list
-    for (let i = 0; i < 3; i++) {
-      const gift = this.game.rng.nextItem(gifts);
-      if (gift && !this.offeredGifts.find((g) => g.name === gift.name)) {
-        this.offeredGifts.push(gift);
+    // pick random gift from list
+    const gift = this.game.rng.nextItem(gifts)!;
+    if (!entity.receivedGifts) {
+      entity.receivedGifts = [];
+    }
+    if (entity.receivedGifts.find((g) => g.name === gift.name)) {
+      if (!gift.canHaveMultiple) {
+        return this.determineGift(entity, ageless);
       }
     }
+    return gift;
   }
 
   acceptGift(entity: Entity, gift: Gift) {
