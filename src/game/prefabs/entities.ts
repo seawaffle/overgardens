@@ -1,6 +1,6 @@
 import { Weapons } from ".";
-import { type Entity, SlotType } from "../components";
-import { Palette } from "../data";
+import { type Entity } from "../components";
+import { Palette, SlotType } from "../data";
 
 export const Creatures: Map<string, Entity> = new Map<string, Entity>();
 Creatures.set("rat", {

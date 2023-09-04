@@ -1,6 +1,6 @@
 import type { Entity } from "../components";
 import { MeleeGoal } from "./goals";
-import { Reaction } from "../data/faction";
+import { Reaction } from "../data";
 import { AI } from "./ai";
 
 export class AdjacentAI extends AI {

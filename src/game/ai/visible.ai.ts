@@ -1,5 +1,5 @@
 import type { Entity } from "../components";
-import { Reaction } from "../data/faction";
+import { Reaction } from "../data";
 import { AI } from "./ai";
 import { ApproachGoal } from "./goals";
 import { FleeGoal } from "./goals/flee.goal";

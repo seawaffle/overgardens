@@ -2,8 +2,8 @@ import { GUI } from "malwoden";
 import { Screen } from "./screen";
 import * as Actions from "../actions";
 import { Game } from "../game";
-import { GameState, Palette } from "../data";
-import { HoverState, TextWidget } from "./text-widget";
+import { GameState, Palette, HoverState } from "../data";
+import { TextWidget } from "./text-widget";
 
 export class CharacterScreen extends Screen {
   guiContainer: GUI.ContainerWidget;

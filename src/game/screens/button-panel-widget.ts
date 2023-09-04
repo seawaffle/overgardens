@@ -2,12 +2,6 @@ import { GUI } from "malwoden";
 import type { PanelWidgetState } from "malwoden/dist/types/gui";
 // import { MouseHandlerEvent } from "malwoden/dist/types/input";
 
-export enum HoverState {
-  None = 0,
-  Hover = 1,
-  Down = 2,
-}
-
 export interface ButtonPanelState extends PanelWidgetState {
   onClick?: () => void;
 }

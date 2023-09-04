@@ -1,9 +1,8 @@
 import { GUI } from "malwoden";
 import { Screen } from "./screen";
 import { Game } from "../game";
-import { GameState, Palette } from "../data";
+import { GameState, Palette, Sacrifice } from "../data";
 import * as Actions from "../actions";
-import { Sacrifice } from "../managers/pantheon.manager";
 
 export class CommunionScreen extends Screen {
   guiContainer: GUI.ContainerWidget;

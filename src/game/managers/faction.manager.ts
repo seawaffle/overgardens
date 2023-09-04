@@ -1,4 +1,4 @@
-import { Reaction } from "../data/faction";
+import { Reaction } from "../data";
 import { Game } from "../game";
 import { Manager } from "./manager";
 import * as Prefabs from "../prefabs";

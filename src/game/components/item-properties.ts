@@ -1,4 +1,4 @@
-import { SlotType } from ".";
+import { SlotType } from "../data";
 
 export interface ItemProperties {
   equippable: boolean;

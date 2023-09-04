@@ -1,10 +1,9 @@
 import { Pathfinding, type Vector2 } from "malwoden";
 import type { Entity } from "../components";
 import { Game } from "../game";
-import { GameState } from "../data";
+import { GameState, Reaction } from "../data";
 import { meleeCombat } from ".";
 import { DijkstraMap } from "../data/djikstra-map";
-import { Reaction } from "../data/faction";
 
 export function tryMoveEntity(
   game: Game,

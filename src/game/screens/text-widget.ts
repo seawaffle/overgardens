@@ -1,12 +1,7 @@
 import { GUI, Rect } from "malwoden";
 import type { TextWidgetState } from "malwoden/dist/types/gui";
 import type { MouseHandlerEvent } from "malwoden/dist/types/input";
-
-export enum HoverState {
-  None = 0,
-  Hover = 1,
-  Down = 2,
-}
+import { HoverState } from "../data";
 
 export interface TextState extends TextWidgetState {
   onClick?: () => void;

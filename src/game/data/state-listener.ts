@@ -1,4 +1,4 @@
-import { GameState } from "./game-state";
+import { GameState } from ".";
 
 export class StateListener {
   notify(state: GameState) {

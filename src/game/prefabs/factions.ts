@@ -1,4 +1,4 @@
-import { Reaction } from "../data/faction";
+import { Reaction } from "../data";
 
 export const Factions: object = {
   player: {

@@ -1,8 +1,4 @@
-export enum Reaction {
-  Ignore = 0,
-  Attack,
-  Flee,
-}
+import { Reaction } from ".";
 
 export interface Faction {
   name: string;

@@ -1,16 +1,10 @@
-import { type Ageless, type Gift, GiftFunctions } from "../data";
+import { type Ageless, type Gift, GiftFunctions, Sacrifice } from "../data";
 import { Manager } from "./manager";
 import * as Prefabs from "../prefabs";
 import * as Actions from "../actions";
 import { deepCopy } from "../utils";
 import type { Entity } from "../components";
 import { populateBodyStats } from "../mechanics";
-
-export enum Sacrifice {
-  Self,
-  Vigor,
-  Possessions,
-}
 
 export class PantheonManager extends Manager {
   readonly MAX_PANTHEON_SIZE = 3;

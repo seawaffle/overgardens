@@ -1,12 +1,5 @@
 import type { Entity } from ".";
-
-export enum SlotType {
-  Head,
-  Body,
-  Feet,
-  Gloves,
-  Hand,
-}
+import { SlotType } from "../data";
 
 export interface Slot {
   name: string;

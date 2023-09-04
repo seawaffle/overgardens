@@ -1,5 +1,5 @@
-import { type Entity, SlotType } from "../components";
-import { Palette } from "../data";
+import { type Entity } from "../components";
+import { Palette, SlotType } from "../data";
 
 export const Armor: Map<string, Entity> = new Map<string, Entity>();
 Armor.set("clothes", {

@@ -1,5 +1,5 @@
 import { Game } from "../game";
-import { GameState } from "../data/game-state";
+import { GameState } from "../data";
 
 export function openEscapeMenu(game: Game) {
   if (game.gameState.state !== GameState.AwaitingInput) {

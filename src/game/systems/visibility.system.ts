@@ -3,7 +3,7 @@ import { System } from "./system";
 import type { Entity } from "../components";
 import { Game } from "../game";
 import { FOV } from "malwoden";
-import { Reaction } from "../data/faction";
+import { Reaction } from "../data";
 
 export class VisibilitySystem extends System {
   viewersQuery: Query<With<Entity, "position" | "viewshed">>;

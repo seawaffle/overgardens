@@ -1,5 +1,5 @@
 import { Game } from "../game";
-import { GameState } from "../data/game-state";
+import { GameState } from "../data";
 import type { Entity } from "../components";
 
 export function openInventory(game: Game) {

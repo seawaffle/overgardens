@@ -1,5 +1,6 @@
 import { Weapons } from ".";
-import { type Entity, SlotType } from "../components";
+import { type Entity } from "../components";
+import { SlotType } from "../data";
 
 export const Player: Entity = {
   name: "Player",
