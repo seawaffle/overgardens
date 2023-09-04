@@ -1,4 +1,4 @@
-import { Entity } from "../../components";
+import type { Entity } from "../../components";
 import { Goal } from "./goal";
 import * as Actions from "../../actions";
 

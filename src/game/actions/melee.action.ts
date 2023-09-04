@@ -1,5 +1,5 @@
 import { inflictDamage } from ".";
-import { Entity } from "../components";
+import type { Entity } from "../components";
 import { GameState } from "../data";
 import { Game } from "../game";
 import { roll } from "../mechanics";

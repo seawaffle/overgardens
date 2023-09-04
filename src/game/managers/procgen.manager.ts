@@ -14,8 +14,8 @@ import {
 import { Manager } from "./manager";
 import * as Prefabs from "../prefabs";
 import { nanoid } from "nanoid";
-import { Ageless, Area, Level, Map, Tile } from "../data";
-import { CharCode, Generation, Vector2 } from "malwoden";
+import { type Ageless, Area, Level, Map, Tile } from "../data";
+import { CharCode, Generation, type Vector2 } from "malwoden";
 import { StringGenerator } from "rot-js";
 import NameData from "../prefabs/names.json";
 import { populateBodyStats } from "../mechanics";

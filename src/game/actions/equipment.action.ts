@@ -1,6 +1,6 @@
 import { Game } from "../game";
 import { GameState } from "../data/game-state";
-import { Entity, Slot, SlotType } from "../components";
+import { type Entity, type Slot, SlotType } from "../components";
 import { applyEquipmentStats } from "../mechanics";
 import { deepCopy } from "../utils";
 import * as Prefabs from "../prefabs";

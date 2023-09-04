@@ -1,5 +1,5 @@
 import { Rand } from "malwoden";
-import { Entity } from "./components";
+import type { Entity } from "./components";
 
 export function attributeBonus(value: number) {
   return ~~((value - 10) / 2);

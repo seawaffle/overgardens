@@ -1,4 +1,4 @@
-import { Gift } from ".";
+import type { Gift } from ".";
 
 export interface Ageless {
   name: string;

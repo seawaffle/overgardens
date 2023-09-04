@@ -1,6 +1,6 @@
 import { CharCode, Color } from "malwoden";
 import { Palette } from ".";
-import { Destination } from "../components";
+import type { Destination } from "../components";
 
 export class Tile {
   constructor(

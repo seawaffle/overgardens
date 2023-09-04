@@ -2,7 +2,7 @@ import { Reaction } from "../data/faction";
 import { Game } from "../game";
 import { Manager } from "./manager";
 import * as Prefabs from "../prefabs";
-import { Entity } from "../components";
+import type { Entity } from "../components";
 
 export class FactionManager extends Manager {
   readonly DEFAULT = "default";

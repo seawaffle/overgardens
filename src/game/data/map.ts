@@ -1,6 +1,6 @@
-import { Struct, Vector2 } from "malwoden";
+import { Struct, type Vector2 } from "malwoden";
 import { Tile } from "./tile";
-import { Entity } from "../components";
+import type { Entity } from "../components";
 
 export class Map {
   areas: Area[];

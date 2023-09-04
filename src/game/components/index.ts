@@ -12,3 +12,4 @@ export * from "./item-properties";
 export * from "./altar-properties";
 export * from "./action";
 export * from "./status";
+export * from "./incoming-damage"

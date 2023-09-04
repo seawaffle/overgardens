@@ -1,10 +1,11 @@
-import { Vector2 } from "malwoden";
-import {
+import type { Vector2 } from "malwoden";
+import type {
   Renderable,
   Body,
   Viewshed,
   Destination,
   OutOfLevel,
+  IncomingDamage,
   Inventory,
   ItemProperties,
   AltarProperties,
@@ -12,8 +13,7 @@ import {
   Action,
 } from ".";
 import { Goal } from "../ai/goals";
-import { IncomingDamage } from "./incoming-damage";
-import { Gift } from "../data";
+import type { Gift } from "../data";
 
 export interface Entity {
   id?: string;

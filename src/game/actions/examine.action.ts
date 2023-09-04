@@ -1,4 +1,4 @@
-import { Vector2 } from "malwoden";
+import type { Vector2 } from "malwoden";
 import { GameState } from "../data";
 import { Game } from "../game";
 

@@ -1,6 +1,6 @@
 import { Game } from "../game";
 import { GameState } from "../data/game-state";
-import { Entity } from "../components";
+import type { Entity } from "../components";
 
 export function openInventory(game: Game) {
   if (game.gameState.state === GameState.Ticking) return;

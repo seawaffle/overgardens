@@ -1,5 +1,5 @@
-import { Query, With } from "miniplex";
-import { Entity } from "../components";
+import { Query, type With } from "miniplex";
+import type { Entity } from "../components";
 import { System } from "./system";
 import { Game } from "../game";
 import { determineMaxExperienceByLevel, hpPerLevel } from "../mechanics";

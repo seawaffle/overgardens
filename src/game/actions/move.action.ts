@@ -1,5 +1,5 @@
-import { Pathfinding, Vector2 } from "malwoden";
-import { Entity } from "../components";
+import { Pathfinding, type Vector2 } from "malwoden";
+import type { Entity } from "../components";
 import { Game } from "../game";
 import { GameState } from "../data";
 import { meleeCombat } from ".";

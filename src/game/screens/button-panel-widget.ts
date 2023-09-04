@@ -1,5 +1,5 @@
 import { GUI } from "malwoden";
-import { PanelWidgetState } from "malwoden/dist/types/gui";
+import type { PanelWidgetState } from "malwoden/dist/types/gui";
 // import { MouseHandlerEvent } from "malwoden/dist/types/input";
 
 export enum HoverState {

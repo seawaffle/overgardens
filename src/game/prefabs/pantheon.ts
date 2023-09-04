@@ -1,4 +1,4 @@
-import { Ageless } from "../data";
+import type { Ageless } from "../data";
 
 export const Pantheon: Ageless[] = [
   {

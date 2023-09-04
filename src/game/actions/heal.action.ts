@@ -1,4 +1,4 @@
-import { Entity } from "../components";
+import type { Entity } from "../components";
 
 export function heal(entity: Entity, amount: number) {
   if (entity.body) {

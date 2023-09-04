@@ -1,9 +1,9 @@
-import { Ageless, Gift, GiftFunctions } from "../data";
+import { type Ageless, type Gift, GiftFunctions } from "../data";
 import { Manager } from "./manager";
 import * as Prefabs from "../prefabs";
 import * as Actions from "../actions";
 import { deepCopy } from "../utils";
-import { Entity } from "../components";
+import type { Entity } from "../components";
 import { populateBodyStats } from "../mechanics";
 
 export enum Sacrifice {

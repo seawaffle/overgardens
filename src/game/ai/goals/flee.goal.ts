@@ -1,6 +1,6 @@
-import { Vector2 } from "malwoden";
+import type { Vector2 } from "malwoden";
 import { Goal } from ".";
-import { Entity } from "../../components";
+import type { Entity } from "../../components";
 import { Game } from "../../game";
 import * as Actions from "../../actions";
 

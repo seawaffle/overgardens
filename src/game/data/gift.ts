@@ -1,4 +1,4 @@
-import { Attribute, Entity, Body } from "../components";
+import type { Attribute, Entity, Body } from "../components";
 import { Game } from "../game";
 import { populateBodyStats } from "../mechanics";
 

@@ -1,7 +1,7 @@
-import { Query, With } from "miniplex";
+import { Query, type With } from "miniplex";
 import { GameState } from "../data";
 import { System } from "./system";
-import { Entity } from "../components";
+import type { Entity } from "../components";
 import { Game } from "../game";
 
 export class ZoneChangeSystem extends System {

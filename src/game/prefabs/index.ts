@@ -1,4 +1,4 @@
-import { Entity } from "../components";
+import type { Entity } from "../components";
 import { Armor } from "./armor";
 import { Weapons } from "./weapons";
 

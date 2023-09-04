@@ -1,4 +1,4 @@
-import { Entity } from "../components";
+import type { Entity } from "../components";
 import { MeleeGoal } from "./goals";
 import { Reaction } from "../data/faction";
 import { AI } from "./ai";

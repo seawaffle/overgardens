@@ -1,5 +1,5 @@
-import { Vector2 } from "malwoden";
-import { IsBlockedCallback } from "malwoden/dist/types/pathfinding/pathfinding-common";
+import type { Vector2 } from "malwoden";
+import type { IsBlockedCallback } from "malwoden/dist/types/pathfinding/pathfinding-common";
 
 interface DijkstraConfig {
   isBlockedCallback?: IsBlockedCallback;

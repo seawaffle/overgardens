@@ -1,4 +1,4 @@
-import { Glyph, Terminal, Vector2 } from "malwoden";
+import { Glyph, Terminal, type Vector2 } from "malwoden";
 import { Game } from "../game";
 import { Manager } from "./manager";
 import { GameState } from "../data";

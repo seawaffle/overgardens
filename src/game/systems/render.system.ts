@@ -1,8 +1,8 @@
 import { Glyph } from "malwoden";
 import { System } from "./system";
 import { Game } from "../game";
-import { Query, With } from "miniplex";
-import { Entity } from "../components";
+import { Query, type With } from "miniplex";
+import type { Entity } from "../components";
 import * as Screens from "../screens";
 import { GameState, Palette, Tile } from "../data";
 import { hexToColor } from "../utils";

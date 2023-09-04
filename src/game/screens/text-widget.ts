@@ -1,6 +1,6 @@
 import { GUI, Rect } from "malwoden";
-import { TextWidgetState } from "malwoden/dist/types/gui";
-import { MouseHandlerEvent } from "malwoden/dist/types/input";
+import type { TextWidgetState } from "malwoden/dist/types/gui";
+import type { MouseHandlerEvent } from "malwoden/dist/types/input";
 
 export enum HoverState {
   None = 0,

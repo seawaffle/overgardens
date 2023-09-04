@@ -1,4 +1,4 @@
-import { Entity } from "../components";
+import type { Entity } from "../components";
 import { GameState } from "../data";
 import { Game } from "../game";
 

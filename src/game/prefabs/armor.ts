@@ -1,4 +1,4 @@
-import { Entity, SlotType } from "../components";
+import { type Entity, SlotType } from "../components";
 import { Palette } from "../data";
 
 export const Armor: Map<string, Entity> = new Map<string, Entity>();

@@ -1,6 +1,6 @@
-import { Query, With } from "miniplex";
+import { Query, type With } from "miniplex";
 import { System } from "./system";
-import { Entity } from "../components";
+import type { Entity } from "../components";
 import { Game } from "../game";
 import { FOV } from "malwoden";
 import { Reaction } from "../data/faction";

@@ -20,9 +20,9 @@ import {
   ExtendedActionSystem,
   ExperienceSystem,
 } from "./systems";
-import { Entity, Slot } from "./components";
+import type { Entity, Slot } from "./components";
 import { GameState } from "./data";
-import { Rand, Vector2 } from "malwoden";
+import { Rand, type Vector2 } from "malwoden";
 import { FactionManager } from "./managers/faction.manager";
 import { MusicManager } from "./managers/music.manager";
 import { PantheonManager } from "./managers/pantheon.manager";

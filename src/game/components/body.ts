@@ -1,4 +1,4 @@
-import { Attribute, Pool, Slot } from ".";
+import type { Attribute, Pool, Slot } from ".";
 
 export interface Body {
   might?: Attribute;

@@ -1,7 +1,7 @@
-import { Query, With } from "miniplex";
+import { Query, type With } from "miniplex";
 import { Game } from "../game";
 import { System } from "./system";
-import { Entity } from "../components";
+import type { Entity } from "../components";
 import { experienceForKilling } from "../mechanics";
 
 export class DamageSystem extends System {

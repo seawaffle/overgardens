@@ -1,7 +1,7 @@
-import { Vector2 } from "malwoden";
+import type { Vector2 } from "malwoden";
 import { Goal } from ".";
 import { Game } from "../../game";
-import { Entity } from "../../components";
+import type { Entity } from "../../components";
 import * as Actions from "../../actions";
 
 export class ApproachGoal extends Goal {

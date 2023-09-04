@@ -3,7 +3,7 @@ import { Screen } from "./screen";
 import * as Actions from "../actions";
 import { Game } from "../game";
 import { GameState, Palette } from "../data";
-import { Entity } from "../components";
+import type { Entity } from "../components";
 import { TextWidget } from "./text-widget";
 import { indexToLetter } from "../utils";
 

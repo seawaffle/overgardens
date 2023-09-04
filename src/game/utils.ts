@@ -1,8 +1,8 @@
-import { Color, Pathfinding, Rand, Struct, Vector2 } from "malwoden";
+import { Color, Pathfinding, Rand, Struct, type Vector2 } from "malwoden";
 import { Noise } from "rot-js";
 import { Level, Tile } from "./data";
 import { ColorTranslator } from "colortranslator";
-import { KeyboardHandlerEvent } from "malwoden/dist/types/input";
+import type { KeyboardHandlerEvent } from "malwoden/dist/types/input";
 // noise related functions stolen from https://www.redblobgames.com/maps/terrain-from-noise
 export function mixNoise(
   width: number,
