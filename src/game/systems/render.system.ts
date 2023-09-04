@@ -13,6 +13,7 @@ export class RenderSystem extends System {
   screens: Screen[] = [
     new Screens.HUDScreen(this.game),
     new Screens.LogScreen(this.game),
+    new Screens.ActionBarScreen(this.game),
     new Screens.MainMenuScreen(this.game),
     new Screens.HelpScreen(this.game),
     new Screens.EscapeScreen(this.game),

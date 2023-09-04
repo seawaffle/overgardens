@@ -8,6 +8,8 @@ import {
   Inventory,
   ItemProperties,
   AltarProperties,
+  Status,
+  Action,
 } from ".";
 import { Goal } from "../ai/goals";
 import { IncomingDamage } from "./incoming-damage";
@@ -36,4 +38,6 @@ export interface Entity {
   gainedExperience?: number;
   altarProperties?: AltarProperties;
   receivedGifts?: Gift[];
+  statuses?: Status[];
+  actions?: Action[];
 }

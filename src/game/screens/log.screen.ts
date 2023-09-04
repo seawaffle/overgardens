@@ -21,7 +21,7 @@ export class LogScreen extends Screen {
       .setTerminal(this.game.render.terminal);
     const logWidth =
       this.game.render.displayWidth - this.game.render.viewportWidth;
-    const logHeight = this.game.render.displayHeight - HUDScreen.HUD_HEIGHT;
+    const logHeight = this.game.render.viewportHeight - HUDScreen.HUD_HEIGHT;
     const logX = this.game.render.viewportWidth;
     const logY = HUDScreen.HUD_HEIGHT;
     const panelWidget = new GUI.PanelWidget({
