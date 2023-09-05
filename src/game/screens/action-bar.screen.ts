@@ -24,7 +24,8 @@ export class ActionBarScreen extends Screen {
       origin: { x: 0, y },
       initialState: {
         width: this.game.render.displayWidth,
-        height: this.game.render.actionHeight,
+        // height: this.game.render.actionHeight,
+        height: 5,
         backColor: Palette.Ebony,
         foreColor: Palette.GreyNurse,
       },
@@ -34,7 +35,8 @@ export class ActionBarScreen extends Screen {
         origin: { x: x * 6, y: 0 },
         initialState: {
           width: 6,
-          height: this.game.render.actionHeight,
+        // height: this.game.render.actionHeight,
+        height: 5,
           backColor: Palette.Ebony,
           foreColor: Palette.GreyNurse,
         },

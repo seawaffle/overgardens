@@ -10,6 +10,7 @@ export * from "./player";
 export * from "./spawn-table";
 export * from "./pantheon";
 export * from "./altar";
+export * from "./statuses";
 export const AllItems: Map<string, Entity> = new Map<string, Entity>([
   ...Weapons,
   ...Armor,

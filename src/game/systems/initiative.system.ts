@@ -28,12 +28,11 @@ export class InitiativeSystem extends System {
       }
       e.initiative -= 1;
       if (e.initiative < 1) {
-        this.game.ecs.world.addComponent(e, "currentTurn", true);
-
         e.initiative = 6;
-
         if (e.player) {
           this.game.gameState.setState(GameState.AwaitingInput);
+        } else {
+          this.game.ecs.world.addComponent(e, "currentTurn", true);
         }
       }
     }

@@ -5,3 +5,6 @@ export * from "./tile";
 export * from "./gift";
 export * from "./ageless";
 export * from "./enums";
+export * from "./action-functions";
+export * from "./gift-functions";
+export * from "./status-functions";

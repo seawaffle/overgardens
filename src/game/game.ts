@@ -19,6 +19,7 @@ import {
   ZoneChangeSystem,
   ExtendedActionSystem,
   ExperienceSystem,
+  StatusSystem,
 } from "./systems";
 import type { Entity, Slot } from "./components";
 import { GameState } from "./data";
@@ -48,6 +49,7 @@ export class Game {
   visibilitySystem: VisibilitySystem;
   mapIndexingSystem: MapIndexingSystem;
   initiativeSystem: InitiativeSystem;
+  statusSystem: StatusSystem;
   damageSystem: DamageSystem;
   deathSystem: DeathSystem;
   aiSystem: AISystem;
@@ -83,6 +85,7 @@ export class Game {
     this.visibilitySystem = new VisibilitySystem(this);
     this.mapIndexingSystem = new MapIndexingSystem(this);
     this.initiativeSystem = new InitiativeSystem(this);
+    this.statusSystem = new StatusSystem(this);
     this.aiSystem = new AISystem(this);
     this.damageSystem = new DamageSystem(this);
     this.deathSystem = new DeathSystem(this);
@@ -103,6 +106,7 @@ export class Game {
     this.mapIndexingSystem.update();
     this.visibilitySystem.update();
     this.initiativeSystem.update();
+    this.statusSystem.update();
     this.aiSystem.update();
     this.extendedActionSystem.update();
     this.damageSystem.update();

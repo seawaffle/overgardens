@@ -9,9 +9,10 @@ export class RenderManager extends Manager {
   tileHeight = 16;
   viewportWidth = 40;
   viewportHeight = 40;
-  actionHeight = 5;
+  // actionHeight = 5;
   displayWidth = 60;
-  displayHeight = 45;
+  // displayHeight = 45;
+  displayHeight = 40;
 
   constructor(game: Game) {
     super(game);
