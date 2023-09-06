@@ -67,5 +67,7 @@ export const Player: Entity = {
       },
     ],
   },
+  abilities: [],
+  statuses: [],
   inventory: { items: [] },
 };

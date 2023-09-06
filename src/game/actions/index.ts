@@ -14,3 +14,5 @@ export * from "./equipment.action";
 export * from "./character.action";
 export * from "./heal.action";
 export * from "./altar.action";
+export * from "./ability.action";
+export * from "./targeting.action";

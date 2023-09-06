@@ -6,7 +6,7 @@ import * as Actions from "../actions";
 
 export class ContextMenuScreen extends Screen {
   static WIDTH = 20;
-  static HEIGHT = 10;
+  static HEIGHT = 20;
   guiContainer: GUI.ContainerWidget;
 
   constructor(game: Game) {
@@ -115,6 +115,20 @@ export class ContextMenuScreen extends Screen {
         downColor: Palette.William,
         onClick: () => {
           Actions.openHelp(this.game);
+        },
+      },
+    }).setParent(panelWidget);
+    // abilities
+    new GUI.ButtonWidget({
+      origin: { x: 2, y: 7 },
+      initialState: {
+        text: "[A] Abilities",
+        backColor: Palette.Ebony,
+        foreColor: Palette.GreyNurse,
+        hoverColor: Palette.Atomic,
+        downColor: Palette.William,
+        onClick: () => {
+          Actions.openAbilities(this.game);
         },
       },
     }).setParent(panelWidget);

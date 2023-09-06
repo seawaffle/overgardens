@@ -54,12 +54,12 @@ export const Pantheon: Ageless[] = [
         canHaveMultiple: true,
       },
       {
-        name: "Shadow Slip",
+        name: "Shadow Merge",
         description:
           "Enchan gifts you the ability to become as intangible as shadow, slipping through cracks, passing through solid stone",
         minFavor: 25,
         maxFavor: 100,
-        function: "shadowSlip",
+        function: "shadowMerge",
         args: [],
         canHaveMultiple: false,
       },

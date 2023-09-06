@@ -21,12 +21,13 @@ import {
   ExperienceSystem,
   StatusSystem,
 } from "./systems";
-import type { Entity, Slot } from "./components";
+import type { Ability, Entity, Slot } from "./components";
 import { GameState } from "./data";
 import { Rand, type Vector2 } from "malwoden";
 import { FactionManager } from "./managers/faction.manager";
 import { MusicManager } from "./managers/music.manager";
 import { PantheonManager } from "./managers/pantheon.manager";
+import { CooldownSystem } from "./systems/cooldown.system";
 
 export class Game {
   // should music be playing
@@ -56,6 +57,7 @@ export class Game {
   zoneChangeSystem: ZoneChangeSystem;
   extendedActionSystem: ExtendedActionSystem;
   experienceSystem: ExperienceSystem;
+  cooldownSystem: CooldownSystem;
   player?: Entity;
   rng: Rand.AleaRNG;
   fpsTicks: number[] = [];
@@ -66,6 +68,8 @@ export class Game {
   slotToEquip?: Slot;
   updateScreen = false;
   waitHealTick = false;
+  targetPosition: Vector2 = { x: -1, y: -1 };
+  targetingAbility?: Ability;
 
   constructor(id?: string) {
     this.gameId = id || Date.now().toString();
@@ -92,6 +96,7 @@ export class Game {
     this.zoneChangeSystem = new ZoneChangeSystem(this);
     this.extendedActionSystem = new ExtendedActionSystem(this);
     this.experienceSystem = new ExperienceSystem(this);
+    this.cooldownSystem = new CooldownSystem(this);
     this.player = undefined;
     this.gameState.setState(GameState.MainMenu);
   }
@@ -106,6 +111,7 @@ export class Game {
     this.mapIndexingSystem.update();
     this.visibilitySystem.update();
     this.initiativeSystem.update();
+    this.cooldownSystem.update();
     this.statusSystem.update();
     this.aiSystem.update();
     this.extendedActionSystem.update();

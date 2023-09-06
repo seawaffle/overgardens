@@ -4,22 +4,22 @@ import { System } from "./system";
 import type { Game } from "../game";
 import { GameState, StatusFunctions } from "../data";
 
-export class StatusSystem extends System {
-  statusQuery: Query<With<Entity, "statuses">>;
+export class CooldownSystem extends System {
+  abilityQuery: Query<With<Entity, "abilities">>;
   statusFunctions = new StatusFunctions();
   playerTurn = false;
 
   constructor(game: Game) {
     super(game);
-    this.statusQuery = this.game.ecs.world.with("statuses");
+    this.abilityQuery = this.game.ecs.world.with("abilities");
   }
 
   update(): void {
-    for (const e of this.statusQuery) {
+    for (const e of this.abilityQuery) {
       if (e.player) {
         if (this.game.gameState.state === GameState.AwaitingInput) {
           if (!this.playerTurn) {
-            this.runStatuses(e);
+            this.adjustCooldowns(e);
             this.playerTurn = true;
           }
         } else if (this.game.gameState.state === GameState.Ticking) {
@@ -27,26 +27,17 @@ export class StatusSystem extends System {
         }
       } else {
         if (e.currentTurn) {
-          this.runStatuses(e);
+          this.adjustCooldowns(e);
         }
       }
     }
   }
 
-  runStatuses(entity: Entity) {
-    const statusesToRemove = [];
-    for (const status of entity.statuses!) {
-      const func = this.statusFunctions.returnFunction(status.function);
-      func(this.game, entity, status.args);
-      status.duration--;
-      if (status.duration < 0) {
-        statusesToRemove.push(status);
+  adjustCooldowns(entity: Entity) {
+    for (const ability of entity.abilities!) {
+      if (ability.turnsLeft > 0) {
+        ability.turnsLeft--;
       }
-    }
-    for (const s of statusesToRemove) {
-      entity.statuses = entity.statuses!.filter(
-        (status) => s.name !== status.name,
-      );
     }
   }
 }

@@ -13,14 +13,17 @@ export class AdventureMouseContext extends Input.MouseContext {
         this.game.extendedActionSystem.endAction();
       }
 
-      if (this.game.gameState.state !== GameState.AwaitingInput) {
+      if (this.game.gameState.state === GameState.Ticking) {
         return;
       }
       const mapPos = this.game.render.convertMouseToMapPosition({
         x: mouseEvent.x,
         y: mouseEvent.y,
       });
-      if (this.game.render.isInViewport(mapPos)) {
+      if (
+        this.game.render.isInViewport(mapPos) &&
+        this.game.gameState.state === GameState.AwaitingInput
+      ) {
         this.game.extendedActionSystem.setAction(Actions.approach, [
           this.game,
           this.game.player,

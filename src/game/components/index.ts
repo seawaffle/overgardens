@@ -10,6 +10,7 @@ export * from "./pool";
 export * from "./slot";
 export * from "./item-properties";
 export * from "./altar-properties";
-export * from "./action";
+export * from "./targeting-properties";
+export * from "./ability";
 export * from "./status";
 export * from "./incoming-damage";

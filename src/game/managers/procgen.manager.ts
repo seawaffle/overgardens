@@ -65,7 +65,7 @@ export class ProcGenManager extends Manager {
     const area = new Area(
       id,
       this.game.map.areaWidth,
-      this.game.map.areaHeight,
+      this.game.map.areaHeight
     );
     area.rootNote = this.game.music.getRandomRoot();
     const levelCount = this.game.rng.nextInt(this.MIN_LEVELS, this.MAX_LEVELS);
@@ -76,7 +76,7 @@ export class ProcGenManager extends Manager {
         area.levels.push(this.generateLevel(i, area.rootNote, difficulty));
       } else {
         area.levels.push(
-          this.generateLevel(i, area.rootNote, difficulty, area.levels[i - 1]),
+          this.generateLevel(i, area.rootNote, difficulty, area.levels[i - 1])
         );
       }
     }
@@ -87,12 +87,12 @@ export class ProcGenManager extends Manager {
     id: number,
     rootNote: string,
     difficulty: number,
-    previousLevel?: Level,
+    previousLevel?: Level
   ): Level {
     const level = new Level(
       id,
       this.game.map.areaWidth,
-      this.game.map.areaHeight,
+      this.game.map.areaHeight
     );
     level.rootNote = rootNote;
     level.mode = this.game.music.getRandomScale();
@@ -112,13 +112,13 @@ export class ProcGenManager extends Manager {
       level.width,
       level.height,
       [1, 1 / 2, 1 / 4, 1 / 8, 1 / 16],
-      2,
+      2
     );
     const cloudMap = mixNoise(
       level.width,
       level.height,
       [1, 1 / 2, 1 / 4, 1 / 8, 1 / 16],
-      2,
+      2
     );
     for (let y = 0; y < level.height; y++) {
       for (let x = 0; x < level.width; x++) {
@@ -179,7 +179,7 @@ export class ProcGenManager extends Manager {
       level.width,
       level.height,
       [1, 1 / 2, 1 / 4, 1 / 8, 1 / 16],
-      2,
+      2
     );
     for (let x = 0; x < level.width; x++) {
       for (let y = 0; y < level.height; y++) {
@@ -207,7 +207,7 @@ export class ProcGenManager extends Manager {
           tile = randomTileShading(
             this.game.rng,
             genTile === 0 ? { ...Tile.Floor } : { ...Tile.Wall },
-            7,
+            7
           );
         }
         level.tiles.set(position, tile);
@@ -229,21 +229,21 @@ export class ProcGenManager extends Manager {
         const tile = randomTileShading(
           this.game.rng,
           { ...Tile.DownStairs },
-          5,
+          5
         );
         tile.destination = { area: area.id, level: i + 1 };
         level.tiles.set(pos, tile);
         console.log(
           `${area.id}.${level.id} ${tile.type} = ${JSON.stringify(pos)} to ${
             tile.destination.area
-          }.${tile.destination.level}`,
+          }.${tile.destination.level}`
         );
       } else {
         // place up stairs based on previous level's position
         const previousLevel = area.levels[i - 1];
         let upPos = findOpenNearCoord(
           level,
-          this.findStairPosition(previousLevel, "down stairs")!,
+          this.findStairPosition(previousLevel, "down stairs")!
         )!;
         let validPosition = false;
         while (!validPosition) {
@@ -269,7 +269,7 @@ export class ProcGenManager extends Manager {
         console.log(
           `${area.id}.${level.id} ${tile.type} = ${JSON.stringify(upPos)} to ${
             tile.destination.area
-          }.${tile.destination.level}`,
+          }.${tile.destination.level}`
         );
         // place down stairs on any level that isn't the bottom
         if (i + 1 < area.levels.length) {
@@ -280,14 +280,14 @@ export class ProcGenManager extends Manager {
           const downTile = randomTileShading(
             this.game.rng,
             { ...Tile.DownStairs },
-            5,
+            5
           );
           downTile.destination = { area: area.id, level: i + 1 };
           level.tiles.set(pos, downTile);
           console.log(
             `${area.id}.${level.id} ${downTile.type} = ${JSON.stringify(
-              pos,
-            )} to ${downTile.destination.area}.${downTile.destination.level}`,
+              pos
+            )} to ${downTile.destination.area}.${downTile.destination.level}`
           );
         }
       }

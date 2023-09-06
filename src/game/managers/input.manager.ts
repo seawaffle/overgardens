@@ -16,16 +16,17 @@ import {
   FullLogContext,
   CharacterContext,
   EquipmentContext,
+  CommunionContext,
+  AbilityContext,
+  TargetingMouseContext,
+  TargetingContext,
 } from "../input";
-import { CommunionContext } from "../input/communion.context";
 
 export class InputManager extends Manager implements StateListener {
   keyboardHandler: Input.KeyboardHandler;
   mouseContext: Input.MouseContext;
   mouseHandler: Input.MouseHandler;
-  // standardMouseContext: Input.MouseContext;
   adventureMouseContext: AdventureMouseContext;
-  examineMouseContext: ExamineMouseContext;
 
   constructor(game: Game) {
     super(game);
@@ -33,86 +34,82 @@ export class InputManager extends Manager implements StateListener {
     this.game.gameState.registerListener(this);
 
     this.keyboardHandler = new Input.KeyboardHandler();
-    // this.mouseContext = this.standardMouseContext = new Input.MouseContext();
-    this.mouseContext = this.adventureMouseContext = new AdventureMouseContext(
-      this.game,
-    );
+    this.adventureMouseContext = new AdventureMouseContext(this.game);
+    this.mouseContext = this.adventureMouseContext;
     this.mouseHandler = new Input.MouseHandler().setContext(this.mouseContext);
-    this.examineMouseContext = new ExamineMouseContext(this.game);
   }
   notify(state: GameState): void {
     switch (state) {
       case GameState.MainMenu: {
         this.keyboardHandler.setContext(new MainMenuContext(this.game));
         this.mouseContext = this.adventureMouseContext;
-        this.mouseHandler.setContext(this.mouseContext);
         break;
       }
       case GameState.Inventory: {
         this.keyboardHandler.setContext(new InventoryContext(this.game));
         this.mouseContext = this.adventureMouseContext;
-        this.mouseHandler.setContext(this.mouseContext);
         break;
       }
       case GameState.Character: {
         this.keyboardHandler.setContext(new CharacterContext(this.game));
         this.mouseContext = this.adventureMouseContext;
-        this.mouseHandler.setContext(this.mouseContext);
         break;
       }
       case GameState.Equipment: {
         this.keyboardHandler.setContext(new EquipmentContext(this.game));
         this.mouseContext = this.adventureMouseContext;
-        this.mouseHandler.setContext(this.mouseContext);
         break;
       }
       case GameState.HelpScreen: {
         this.keyboardHandler.setContext(new HelpContext(this.game));
         this.mouseContext = this.adventureMouseContext;
-        this.mouseHandler.setContext(this.mouseContext);
         break;
       }
       case GameState.EscapeMenu: {
         this.keyboardHandler.setContext(new EscapeContext(this.game));
         this.mouseContext = this.adventureMouseContext;
-        this.mouseHandler.setContext(this.mouseContext);
         break;
       }
       case GameState.Examine: {
         this.keyboardHandler.setContext(new ExamineContext(this.game));
-        this.mouseContext = this.examineMouseContext;
-        this.mouseHandler.setContext(this.mouseContext);
+        this.mouseContext = new ExamineMouseContext(this.game);
         break;
       }
       case GameState.GameOver: {
         this.keyboardHandler.setContext(new GameOverContext(this.game));
         this.mouseContext = this.adventureMouseContext;
-        this.mouseHandler.setContext(this.mouseContext);
         break;
       }
       case GameState.ContextMenu: {
         this.keyboardHandler.setContext(new ContextMenuContext(this.game));
         this.mouseContext = this.adventureMouseContext;
-        this.mouseHandler.setContext(this.mouseContext);
         break;
       }
       case GameState.FullLog: {
         this.keyboardHandler.setContext(new FullLogContext(this.game));
         this.mouseContext = this.adventureMouseContext;
-        this.mouseHandler.setContext(this.mouseContext);
         break;
       }
       case GameState.Communion: {
         this.keyboardHandler.setContext(new CommunionContext(this.game));
         this.mouseContext = this.adventureMouseContext;
-        this.mouseHandler.setContext(this.mouseContext);
+        break;
+      }
+      case GameState.Abilities: {
+        this.keyboardHandler.setContext(new AbilityContext(this.game));
+        this.mouseContext = this.adventureMouseContext;
+        break;
+      }
+      case GameState.Targeting: {
+        this.keyboardHandler.setContext(new TargetingContext(this.game));
+        this.mouseContext = new TargetingMouseContext(this.game);
         break;
       }
       default: {
         this.keyboardHandler.setContext(new AdventureContext(this.game));
         this.mouseContext = this.adventureMouseContext;
-        this.mouseHandler.setContext(this.mouseContext);
       }
     }
+    this.mouseHandler.setContext(this.mouseContext);
   }
 }

@@ -3,6 +3,8 @@ import { Noise } from "rot-js";
 import { Level, Tile } from "./data";
 import { ColorTranslator } from "colortranslator";
 import type { KeyboardHandlerEvent } from "malwoden/dist/types/input";
+import { World } from "miniplex";
+import type { Entity } from "./components";
 // noise related functions stolen from https://www.redblobgames.com/maps/terrain-from-noise
 export function mixNoise(
   width: number,
@@ -309,4 +311,16 @@ export function indexToLetter(index: number): string {
     result = letters[index % letters.length].toUpperCase();
   }
   return result;
+}
+
+export function initializeStatuses(world: World, entity: Entity) {
+  if (!entity.statuses) {
+    world.addComponent(entity, "statuses", []);
+  }
+}
+
+export function initializeAbilities(world: World, entity: Entity) {
+  if (!entity.abilities) {
+    world.addComponent(entity, "abilities", []);
+  }
 }

@@ -52,6 +52,11 @@ export class RenderManager extends Manager {
       this.game.examinePosition
     ) {
       target = this.game.examinePosition;
+      // } else if (
+      //   this.game.gameState.state === GameState.Targeting &&
+      //   this.game.targetPosition
+      // ) {
+      //   target = this.game.targetPosition;
     } else if (this.game.player) {
       target = this.game.player.position!;
     } else {

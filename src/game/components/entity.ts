@@ -10,7 +10,7 @@ import type {
   ItemProperties,
   AltarProperties,
   Status,
-  Action,
+  Ability,
 } from ".";
 import { Goal } from "../ai/goals";
 import type { Gift } from "../data";
@@ -39,5 +39,5 @@ export interface Entity {
   altarProperties?: AltarProperties;
   receivedGifts?: Gift[];
   statuses?: Status[];
-  actions?: Action[];
+  abilities?: Ability[];
 }

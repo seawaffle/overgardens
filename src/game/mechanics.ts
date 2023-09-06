@@ -50,6 +50,13 @@ export function populateBodyStats(entity: Entity) {
       );
       entity.body.hp = { current: hp, max: hp };
     }
+    if (!entity.body.level) {
+      entity.body.level = { current: 1, max: 100 };
+      entity.body.xp = {
+        current: 0,
+        max: determineMaxExperienceByLevel(entity),
+      };
+    }
     entity.body.dodgeValue =
       entity.body.dodgeValue ||
       10 + entity.body.agility.bonus + entity.body.agility.modifier;

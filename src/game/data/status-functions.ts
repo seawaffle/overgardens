@@ -20,12 +20,14 @@ export class StatusFunctions {
         parseInt(minTurns),
         parseInt(maxTurns),
       );
-    } else {
-      console.log("hunger tick");
     }
     const status = entity.statuses!.find(
       (status) => status.function === "hunger",
     )!;
     status.args = [turnsUntilHunger.toString(), minTurns, maxTurns];
+  }
+
+  shadowMerge(_game: Game, _entity: Entity, _args: string[]) {
+    // dummy
   }
 }

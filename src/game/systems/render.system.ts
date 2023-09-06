@@ -1,4 +1,4 @@
-import { Glyph } from "malwoden";
+import { Glyph, Pathfinding, type Vector2 } from "malwoden";
 import { System } from "./system";
 import { Game } from "../game";
 import { Query, type With } from "miniplex";
@@ -26,10 +26,13 @@ export class RenderSystem extends System {
     new Screens.ItemOptionsScreen(this.game),
     new Screens.ItemPickerScreen(this.game),
     new Screens.CommunionScreen(this.game),
+    new Screens.AbilityScreen(this.game),
   ];
 
   screenWidth: number;
   screenHeight: number;
+  targetingRange?: Vector2[];
+  targetingRadius?: Vector2[];
 
   constructor(game: Game) {
     super(game);
@@ -54,6 +57,19 @@ export class RenderSystem extends System {
   renderTiles() {
     const level = this.game.map.getCurrentLevel();
     if (level) {
+      if (this.game.gameState.state === GameState.Targeting) {
+        const rangeFinder = new Pathfinding.RangeFinder({
+          topology: "eight",
+        });
+        this.targetingRange = rangeFinder.compute({
+          start: this.game.player!.position!,
+          maxRange: this.game.targetingAbility!.targetingProperties!.range,
+        });
+        this.targetingRadius = rangeFinder.compute({
+          start: this.game.targetPosition,
+          maxRange: this.game.targetingAbility!.targetingProperties!.radius,
+        });
+      }
       const blank = Tile.Nothing.bg_color_dark;
       for (let x = 0; x < this.screenWidth; x++) {
         for (let y = 0; y < this.screenHeight; y++) {
@@ -66,26 +82,66 @@ export class RenderSystem extends System {
           const fg_colorDark = tile.fg_color_dark;
           const bg_colorLight = tile.bg_color_light;
           const bg_colorDark = tile.bg_color_dark;
+          let character = Tile.Nothing.character;
           let fg = blank;
           let bg = blank;
           if (visible) {
+            character = tile.character;
             fg = fg_colorLight;
             bg = bg_colorLight;
           } else if (explored) {
+            character = tile.character;
             fg = fg_colorDark;
             bg = bg_colorDark;
+          }
+          if (this.game.gameState.state === GameState.Targeting) {
+            character = Tile.Nothing.character;
+            fg = blank;
+            bg = blank;
+            if (explored) {
+              character = tile.character;
+              fg = fg_colorDark;
+              bg = bg_colorDark;
+            }
+            if (
+              this.targetingRange!.find(
+                (r) => r.x === mapPos.x && r.y === mapPos.y,
+              ) &&
+              visible
+            ) {
+              fg = fg_colorLight;
+              bg = bg_colorLight;
+            }
+            if (
+              this.targetingRadius!.find(
+                (r) => r.x === mapPos.x && r.y === mapPos.y,
+              )
+            ) {
+              fg = Palette.MilanoRed;
+              bg = Palette.ChileanFire;
+            }
+            if (
+              mapPos.x === this.game.targetPosition.x &&
+              mapPos.y === this.game.targetPosition.y
+            ) {
+              if (!explored) {
+                character = Tile.Nothing.character;
+              }
+              fg = Palette.RoyalHeath;
+              bg = Palette.Mulberry;
+            }
           }
           if (
             this.game.gameState.state === GameState.Examine &&
             mapPos.x === this.game.examinePosition.x &&
             mapPos.y === this.game.examinePosition.y
           ) {
-            fg = Palette.Mulberry;
+            fg = Palette.RoyalHeath;
             bg = Palette.Mulberry;
           }
           this.game.render.draw(
             displayPos,
-            Glyph.fromCharCode(tile.character, fg, bg),
+            Glyph.fromCharCode(character, fg, bg),
           );
         }
       }
@@ -121,6 +177,29 @@ export class RenderSystem extends System {
           if (renderable.glyph.bg) {
             bg = hexToColor(renderable.glyph.bg);
           }
+          if (this.game.gameState.state === GameState.Targeting) {
+            bg = tile ? tile.bg_color_dark : Palette.Ebony;
+            if (
+              this.targetingRange?.find(
+                (r) => r.x === position.x && r.y === position.y,
+              )
+            ) {
+              bg = tile ? tile.bg_color_light : Palette.Ebony;
+            }
+            if (
+              this.targetingRadius?.find(
+                (r) => r.x === position.x && r.y === position.y,
+              )
+            ) {
+              bg = Palette.ChileanFire;
+            }
+            if (
+              position.x === this.game.targetPosition.x &&
+              position.y === this.game.targetPosition.y
+            ) {
+              bg = Palette.Mulberry;
+            }
+          }
           if (
             this.game.gameState.state === GameState.Examine &&
             position.x === this.game.examinePosition.x &&
@@ -136,6 +215,8 @@ export class RenderSystem extends System {
   }
 
   renderWorld(): void {
+    this.targetingRadius = [];
+    this.targetingRange = [];
     this.renderTiles();
     this.renderEntities();
   }

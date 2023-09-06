@@ -117,6 +117,10 @@ export class AdventureContext extends Input.KeyboardContext {
             Actions.kneelAtAltar(game, game.player!);
             break;
           }
+          case Input.KeyCode.A: {
+            Actions.openAbilities(game);
+            break;
+          }
         }
       }
     });

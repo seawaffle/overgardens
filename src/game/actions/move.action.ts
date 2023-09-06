@@ -42,7 +42,10 @@ export function tryMoveEntity(
         return;
       }
     }
-    if (!level.isBlocked(destination)) {
+    const phasing = entity.statuses?.find((s) => s.function === "shadowMerge")
+      ? true
+      : false;
+    if (!level.isBlocked(destination) || phasing) {
       level.setBlocked(pos, false);
       level.setBlocked(destination);
       entity.position! = destination;

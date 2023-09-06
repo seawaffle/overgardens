@@ -1,8 +1,8 @@
 import type { Attribute, Entity, Body, Status } from "../components";
 import { Game } from "../game";
 import { populateBodyStats } from "../mechanics";
-import { Statuses } from "../prefabs";
-import { deepCopy } from "../utils";
+import { Abilities, Statuses } from "../prefabs";
+import { deepCopy, initializeAbilities, initializeStatuses } from "../utils";
 
 export class GiftFunctions {
   returnFunction(name: any) {
@@ -27,12 +27,13 @@ export class GiftFunctions {
 
   perfectedAppendage(_game: Game, _entity: Entity, _args: any[]) {}
 
-  shadowSlip(_game: Game, _entity: Entity, _args: any[]) {}
+  shadowMerge(game: Game, entity: Entity, _args: any[]) {
+    initializeAbilities(game.ecs.world, entity);
+    entity.abilities!.push(deepCopy(Abilities.get("shadowMerge")));
+  }
 
   hunger(game: Game, entity: Entity, _args: any[]) {
-    if (!entity.statuses) {
-      game.ecs.world.addComponent(entity, "statuses", []);
-    }
+    initializeStatuses(game.ecs.world, entity);
     const hunger: Status = deepCopy(Statuses.get("hunger"));
     const hungerArgs = hunger.args;
     const timeTillHunger = game.rng.nextInt(
@@ -43,7 +44,12 @@ export class GiftFunctions {
     entity.statuses!.push(hunger);
   }
 
-  tendrils(_game: Game, _entity: Entity, _args: any[]) {}
+  tendrils(game: Game, entity: Entity, _args: any[]) {
+    initializeStatuses(game.ecs.world, entity);
+  }
 
-  puppeteer(_game: Game, _entity: Entity, _args: any[]) {}
+  puppeteer(game: Game, entity: Entity, _args: any[]) {
+    initializeAbilities(game.ecs.world, entity);
+    entity.abilities!.push(deepCopy(Abilities.get("puppeteer")));
+  }
 }

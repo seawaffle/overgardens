@@ -16,6 +16,7 @@ export function startExamine(game: Game) {
     return;
   }
   game.examinePosition = game.player!.position!;
+  game.log.setOverride("Examining...");
   game.gameState.setState(GameState.Examine);
 }
 

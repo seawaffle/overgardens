@@ -7,3 +7,9 @@ Statuses.set("hunger", {
   function: "hunger",
   args: ["0", "50", "100"],
 });
+Statuses.set("shadowMerge", {
+  name: "Shadow Merge",
+  duration: 10,
+  function: "shadowMerge",
+  args: [],
+});

@@ -28,6 +28,8 @@ export enum GameState {
   Equipment,
   Character,
   Communion,
+  Abilities,
+  Targeting,
 }
 
 export enum Sacrifice {
