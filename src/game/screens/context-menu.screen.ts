@@ -20,10 +20,12 @@ export class ContextMenuScreen extends Screen {
       .setMouseHandler(this.game.input.mouseHandler)
       .registerMouseContext(this.game.input.mouseContext)
       .setTerminal(this.game.render.terminal);
-    const menuX =
-      this.game.render.displayWidth / 2 - ContextMenuScreen.WIDTH / 2;
-    const menuY =
-      this.game.render.displayHeight / 2 - ContextMenuScreen.HEIGHT / 2;
+    const menuX = Math.round(
+      this.game.render.displayWidth / 2 - ContextMenuScreen.WIDTH / 2,
+    );
+    const menuY = Math.round(
+      this.game.render.displayHeight / 2 - ContextMenuScreen.HEIGHT / 2,
+    );
     const panelWidget = new GUI.PanelWidget({
       origin: { x: menuX, y: menuY },
       initialState: {

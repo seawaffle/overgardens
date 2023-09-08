@@ -1,29 +1,121 @@
-import { GUI } from "malwoden";
-import type { PanelWidgetState } from "malwoden/dist/types/gui";
+import { CharCode, Color, GUI, Glyph, Rect, type Vector2 } from "malwoden";
+import type { PanelWidgetState, WidgetConfig } from "malwoden/dist/types/gui";
+import { HoverState } from "../data";
+import type { MouseHandlerEvent } from "malwoden/dist/types/input";
 // import { MouseHandlerEvent } from "malwoden/dist/types/input";
 
 export interface ButtonPanelState extends PanelWidgetState {
   onClick?: () => void;
+  hoverColor?: Color;
+  downColor?: Color;
+  title?: string;
 }
 
 export class ButtonPanelWidget extends GUI.Widget<ButtonPanelState> {
+  constructor(config: WidgetConfig<ButtonPanelState>) {
+    super(config);
+    this.state = {
+      foreColor: Color.White,
+      backColor: Color.Black,
+      hoverColor: Color.Black,
+      downColor: Color.Black,
+      ...config.initialState,
+    };
+  }
+
+  getAbsTopLeft(): Vector2 {
+    return this.getAbsoluteOrigin();
+  }
+
+  getAbsBottomRight(): Vector2 {
+    const o = this.getAbsoluteOrigin();
+    return {
+      x: o.x + this.state.width - 1,
+      y: o.y + this.state.height - 1,
+    };
+  }
+
+  getBackColor(mouseState: HoverState): Color | undefined {
+    if (mouseState === HoverState.None) {
+      return this.state.backColor;
+    }
+
+    if (mouseState === HoverState.Hover) {
+      return this.state.hoverColor;
+    }
+
+    if (mouseState === HoverState.Down) {
+      return this.state.downColor;
+    }
+  }
+
+  onMouseClick(event: MouseHandlerEvent): boolean {
+    if (!this.terminal || !this.state.onClick) return false;
+    if (event.type === "mouseup") return false;
+    const tilePos = this.terminal.windowToTilePoint(event);
+    if (this.getBounds().contains(tilePos)) {
+      this.state.onClick();
+      return true;
+    }
+    return false;
+  }
+
+  getBounds(): Rect {
+    return Rect.FromWidthHeight(
+      this.getAbsoluteOrigin(),
+      this.state.width,
+      this.state.height,
+    );
+  }
+
+  getMouseState(): HoverState {
+    const mousePos = this.mouseHandler!.getPos();
+    const terminalPos = this.terminal!.windowToTilePoint(mousePos);
+    const mouseDown = this.mouseHandler!.isMouseDown();
+    if (this.getBounds().contains(terminalPos)) {
+      return mouseDown ? HoverState.Down : HoverState.Hover;
+    }
+    return HoverState.None;
+  }
+
   onDraw(): void {
     if (!this.terminal) return;
 
-    // const origin = this.getAbsoluteOrigin();
+    const bounds = this.getBounds();
 
-    // const text = this.text();
-    // const lines = this.lines(text);
+    const hoverState = this.getMouseState();
+    const backColor = this.getBackColor(hoverState);
 
-    // for (let y = 0; y < lines.length; y++) {
-    //   const line = lines[y];
-    //   this.terminal.writeAt(
-    //     { x: origin.x, y: origin.y + y },
-    //     line,
-    //     this.state.foreColor,
-    //     this.state.backColor,
-    //   );
-    // }
+    const g = Glyph.fromCharCode(
+      CharCode.space,
+      this.state.foreColor,
+      backColor,
+    );
+
+    for (let y = bounds.v1.y; y <= bounds.v2.y; y++) {
+      for (let x = bounds.v1.x; x <= bounds.v2.x; x++) {
+        this.terminal.drawGlyph({ x, y }, g);
+      }
+    }
+    const origin = this.getAbsoluteOrigin();
+
+    if (this.state.title) {
+      const title = this.padToWidth(this.state.title, this.state.width);
+      this.terminal.writeAt(
+        { x: origin.x, y: origin.y },
+        title,
+        this.state.foreColor,
+        backColor,
+      );
+    }
+  }
+
+  padToWidth(text: string, length: number) {
+    if (text.length >= length) {
+      return text;
+    } else {
+      return text.padStart((text.length + length) / 2, " ").padEnd(length, " ");
+    }
   }
 
   //   truncateText(config: {

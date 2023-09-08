@@ -13,5 +13,5 @@ export * from "./equipment.screen";
 export * from "./item-options.screen";
 export * from "./item-picker.screen";
 export * from "./communion.screen";
-export * from "./action-bar.screen";
+export * from "./ability-bar.screen";
 export * from "./ability.screen";

@@ -1,4 +1,5 @@
 import {
+  AbilityBarManager,
   DatabaseManager,
   ECSManager,
   GameStateManager,
@@ -46,6 +47,7 @@ export class Game {
   music: MusicManager;
   faction: FactionManager;
   pantheon: PantheonManager;
+  abilityBar: AbilityBarManager;
   renderSystem: RenderSystem;
   visibilitySystem: VisibilitySystem;
   mapIndexingSystem: MapIndexingSystem;
@@ -85,6 +87,7 @@ export class Game {
     this.music = new MusicManager(this);
     this.faction = new FactionManager(this);
     this.pantheon = new PantheonManager(this);
+    this.abilityBar = new AbilityBarManager(this);
     this.renderSystem = new RenderSystem(this);
     this.visibilitySystem = new VisibilitySystem(this);
     this.mapIndexingSystem = new MapIndexingSystem(this);
@@ -146,7 +149,6 @@ export class Game {
     this.player!.viewshed!.dirty = true;
     this.mapIndexingSystem = new MapIndexingSystem(this);
     this.visibilitySystem = new VisibilitySystem(this);
-    this.renderSystem = new RenderSystem(this);
     await this.music.startAudio();
     this.music.generate();
     this.updateSystems();
@@ -176,7 +178,6 @@ export class Game {
     this.map.loadMap(data.map);
     this.gameState = new GameStateManager(this);
     this.gameState.setState(GameState.AwaitingInput);
-    this.renderSystem = new RenderSystem(this);
     this.visibilitySystem = new VisibilitySystem(this);
     this.mapIndexingSystem = new MapIndexingSystem(this);
     this.initiativeSystem = new InitiativeSystem(this);

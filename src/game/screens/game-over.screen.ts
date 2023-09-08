@@ -20,8 +20,12 @@ export class GameOverScreen extends Screen {
       .setMouseHandler(this.game.input.mouseHandler)
       .registerMouseContext(this.game.input.mouseContext)
       .setTerminal(this.game.render.terminal);
-    const xPos = this.game.render.displayWidth / 2 - GameOverScreen.WIDTH / 2;
-    const yPos = this.game.render.displayHeight / 2 - GameOverScreen.HEIGHT / 2;
+    const xPos = Math.round(
+      this.game.render.displayWidth / 2 - GameOverScreen.WIDTH / 2,
+    );
+    const yPos = Math.round(
+      this.game.render.displayHeight / 2 - GameOverScreen.HEIGHT / 2,
+    );
     const panelWidget = new GUI.PanelWidget({
       origin: { x: xPos, y: yPos },
       initialState: {

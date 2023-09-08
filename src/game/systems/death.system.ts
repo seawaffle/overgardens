@@ -21,6 +21,7 @@ export class DeathSystem extends System {
       }
       if (level) {
         const tile = level.tiles.get(d.position!)!;
+        // blood stains on death
         const bloodStain = tile.bg_color_light.blend(
           Palette.MilanoRed,
           this.game.rng.next(),
@@ -28,6 +29,14 @@ export class DeathSystem extends System {
         tile.bg_color_light = bloodStain;
         if (!tile.type.includes("blood")) {
           tile.type = `bloody ${tile.type}`;
+        }
+        // drop inventory on death
+        if (d.inventory) {
+          for (const item of d.inventory.items) {
+            if (item.itemProperties!.droppedOnDeath) {
+              this.game.ecs.world.addComponent(item, "position", d.position);
+            }
+          }
         }
       }
       this.game.ecs.world.remove(d);

@@ -6,3 +6,4 @@ export * from "./render.manager";
 export * from "./database.manager";
 export * from "./procgen.manager";
 export * from "./log.manager";
+export * from "./ability-bar.manager";

@@ -20,10 +20,12 @@ export class EscapeScreen extends Screen {
       .setMouseHandler(this.game.input.mouseHandler)
       .registerMouseContext(this.game.input.mouseContext)
       .setTerminal(this.game.render.terminal);
-    const escapeX =
-      this.game.render.displayWidth / 2 - EscapeScreen.ESCAPE_WIDTH / 2;
-    const escapeY =
-      this.game.render.displayHeight / 2 - EscapeScreen.ESCAPE_HEIGHT / 2;
+    const escapeX = Math.round(
+      this.game.render.displayWidth / 2 - EscapeScreen.ESCAPE_WIDTH / 2,
+    );
+    const escapeY = Math.round(
+      this.game.render.displayHeight / 2 - EscapeScreen.ESCAPE_HEIGHT / 2,
+    );
     const panelWidget = new GUI.PanelWidget({
       origin: { x: escapeX, y: escapeY },
       initialState: {
