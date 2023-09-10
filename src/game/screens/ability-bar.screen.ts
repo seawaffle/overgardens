@@ -3,6 +3,7 @@ import { Screen } from "./screen";
 import { Game } from "../game";
 import { Palette } from "../data";
 import { ButtonPanelWidget } from "./button-panel-widget";
+import * as Actions from "../actions";
 import type { Ability } from "../components";
 
 export class AbilityBarScreen extends Screen {
@@ -41,7 +42,7 @@ export class AbilityBarScreen extends Screen {
         downColor: Palette.William,
         onClick: () => {
           this.firstPage = !this.firstPage;
-          this.game.updateScreen = true;
+          this.game.abilityBar.barUpdate = true;
         },
       },
     }).setParent(panelWidget);
@@ -53,10 +54,10 @@ export class AbilityBarScreen extends Screen {
     const start = this.firstPage ? 0 : numberOfButtons;
     for (let x = start; x < start + numberOfButtons; x++) {
       const number = x === 9 ? 0 : x + 1;
-      const keycode = x === 9 ? 48 : 48 + x;
+      const keycode = x === 9 ? 48 : 48 + number;
       const abilityIndex = this.game.abilityBar.inputToIndex(keycode);
       let ability: Ability | undefined = undefined;
-      if (abilityIndex) {
+      if (abilityIndex !== undefined) {
         ability = this.game.player!.abilities![abilityIndex];
       }
       new ButtonPanelWidget({
@@ -65,12 +66,15 @@ export class AbilityBarScreen extends Screen {
           width: buttonWidth,
           height: this.game.render.actionHeight,
           title: number.toString(),
+          text: ability ? ability.name : "",
           backColor: Palette.Ebony,
           foreColor: Palette.GreyNurse,
           hoverColor: Palette.Atomic,
           downColor: Palette.William,
           onClick: () => {
-            console.log(`${number} ${ability ? ability.name : ""}`);
+            if (ability) {
+              Actions.activateAbility(this.game, this.game.player!, ability);
+            }
           },
         },
       }).setParent(panelWidget);
@@ -102,13 +106,13 @@ export class AbilityBarScreen extends Screen {
   }
 
   render(): void {
-    if (this.game.updateScreen) {
+    if (this.game.abilityBar.barUpdate) {
       this.guiContainer.setMouseHandler(undefined);
       this.guiContainer.clearMouseContext();
       this.guiContainer.setDisabled(true);
       this.guiContainer = this.constructGui();
       this.guiContainer.setDisabled(false);
-      this.game.updateScreen = false;
+      this.game.abilityBar.barUpdate = false;
     }
     this.guiContainer.cascadeDraw();
   }

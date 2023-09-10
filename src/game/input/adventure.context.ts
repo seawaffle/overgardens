@@ -121,6 +121,26 @@ export class AdventureContext extends Input.KeyboardContext {
             Actions.openAbilities(game);
             break;
           }
+          // ability bar
+          case Input.KeyCode.One:
+          case Input.KeyCode.Two:
+          case Input.KeyCode.Three:
+          case Input.KeyCode.Four:
+          case Input.KeyCode.Five:
+          case Input.KeyCode.Six:
+          case Input.KeyCode.Seven:
+          case Input.KeyCode.Eight:
+          case Input.KeyCode.Nine:
+          case Input.KeyCode.Zero: {
+            const index = this.game.abilityBar.inputToIndex(keyEvent.key);
+            if (index !== undefined) {
+              Actions.activateAbility(
+                this.game,
+                game.player!,
+                game.player!.abilities![index],
+              );
+            }
+          }
         }
       }
     });

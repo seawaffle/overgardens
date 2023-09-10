@@ -5,6 +5,13 @@ import { Abilities, Statuses } from "../prefabs";
 import { deepCopy, initializeAbilities, initializeStatuses } from "../utils";
 
 export class GiftFunctions {
+  static addAbiityToBar(game: Game, index: number) {
+    const nextOpen = game.abilityBar.findNextOpen();
+    if (nextOpen) {
+      game.abilityBar.setAbility(nextOpen, index);
+    }
+  }
+
   returnFunction(name: any) {
     const func: keyof GiftFunctions = name;
     return this[func];
@@ -29,7 +36,9 @@ export class GiftFunctions {
 
   shadowMerge(game: Game, entity: Entity, _args: any[]) {
     initializeAbilities(game.ecs.world, entity);
-    entity.abilities!.push(deepCopy(Abilities.get("shadowMerge")));
+    const index =
+      entity.abilities!.push(deepCopy(Abilities.get("shadowMerge"))) - 1;
+    GiftFunctions.addAbiityToBar(game, index);
   }
 
   hunger(game: Game, entity: Entity, _args: any[]) {
@@ -50,6 +59,8 @@ export class GiftFunctions {
 
   puppeteer(game: Game, entity: Entity, _args: any[]) {
     initializeAbilities(game.ecs.world, entity);
-    entity.abilities!.push(deepCopy(Abilities.get("puppeteer")));
+    const index =
+      entity.abilities!.push(deepCopy(Abilities.get("puppeteer"))) - 1;
+    GiftFunctions.addAbiityToBar(game, index);
   }
 }
