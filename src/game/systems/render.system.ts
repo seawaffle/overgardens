@@ -27,6 +27,8 @@ export class RenderSystem extends System {
     new Screens.ItemPickerScreen(this.game),
     new Screens.CommunionScreen(this.game),
     new Screens.AbilityScreen(this.game),
+    new Screens.BarSettingsScreen(this.game),
+    new Screens.AbilitySelectScreen(this.game),
   ];
 
   screenWidth: number;

@@ -16,3 +16,4 @@ export * from "./heal.action";
 export * from "./altar.action";
 export * from "./ability.action";
 export * from "./targeting.action";
+export * from "./bar-settings.action";

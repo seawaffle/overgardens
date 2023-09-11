@@ -35,7 +35,7 @@ export class AbilityBarScreen extends Screen {
       initialState: {
         width: 2,
         height: this.game.render.actionHeight,
-        title: toggleText,
+        text: toggleText,
         backColor: Palette.Ebony,
         foreColor: Palette.GreyNurse,
         hoverColor: Palette.Atomic,
@@ -85,13 +85,13 @@ export class AbilityBarScreen extends Screen {
       initialState: {
         width: 2,
         height: this.game.render.actionHeight,
-        title: "*",
+        text: "*",
         backColor: Palette.Ebony,
         foreColor: Palette.GreyNurse,
         hoverColor: Palette.Atomic,
         downColor: Palette.William,
         onClick: () => {
-          console.log("bar settings");
+          Actions.openBarSettings(this.game);
         },
       },
     }).setParent(panelWidget);

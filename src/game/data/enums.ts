@@ -30,6 +30,7 @@ export enum GameState {
   Communion,
   Abilities,
   Targeting,
+  BarSettings,
 }
 
 export enum Sacrifice {

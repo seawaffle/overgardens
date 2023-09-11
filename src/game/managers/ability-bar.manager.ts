@@ -5,6 +5,7 @@ import { Manager } from "./manager";
 export class AbilityBarManager extends Manager {
   abilities: Map<Input.KeyCode, number>;
   barUpdate = false;
+  keyToSet?: Input.KeyCode;
 
   constructor(game: Game) {
     super(game);
@@ -14,6 +15,7 @@ export class AbilityBarManager extends Manager {
   setAbility(key: Input.KeyCode, abilityIndex: number) {
     this.abilities.set(key, abilityIndex);
     this.barUpdate = true;
+    this.keyToSet = undefined;
   }
 
   unsetAbility(key: Input.KeyCode) {

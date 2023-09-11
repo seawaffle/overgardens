@@ -20,6 +20,7 @@ import {
   AbilityContext,
   TargetingMouseContext,
   TargetingContext,
+  BarSettingsContext,
 } from "../input";
 
 export class InputManager extends Manager implements StateListener {
@@ -103,6 +104,11 @@ export class InputManager extends Manager implements StateListener {
       case GameState.Targeting: {
         this.keyboardHandler.setContext(new TargetingContext(this.game));
         this.mouseContext = new TargetingMouseContext(this.game);
+        break;
+      }
+      case GameState.BarSettings: {
+        this.keyboardHandler.setContext(new BarSettingsContext(this.game));
+        this.mouseContext = this.adventureMouseContext;
         break;
       }
       default: {

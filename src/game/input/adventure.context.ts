@@ -121,6 +121,10 @@ export class AdventureContext extends Input.KeyboardContext {
             Actions.openAbilities(game);
             break;
           }
+          case Input.KeyCode.B: {
+            Actions.openBarSettings(game);
+            break;
+          }
           // ability bar
           case Input.KeyCode.One:
           case Input.KeyCode.Two:
