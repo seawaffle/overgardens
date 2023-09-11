@@ -25,6 +25,7 @@ export function pickUp(game: Game, me: Entity) {
   if (items && items.length > 0) {
     if (items.length > 1) {
       // open pick up menu
+      game.gameState.setState(GameState.Pickup);
       return;
     }
     // add item to inventory
@@ -34,6 +35,24 @@ export function pickUp(game: Game, me: Entity) {
   }
   // no items to pick up
   game.log.addMessage("Nothing to pick up");
+}
+
+export function pickUpMultiple(game: Game, me: Entity) {
+  const level = game.map.getCurrentLevel()!;
+  if (game.toBePickedUp) {
+    const items = level
+      .getTileContent(me.position!)
+      .filter((e) => e.itemProperties);
+    if (game.toBePickedUp.length !== items.length) {
+      console.log("list sizes are wrong");
+      return;
+    }
+    for (let i = game.toBePickedUp.length - 1; i >= 0; i--) {
+      if (game.toBePickedUp[i]) {
+        addToInventory(game, me, items[i]);
+      }
+    }
+  }
 }
 
 export function addToInventory(game: Game, me: Entity, item: Entity) {
@@ -62,4 +81,18 @@ export function openItemDetails(game: Game, item: Entity) {
 
 export function closeItemDetails(game: Game) {
   game.itemToDescribe = undefined;
+}
+
+export function openPickup(game: Game) {
+  if (game.gameState.state === GameState.Ticking) return;
+  game.gameState.setState(GameState.Pickup);
+}
+
+export function closePickup(game: Game) {
+  if (game.gameState.state !== GameState.Pickup) {
+    return;
+  }
+
+  game.screenLineNumber = 0;
+  game.gameState.setState(GameState.AwaitingInput);
 }

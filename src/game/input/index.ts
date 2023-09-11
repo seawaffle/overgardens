@@ -16,3 +16,4 @@ export * from "./ability.context";
 export * from "./targeting.context";
 export * from "./targeting.mouse.context";
 export * from "./bar-settings.context";
+export * from "./pickup.context";

@@ -134,6 +134,20 @@ export class ContextMenuScreen extends Screen {
         },
       },
     }).setParent(panelWidget);
+    // bar settings
+    new GUI.ButtonWidget({
+      origin: { x: 2, y: 7 },
+      initialState: {
+        text: "[B] Bar Settings",
+        backColor: Palette.Ebony,
+        foreColor: Palette.GreyNurse,
+        hoverColor: Palette.Atomic,
+        downColor: Palette.William,
+        onClick: () => {
+          Actions.openBarSettings(this.game);
+        },
+      },
+    }).setParent(panelWidget);
     container.setDisabled(true);
     return container;
   }

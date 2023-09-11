@@ -17,3 +17,4 @@ export * from "./ability-bar.screen";
 export * from "./ability.screen";
 export * from "./bar-settings.screen";
 export * from "./ability-select.screen";
+export * from "./pickup.screen";

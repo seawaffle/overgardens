@@ -72,6 +72,7 @@ export class Game {
   waitHealTick = false;
   targetPosition: Vector2 = { x: -1, y: -1 };
   targetingAbility?: Ability;
+  toBePickedUp?: boolean[];
 
   constructor(id?: string) {
     this.gameId = id || Date.now().toString();

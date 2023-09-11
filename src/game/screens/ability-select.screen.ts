@@ -1,8 +1,8 @@
 import { GUI } from "malwoden";
 import { Screen } from "./screen";
-import * as Actions from "../actions";
 import { Game } from "../game";
-import { GameState, Palette } from "../data";
+import * as Actions from "../actions";
+import { Palette } from "../data";
 import { TextWidget } from "./text-widget";
 import { indexToLetter } from "../utils";
 
@@ -49,16 +49,49 @@ export class AbilitySelectScreen extends Screen {
         hoverColor: Palette.Atomic,
         downColor: Palette.William,
         onClick: () => {
-          Actions.closeItemPicker(this.game);
+          this.game.abilityBar.keyToSet = undefined;
+          this.game.screenLineNumber = 0;
+        },
+      },
+    }).setParent(panelWidget);
+    const abilities = this.game.player?.abilities;
+
+    // scroll up button
+    new GUI.ButtonWidget({
+      origin: { x: this.WIDTH - 1, y: 1 },
+      initialState: {
+        text: "↑",
+        backColor: Palette.Ebony,
+        foreColor: Palette.GreyNurse,
+        hoverColor: Palette.Atomic,
+        downColor: Palette.William,
+        onClick: () => {
+          Actions.scrollUpScreen(this.game);
+        },
+      },
+    }).setParent(panelWidget);
+    // scroll down button
+    new GUI.ButtonWidget({
+      origin: {
+        x: this.WIDTH - 1,
+        y: this.HEIGHT - 2,
+      },
+      initialState: {
+        text: "↓",
+        backColor: Palette.Ebony,
+        foreColor: Palette.GreyNurse,
+        hoverColor: Palette.Atomic,
+        downColor: Palette.William,
+        onClick: () => {
+          Actions.scrollDownScreen(this.game, abilities?.length || 0);
         },
       },
     }).setParent(panelWidget);
 
     if (this.game.abilityBar.keyToSet) {
       const key = this.game.abilityBar.keyToSet;
-      const abilities = this.game.player!.abilities!;
       let y = 2;
-      if (abilities.length === 0) {
+      if (!abilities || abilities.length === 0) {
         new TextWidget({
           origin: { x: 2, y },
           initialState: {
@@ -69,7 +102,10 @@ export class AbilitySelectScreen extends Screen {
           },
         }).setParent(panelWidget);
       } else {
-        for (let i = 0; i < abilities.length; i++) {
+        for (let i = this.game.screenLineNumber; i < abilities.length; i++) {
+          if (y >= this.HEIGHT - 1) {
+            break;
+          }
           const ability = abilities[i];
           new TextWidget({
             origin: { x: 2, y },
@@ -92,9 +128,6 @@ export class AbilitySelectScreen extends Screen {
     return container;
   }
 
-  notify(_state: GameState): void {
-    // this.guiContainer.setDisabled(state !== GameState.EscapeMenu);
-  }
   render(): void {
     if (this.game.abilityBar.keyToSet) {
       this.guiContainer = this.constructGui();

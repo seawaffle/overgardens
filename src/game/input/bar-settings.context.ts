@@ -15,6 +15,15 @@ export class BarSettingsContext extends Input.KeyboardContext {
           switch (keyEvent.key) {
             case Input.KeyCode.Escape: {
               this.game.abilityBar.keyToSet = undefined;
+              this.game.screenLineNumber = 0;
+              break;
+            }
+            case Input.KeyCode.UpArrow: {
+              Actions.scrollUpScreen(game);
+              break;
+            }
+            case Input.KeyCode.DownArrow: {
+              Actions.scrollDownScreen(game, game.player!.abilities!.length);
               break;
             }
             default: {
@@ -25,6 +34,7 @@ export class BarSettingsContext extends Input.KeyboardContext {
                   index,
                 );
                 this.game.updateScreen = true;
+                this.game.screenLineNumber = 0;
               }
             }
           }

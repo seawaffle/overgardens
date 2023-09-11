@@ -31,6 +31,7 @@ export enum GameState {
   Abilities,
   Targeting,
   BarSettings,
+  Pickup,
 }
 
 export enum Sacrifice {
