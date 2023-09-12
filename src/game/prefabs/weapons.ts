@@ -41,6 +41,26 @@ Weapons.set("short-sword", {
     renderOrder: 2,
   },
 });
+Weapons.set("great-sword", {
+  name: "Great Sword",
+  mobile: false,
+  itemProperties: {
+    equippable: true,
+    droppedOnDeath: true,
+    slotType: SlotType.Hand,
+    consumable: false,
+    damage: "1d12",
+    melee: true,
+    twoHanded: true,
+  },
+  renderable: {
+    glyph: {
+      character: "/",
+      fg: Palette.ChileanFireHex,
+    },
+    renderOrder: 2,
+  },
+});
 
 Weapons.set("fist", {
   name: "Fist",
@@ -67,5 +87,25 @@ Weapons.set("bite", {
     damage: "1d4-1",
     melee: true,
     natural: true,
+  },
+});
+
+Weapons.set("short-bow", {
+  name: "Short Bow",
+  mobile: false,
+  itemProperties: {
+    equippable: true,
+    droppedOnDeath: true,
+    slotType: SlotType.Hand,
+    consumable: false,
+    damage: "1d6",
+    twoHanded: true,
+  },
+  renderable: {
+    glyph: {
+      character: "|",
+      fg: Palette.GreyNurseHex,
+    },
+    renderOrder: 2,
   },
 });

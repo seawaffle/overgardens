@@ -15,6 +15,7 @@ export const ItemTable: Map<string, SpawnRange> = new Map<string, SpawnRange>();
 // weapons
 ItemTable.set("knife", { minDifficulty: 0, maxDifficulty: 4, weight: 1 });
 ItemTable.set("short-sword", { minDifficulty: 1, maxDifficulty: 6, weight: 1 });
+ItemTable.set("short-bow", { minDifficulty: 0, maxDifficulty: 6, weight: 1 });
 // armor
 ItemTable.set("clothes", { minDifficulty: 0, maxDifficulty: 4, weight: 2 });
 ItemTable.set("leather-armor", {

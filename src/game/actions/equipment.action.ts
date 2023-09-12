@@ -27,8 +27,41 @@ export function equipItem(
   log = true,
 ) {
   if (me.inventory && me.inventory.items.includes(item)) {
-    for (const slot of me.body!.slots!) {
-      if (slot.type === item.itemProperties!.slotType) {
+    const slots = me
+      .body!.slots!.filter((s) => s.type === item.itemProperties!.slotType)
+      .filter((s) => s.ableToEquipItems);
+    if (item.itemProperties!.twoHanded) {
+      if (slots.length >= 2) {
+        let openSlots = slots.filter(
+          (s) => !s.equippedItem || s.equippedItem.itemProperties!.natural,
+        );
+        if (openSlots.length >= 2) {
+          let slotAmount = 2;
+          if (chosenSlot) {
+            chosenSlot.equippedItem = item;
+            item.itemProperties!.equipped = true;
+            slotAmount--;
+            openSlots = openSlots.filter(
+              (s) => !s.equippedItem || s.equippedItem.itemProperties!.natural,
+            );
+          }
+          while (slotAmount > 0) {
+            const slot = openSlots[slotAmount - 1];
+            slot.equippedItem = item;
+            item.itemProperties!.equipped = true;
+            slotAmount--;
+          }
+          applyEquipmentStats(me);
+          return;
+        }
+      }
+      if (log) {
+        game.log.addMessage(
+          `${me.name} doesn't have enough empty slots to equip ${item.name}`,
+        );
+      }
+    } else {
+      for (const slot of slots) {
         if (
           slot.ableToEquipItems &&
           (!slot.equippedItem || slot.equippedItem.itemProperties!.natural)
@@ -64,18 +97,22 @@ export function unequipItem(game: Game, me: Entity, item: Entity, log = true) {
     me.inventory.items.includes(item) &&
     item.itemProperties!.equipped
   ) {
+    let slotAmount = item.itemProperties!.twoHanded ? 2 : 1;
     for (const slot of me.body!.slots!) {
       if (slot.equippedItem === item) {
         slot.equippedItem = undefined;
         item.itemProperties!.equipped = undefined;
+        slotAmount--;
         if (slot.type === SlotType.Hand) {
           slot.equippedItem = deepCopy(Prefabs.Weapons.get("fist"));
         }
-        applyEquipmentStats(me);
-        if (log) {
-          game.log.addMessage(`${me.name} removed ${item.name}`);
+        if (slotAmount === 0) {
+          applyEquipmentStats(me);
+          if (log) {
+            game.log.addMessage(`${me.name} removed ${item.name}`);
+          }
+          return;
         }
-        return;
       }
     }
   }
