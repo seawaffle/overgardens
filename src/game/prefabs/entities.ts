@@ -1,3 +1,4 @@
+import { nanoid } from "nanoid";
 import { Weapons } from ".";
 import { type Entity } from "../components";
 import { Palette, SlotType } from "../data";
@@ -63,6 +64,41 @@ Creatures.set("ooze", {
         type: SlotType.Hand,
         ableToEquipItems: true,
         equippedItem: { ...Weapons.get("fist")! },
+      },
+    ],
+  },
+});
+
+Creatures.set("goblin", {
+  id: "",
+  name: "Goblin",
+  renderable: {
+    glyph: {
+      character: "g",
+      fg: Palette.WildWillowHex,
+    },
+    renderOrder: 1,
+  },
+  blocksTile: true,
+  mobile: true,
+  viewshed: {
+    range: 5,
+    dirty: true,
+  },
+  faction: "mindless",
+  initiative: 8,
+  inventory: {
+    items: [],
+  },
+  body: {
+    might: { base: 8, modifier: 0, bonus: 0 },
+    agility: { base: 14, modifier: 0, bonus: 0 },
+    slots: [
+      {
+        name: "Right Hand",
+        type: SlotType.Hand,
+        ableToEquipItems: true,
+        equippedItem: { ...Weapons.get("short-bow")!, id: nanoid() },
       },
     ],
   },

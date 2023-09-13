@@ -9,8 +9,10 @@ export class HelpScreen extends Screen {
   helpTexts = [
     "? - This help screen",
     "Arrow Keys/Numpad - Movement",
+    "</> - Move up or down a level",
     "Escape - Save or quit game",
     ". - Wait 1 turn",
+    "W - Wait until healed",
     "X - Examine your surroundings",
     "L - View the full log",
     "C - View character sheet",
@@ -18,8 +20,12 @@ export class HelpScreen extends Screen {
     "E - View equipment",
     "O - Autoexplore",
     "M - Autoattack",
-    "P - Pick up an item",
+    "F - Fire equipped ranged weapon",
+    "P - Pick up items",
     "K - Kneel at an altar",
+    "A - Open ability list",
+    "B - Open ability bar settings",
+    "Number keys - Ability bar hotkeys",
   ];
   constructor(game: Game) {
     super(game);

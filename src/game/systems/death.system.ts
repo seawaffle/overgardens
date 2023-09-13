@@ -14,10 +14,14 @@ export class DeathSystem extends System {
 
   update(): void {
     const level = this.game.map.getCurrentLevel();
+    if (this.game.gameState.state === GameState.GameOver) {
+      return;
+    }
     for (const d of this.dyingQuery) {
       this.game.log.addMessage(`${d.name} has died`);
       if (d.player) {
         this.game.gameState.setState(GameState.GameOver);
+        return;
       }
       if (level) {
         const tile = level.tiles.get(d.position!)!;

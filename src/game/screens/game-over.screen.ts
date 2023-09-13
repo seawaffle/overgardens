@@ -85,7 +85,13 @@ export class GameOverScreen extends Screen {
   }
 
   notify(state: GameState): void {
-    this.guiContainer.setDisabled(state !== GameState.GameOver);
+    if (state === GameState.GameOver) {
+      this.guiContainer.clearMouseContext();
+      this.guiContainer = this.constructGui();
+      this.guiContainer.setDisabled(false);
+    } else {
+      this.guiContainer.setDisabled(true);
+    }
   }
   render(): void {
     this.guiContainer.cascadeDraw();

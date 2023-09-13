@@ -64,6 +64,7 @@ export function meleeAttack(game: Game, attacker: Entity, defender: Entity) {
 }
 
 export function rangedAttack(game: Game, attacker: Entity, defender: Entity) {
+  if (attacker.id === defender.id) return;
   if (attacker.body && attacker.body.slots) {
     const rangedWeapon = wieldingRangedWeapon(attacker);
     if (rangedWeapon) {

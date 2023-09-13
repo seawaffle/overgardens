@@ -369,3 +369,19 @@ export function findTargetInRange(
   }
   return target;
 }
+
+export function isTargetInRange(
+  attacker: Vector2,
+  target: Vector2,
+  range: number,
+) {
+  const rangeFinder = new Pathfinding.RangeFinder({
+    topology: "eight",
+  });
+  const targetingRange = rangeFinder.compute({
+    start: attacker,
+    maxRange: range,
+  });
+  const pos = targetingRange.find((r) => r.x === target.x && r.y === target.y);
+  return pos !== undefined;
+}
