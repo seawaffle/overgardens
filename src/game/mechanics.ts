@@ -90,18 +90,22 @@ export function applyEquipmentStats(me: Entity) {
   // initialize stats
   me.body!.dodgeValue = 10;
   me.body!.damageReduction = 0;
+  const appliedItems: string[] = [];
   for (const slot of me.body!.slots!) {
     if (slot.equippedItem) {
       const equipment = slot.equippedItem;
-      // damage reduction
-      if (equipment.itemProperties!.damageReduction) {
-        me.body!.damageReduction += equipment.itemProperties!.damageReduction;
+      if (!appliedItems.find((i) => i === equipment.id)) {
+        appliedItems.push(equipment.id);
+        // damage reduction
+        if (equipment.itemProperties!.damageReduction) {
+          me.body!.damageReduction += equipment.itemProperties!.damageReduction;
+        }
+        // dodge value
+        if (equipment.itemProperties!.dodgeValue) {
+          me.body!.dodgeValue += equipment.itemProperties!.dodgeValue;
+        }
+        // stats
       }
-      // dodge value
-      if (equipment.itemProperties!.dodgeValue) {
-        me.body!.dodgeValue += equipment.itemProperties!.dodgeValue;
-      }
-      // stats
     }
   }
   me.body!.dodgeValue += me.body!.agility!.bonus + me.body!.agility!.modifier;

@@ -1,5 +1,5 @@
 import { inflictDamage } from ".";
-import type { Entity } from "../components";
+import type { Attribute, Entity } from "../components";
 import { GameState } from "../data";
 import { Game } from "../game";
 import { roll } from "../mechanics";
@@ -8,6 +8,7 @@ import { wieldingRangedWeapon } from "../utils";
 export function attack(
   game: Game,
   attacker: Entity,
+  hitAttribute: Attribute,
   weapon: Entity,
   defender: Entity,
 ) {
@@ -19,7 +20,7 @@ export function attack(
   // attack roll
   const attackerRoll = roll(game.rng, "1d20");
   const rollCalculation =
-    attackerRoll + attacker.body!.might!.bonus + attacker.body!.might!.modifier;
+    attackerRoll + hitAttribute.bonus + hitAttribute.modifier;
   const toHit = defender.body!.dodgeValue || 10;
   if (attackerRoll <= 1 || rollCalculation < toHit) {
     game.log.addMessage(`${attacker.name} misses ${defender.name}`);
@@ -53,7 +54,7 @@ export function meleeAttack(game: Game, attacker: Entity, defender: Entity) {
       if (weapon && weapon.itemProperties && weapon.itemProperties.melee) {
         if (usedWeapons.includes(weapon.id)) continue;
         if (firstAttack || game.rng.nextBoolean()) {
-          attack(game, attacker, weapon, defender);
+          attack(game, attacker, attacker.body.might!, weapon, defender);
           firstAttack = false;
           usedWeapons.push(weapon.id);
         }
@@ -66,7 +67,7 @@ export function rangedAttack(game: Game, attacker: Entity, defender: Entity) {
   if (attacker.body && attacker.body.slots) {
     const rangedWeapon = wieldingRangedWeapon(attacker);
     if (rangedWeapon) {
-      attack(game, attacker, rangedWeapon, defender);
+      attack(game, attacker, attacker.body.agility!, rangedWeapon, defender);
     }
   }
 }
