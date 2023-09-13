@@ -125,4 +125,15 @@ export class Tile {
     true,
     true,
   );
+
+  static Transporter = new Tile(
+    "transporter",
+    CharCode.almostEqualTo,
+    Palette.Ebony,
+    Palette.Ebony,
+    Palette.William,
+    Palette.Geyser,
+    true,
+    true,
+  );
 }

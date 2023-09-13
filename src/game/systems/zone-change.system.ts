@@ -3,6 +3,7 @@ import { GameState } from "../data";
 import { System } from "./system";
 import type { Entity } from "../components";
 import { Game } from "../game";
+import type { Vector2 } from "malwoden";
 
 export class ZoneChangeSystem extends System {
   hereQuery: Query<With<Entity, "position">>;
@@ -23,30 +24,30 @@ export class ZoneChangeSystem extends System {
       return;
     }
     const dest = player.destination;
-    // const changingAreas = false;
-    let upOrDown = "up stairs";
-    if (dest.level < this.game.map.getCurrentLevel()!.id) {
-      upOrDown = "down stairs";
+    const currentArea = this.game.map.getCurrentArea()!.id;
+    const currentLevel = this.game.map.getCurrentLevel()!.id;
+    let changingAreas = false;
+    if (dest.area !== currentArea) {
+      changingAreas = true;
     }
     this.freezeEntities();
     this.game.map.changeZone(dest.area, dest.level);
     this.unfreezeEntities(dest.area, dest.level);
     player.destination = undefined;
     const newLevel = this.game.map.getCurrentLevel()!;
-    const stairPosition = this.game.procgen.findStairPosition(
-      newLevel,
-      upOrDown,
-    );
-    // console.log(
-    //   `Moving to area: ${dest.area}.${
-    //     dest.level
-    //   }. Stair position: ${JSON.stringify(stairPosition)}`,
-    // );
-    this.game.procgen.placePlayer(newLevel, stairPosition);
+    let newPosition: Vector2 | undefined = undefined;
+    let message = "";
+    if (changingAreas) {
+      newPosition = this.game.procgen.findTransporter(newLevel, currentArea);
+      message = `${player.name} activates the transporter, finding themselves somewhere else.`;
+    } else {
+      newPosition = this.game.procgen.findStair(newLevel, currentLevel);
+      message = `${player.name} goes ${
+        newLevel.id > currentLevel ? "down" : "up"
+      } the stairs.`;
+    }
+    this.game.procgen.placePlayer(newLevel, newPosition);
     player.viewshed!.dirty = true;
-    const message = `${player.name} goes ${
-      upOrDown === "up stairs" ? "down" : "up"
-    } the stairs.`;
     this.game.log.addMessage(message);
     this.game.gameState.setState(GameState.AwaitingInput);
   }

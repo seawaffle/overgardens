@@ -23,6 +23,15 @@ export class MapManager extends Manager {
     this.game.procgen.populateStairs(area);
   }
 
+  generateArea(id: number) {
+    const area = this.game.procgen.generateArea(id);
+    this.map!.areas.push(area);
+    for (const level of area.levels) {
+      this.game.procgen.generateEntities(area, level);
+    }
+    this.game.procgen.populateStairs(area);
+  }
+
   loadMap(data: Record<string, any>) {
     this.map = new Map(data.width, data.height);
     this.map.currentArea = data.currentArea;
