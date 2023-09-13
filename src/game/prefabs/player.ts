@@ -3,6 +3,7 @@ import { type Entity } from "../components";
 import { SlotType } from "../data";
 
 export const Player: Entity = {
+  id: "",
   name: "Player",
   renderable: {
     glyph: {

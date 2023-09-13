@@ -60,7 +60,10 @@ export class RenderSystem extends System {
   renderTiles() {
     const level = this.game.map.getCurrentLevel();
     if (level) {
-      if (this.game.gameState.state === GameState.Targeting) {
+      if (
+        this.game.gameState.state === GameState.Targeting &&
+        this.game.targetPosition
+      ) {
         const rangeFinder = new Pathfinding.RangeFinder({
           topology: "eight",
         });
@@ -124,8 +127,8 @@ export class RenderSystem extends System {
               bg = Palette.ChileanFire;
             }
             if (
-              mapPos.x === this.game.targetPosition.x &&
-              mapPos.y === this.game.targetPosition.y
+              mapPos.x === this.game.targetPosition!.x &&
+              mapPos.y === this.game.targetPosition!.y
             ) {
               if (!explored) {
                 character = Tile.Nothing.character;
@@ -197,8 +200,8 @@ export class RenderSystem extends System {
               bg = Palette.ChileanFire;
             }
             if (
-              position.x === this.game.targetPosition.x &&
-              position.y === this.game.targetPosition.y
+              position.x === this.game.targetPosition!.x &&
+              position.y === this.game.targetPosition!.y
             ) {
               bg = Palette.Mulberry;
             }

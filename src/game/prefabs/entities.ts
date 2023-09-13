@@ -4,6 +4,7 @@ import { Palette, SlotType } from "../data";
 
 export const Creatures: Map<string, Entity> = new Map<string, Entity>();
 Creatures.set("rat", {
+  id: "",
   name: "Rat",
   renderable: {
     glyph: {
@@ -37,6 +38,7 @@ Creatures.set("rat", {
 });
 
 Creatures.set("ooze", {
+  id: "",
   name: "Ooze",
   renderable: {
     glyph: {

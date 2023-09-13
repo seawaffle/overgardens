@@ -2,6 +2,9 @@ import { Input } from "malwoden";
 import { Game } from "../game";
 import { GameState } from "../data";
 import * as Actions from "../actions";
+import { deepCopy, wieldingRangedWeapon } from "../utils";
+import { Abilities } from "../prefabs";
+import type { Ability } from "../components";
 
 export class AdventureContext extends Input.KeyboardContext {
   constructor(public game: Game) {
@@ -125,6 +128,23 @@ export class AdventureContext extends Input.KeyboardContext {
             Actions.openBarSettings(game);
             break;
           }
+          case Input.KeyCode.F: {
+            // todo: ranged attack logic
+            const rangedWeapon = wieldingRangedWeapon(this.game.player!);
+            if (rangedWeapon) {
+              const rangedAbility: Ability = deepCopy(
+                Abilities.get("rangedAttack"),
+              );
+              rangedAbility.targetingProperties =
+                rangedWeapon.itemProperties!.targeting;
+              Actions.activateAbility(
+                this.game,
+                this.game.player!,
+                rangedAbility,
+              );
+            }
+            break;
+          }
           // ability bar
           case Input.KeyCode.One:
           case Input.KeyCode.Two:
@@ -140,8 +160,8 @@ export class AdventureContext extends Input.KeyboardContext {
             if (index !== undefined) {
               Actions.activateAbility(
                 this.game,
-                game.player!,
-                game.player!.abilities![index],
+                this.game.player!,
+                this.game.player!.abilities![index],
               );
             }
           }

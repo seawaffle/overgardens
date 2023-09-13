@@ -2,6 +2,7 @@ import type { Entity } from "../components";
 import { Palette } from "../data";
 
 export const Altar: Entity = {
+  id: "",
   name: "Altar",
   renderable: {
     glyph: {

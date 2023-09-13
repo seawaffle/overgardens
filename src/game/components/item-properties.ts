@@ -1,3 +1,4 @@
+import type { TargetingProperties } from ".";
 import { SlotType } from "../data";
 
 export interface ItemProperties {
@@ -12,4 +13,5 @@ export interface ItemProperties {
   melee?: true;
   twoHanded?: true;
   natural?: true;
+  targeting?: TargetingProperties;
 }

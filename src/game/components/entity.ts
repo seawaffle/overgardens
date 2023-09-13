@@ -16,7 +16,7 @@ import { Goal } from "../ai/goals";
 import type { Gift } from "../data";
 
 export interface Entity {
-  id?: string;
+  id: string;
   name: string;
   position?: Vector2;
   outOfLevel?: OutOfLevel;

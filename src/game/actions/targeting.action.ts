@@ -2,6 +2,7 @@ import { Pathfinding, type Vector2 } from "malwoden";
 import { GameState } from "../data";
 import { Game } from "../game";
 import { activateAbility } from ".";
+import { findTargetInRange } from "../utils";
 
 export function exitTargeting(game: Game) {
   if (game.gameState.state !== GameState.Targeting) {
@@ -20,7 +21,14 @@ export function startTargeting(game: Game) {
   ) {
     return;
   }
-  game.targetPosition = game.player!.position!;
+
+  game.targetPosition =
+    findTargetInRange(
+      game.map.getCurrentLevel()!,
+      game.player!,
+      game.targetingAbility!.targetingProperties!.range,
+      game.faction,
+    )?.position || game.player!.position!;
   game.log.setOverride("Targeting...");
   game.gameState.setState(GameState.Targeting);
 }
@@ -29,6 +37,7 @@ export function moveTargeting(game: Game, pos: Vector2, absolute = false) {
   if (game.gameState.state !== GameState.Targeting) {
     return;
   }
+  if (!game.targetPosition) return;
   const destination = absolute
     ? pos
     : { x: game.targetPosition.x + pos.x, y: game.targetPosition.y + pos.y };

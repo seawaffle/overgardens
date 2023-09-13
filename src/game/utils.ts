@@ -5,6 +5,7 @@ import { ColorTranslator } from "colortranslator";
 import type { KeyboardHandlerEvent } from "malwoden/dist/types/input";
 import { World } from "miniplex";
 import type { Entity } from "./components";
+import type { FactionManager } from "./managers/faction.manager";
 // noise related functions stolen from https://www.redblobgames.com/maps/terrain-from-noise
 export function mixNoise(
   width: number,
@@ -323,4 +324,48 @@ export function initializeAbilities(world: World, entity: Entity) {
   if (!entity.abilities) {
     world.addComponent(entity, "abilities", []);
   }
+}
+
+export function wieldingRangedWeapon(entity: Entity): Entity | undefined {
+  let response = undefined;
+  const slots = entity.body?.slots;
+  if (slots) {
+    const rangedWeapons = slots.filter(
+      (s) => s.equippedItem && s.equippedItem.itemProperties!.targeting,
+    );
+    if (rangedWeapons.length > 0) {
+      response = rangedWeapons.pop()?.equippedItem;
+    }
+  }
+  return response;
+}
+
+export function findTargetInRange(
+  level: Level,
+  attacker: Entity,
+  range: number,
+  factionManager: FactionManager,
+): Entity | undefined {
+  const rangeFinder = new Pathfinding.RangeFinder({
+    topology: "eight",
+  });
+  const targetingRange = rangeFinder.compute({
+    start: attacker.position!,
+    maxRange: range,
+  });
+  let target = undefined;
+  let currentReaction = -1;
+  for (const r of targetingRange) {
+    // loop through targeting range, find a target.
+    // prioritize aggressive entities
+    const entity = level.getTileContent(r).find((c) => c.body);
+    if (entity) {
+      const reaction = factionManager.getReaction(attacker, entity);
+      if (reaction > currentReaction && entity.id !== attacker.id) {
+        target = entity;
+        currentReaction = reaction;
+      }
+    }
+  }
+  return target;
 }

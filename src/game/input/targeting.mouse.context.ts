@@ -11,6 +11,9 @@ export class TargetingMouseContext extends Input.MouseContext {
         x: mouseEvent.x,
         y: mouseEvent.y,
       });
+      if (!this.game.targetPosition) {
+        return;
+      }
       if (
         mapPos.x === this.game.targetPosition.x &&
         mapPos.y === this.game.targetPosition.y

@@ -13,12 +13,7 @@ export class MeleeGoal extends Goal {
 
   run(me: Entity): void {
     if (me.body && me.body.slots) {
-      for (const slot of me.body.slots) {
-        const weapon = slot.equippedItem;
-        if (weapon && weapon.itemProperties && weapon.itemProperties.melee) {
-          Actions.meleeCombat(this.game, me, weapon, this.target);
-        }
-      }
+      Actions.meleeAttack(this.game, me, this.target);
     }
   }
 }

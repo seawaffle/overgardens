@@ -18,3 +18,12 @@ Abilities.set("shadowMerge", {
   turnsLeft: 50,
   cooldownAmount: 50,
 });
+
+Abilities.set("rangedAttack", {
+  name: "",
+  function: "rangedAttack",
+  args: [],
+  description: "",
+  turnsLeft: 0,
+  cooldownAmount: 0,
+});

@@ -3,11 +3,22 @@ import type { Entity } from "../components";
 import type { Game } from "../game";
 import { Statuses } from "../prefabs";
 import { deepCopy, initializeStatuses } from "../utils";
+import * as Actions from "../actions";
 
 export class AbilityFunctions {
   returnFunction(name: any) {
     const func: keyof AbilityFunctions = name;
     return this[func];
+  }
+
+  rangedAttack(game: Game, entity: Entity, _args: string[]) {
+    const level = game.map.getCurrentLevel()!;
+    const targetContent = level.getTileContent(game.targetPosition!);
+    const targetEntity = targetContent.find((c) => c.body);
+    if (targetEntity) {
+      Actions.rangedAttack(game, entity, targetEntity);
+    }
+    game.targetPosition = undefined;
   }
 
   shadowMerge(game: Game, entity: Entity, _args: string[]) {
@@ -17,9 +28,10 @@ export class AbilityFunctions {
 
   puppeteer(game: Game, entity: Entity, _args: string[]) {
     const level = game.map.getCurrentLevel()!;
-    const targetContent = level.getTileContent(game.targetPosition);
+    const targetContent = level.getTileContent(game.targetPosition!);
     const targetEntity = targetContent.find((c) => c.body);
     if (targetEntity) {
+      // to do: add contested roll here
       game.ecs.world.addComponent(targetEntity, "player", true);
       targetEntity.abilities = entity.abilities;
       targetEntity.renderable!.glyph.fg = "yellow";
@@ -36,5 +48,6 @@ export class AbilityFunctions {
       // additional gamestate change here because now the current entity isn't the player anymore
       game.gameState.setState(GameState.Ticking);
     }
+    game.targetPosition = undefined;
   }
 }

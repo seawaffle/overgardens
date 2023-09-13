@@ -3,6 +3,7 @@ import { Palette, SlotType } from "../data";
 
 export const Armor: Map<string, Entity> = new Map<string, Entity>();
 Armor.set("clothes", {
+  id: "",
   name: "Clothes",
   mobile: false,
   itemProperties: {
@@ -20,6 +21,7 @@ Armor.set("clothes", {
   },
 });
 Armor.set("leather-helm", {
+  id: "",
   name: "Leather Helm",
   mobile: false,
   itemProperties: {
@@ -37,6 +39,7 @@ Armor.set("leather-helm", {
   },
 });
 Armor.set("leather-armor", {
+  id: "",
   name: "Leather Armor",
   mobile: false,
   itemProperties: {

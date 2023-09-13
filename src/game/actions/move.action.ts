@@ -2,7 +2,7 @@ import { Pathfinding, type Vector2 } from "malwoden";
 import type { Entity } from "../components";
 import { Game } from "../game";
 import { GameState, Reaction } from "../data";
-import { meleeCombat } from ".";
+import { meleeAttack } from ".";
 import { DijkstraMap } from "../data/djikstra-map";
 
 export function tryMoveEntity(
@@ -23,22 +23,7 @@ export function tryMoveEntity(
   if (level) {
     for (const e of level.getTileContent(destination)) {
       if (entity.player && e.body) {
-        if (entity.body && entity.body.slots) {
-          let firstAttack = true;
-          for (const slot of entity.body.slots) {
-            const weapon = slot.equippedItem;
-            if (
-              weapon &&
-              weapon.itemProperties &&
-              weapon.itemProperties.melee
-            ) {
-              if (firstAttack || game.rng.nextBoolean()) {
-                meleeCombat(game, entity, weapon, e);
-                firstAttack = false;
-              }
-            }
-          }
-        }
+        meleeAttack(game, entity, e);
         return;
       }
     }

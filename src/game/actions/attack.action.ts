@@ -3,8 +3,9 @@ import type { Entity } from "../components";
 import { GameState } from "../data";
 import { Game } from "../game";
 import { roll } from "../mechanics";
+import { wieldingRangedWeapon } from "../utils";
 
-export function meleeCombat(
+export function attack(
   game: Game,
   attacker: Entity,
   weapon: Entity,
@@ -39,6 +40,33 @@ export function meleeCombat(
     inflictDamage(game, attacker, defender, damage);
     if (attacker.player) {
       game.gameState.setState(GameState.Ticking);
+    }
+  }
+}
+
+export function meleeAttack(game: Game, attacker: Entity, defender: Entity) {
+  if (attacker.body && attacker.body.slots) {
+    let firstAttack = true;
+    const usedWeapons: string[] = [];
+    for (const slot of attacker.body.slots) {
+      const weapon = slot.equippedItem;
+      if (weapon && weapon.itemProperties && weapon.itemProperties.melee) {
+        if (usedWeapons.includes(weapon.id)) continue;
+        if (firstAttack || game.rng.nextBoolean()) {
+          attack(game, attacker, weapon, defender);
+          firstAttack = false;
+          usedWeapons.push(weapon.id);
+        }
+      }
+    }
+  }
+}
+
+export function rangedAttack(game: Game, attacker: Entity, defender: Entity) {
+  if (attacker.body && attacker.body.slots) {
+    const rangedWeapon = wieldingRangedWeapon(attacker);
+    if (rangedWeapon) {
+      attack(game, attacker, rangedWeapon, defender);
     }
   }
 }

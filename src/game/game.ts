@@ -70,7 +70,7 @@ export class Game {
   slotToEquip?: Slot;
   updateScreen = false;
   waitHealTick = false;
-  targetPosition: Vector2 = { x: -1, y: -1 };
+  targetPosition?: Vector2;
   targetingAbility?: Ability;
   toBePickedUp?: boolean[];
 

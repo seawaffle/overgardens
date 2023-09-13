@@ -3,6 +3,7 @@ import { Palette, SlotType } from "../data";
 
 export const Weapons: Map<string, Entity> = new Map<string, Entity>();
 Weapons.set("knife", {
+  id: "",
   name: "Knife",
   mobile: false,
   itemProperties: {
@@ -23,6 +24,7 @@ Weapons.set("knife", {
 });
 
 Weapons.set("short-sword", {
+  id: "",
   name: "Short Sword",
   mobile: false,
   itemProperties: {
@@ -42,6 +44,7 @@ Weapons.set("short-sword", {
   },
 });
 Weapons.set("great-sword", {
+  id: "",
   name: "Great Sword",
   mobile: false,
   itemProperties: {
@@ -63,6 +66,7 @@ Weapons.set("great-sword", {
 });
 
 Weapons.set("fist", {
+  id: "",
   name: "Fist",
   mobile: false,
   itemProperties: {
@@ -77,6 +81,7 @@ Weapons.set("fist", {
 });
 
 Weapons.set("bite", {
+  id: "",
   name: "Bite",
   mobile: false,
   itemProperties: {
@@ -91,6 +96,7 @@ Weapons.set("bite", {
 });
 
 Weapons.set("short-bow", {
+  id: "",
   name: "Short Bow",
   mobile: false,
   itemProperties: {
@@ -100,6 +106,7 @@ Weapons.set("short-bow", {
     consumable: false,
     damage: "1d6",
     twoHanded: true,
+    targeting: { range: 6, radius: 0 },
   },
   renderable: {
     glyph: {
