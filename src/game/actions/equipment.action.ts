@@ -91,6 +91,16 @@ export function equipItem(
   }
 }
 
+export function unequipAll(game: Game, me: Entity) {
+  if (me.body && me.body.slots) {
+    for (const slot of me.body.slots) {
+      if (slot.equippedItem) {
+        unequipItem(game, me, slot.equippedItem);
+      }
+    }
+  }
+}
+
 export function unequipItem(game: Game, me: Entity, item: Entity, log = true) {
   if (
     me.inventory &&

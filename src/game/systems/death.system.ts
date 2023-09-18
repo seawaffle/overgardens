@@ -3,6 +3,7 @@ import type { Entity } from "../components";
 import { System } from "./system";
 import { Game } from "../game";
 import { GameState, Palette } from "../data";
+import * as Actions from "../actions";
 
 export class DeathSystem extends System {
   dyingQuery: Query<With<Entity, "dying">>;
@@ -36,9 +37,10 @@ export class DeathSystem extends System {
         }
         // drop inventory on death
         if (d.inventory) {
+          Actions.unequipAll(this.game, d);
           for (const item of d.inventory.items) {
             if (item.itemProperties!.droppedOnDeath) {
-              this.game.ecs.world.addComponent(item, "position", d.position);
+              Actions.dropItem(this.game, d, item);
             }
           }
         }

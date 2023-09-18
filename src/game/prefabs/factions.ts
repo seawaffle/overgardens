@@ -7,8 +7,17 @@ export const Factions: object = {
   mindless: {
     default: Reaction.Attack,
   },
-  herbivores: {
-    default: Reaction.Flee,
-    herbivores: Reaction.Ignore,
+  ratling: {
+    default: Reaction.Attack,
+    ratling: Reaction.Ignore,
+    apekin: Reaction.Flee,
+  },
+  apekin: {
+    default: Reaction.Attack,
+    apekin: Reaction.Ignore,
+  },
+  human: {
+    default: Reaction.Attack,
+    human: Reaction.Ignore,
   },
 };

@@ -3,14 +3,14 @@ export interface SpawnRange {
   maxDifficulty: number;
   weight: number;
 }
-export const CreatureTable: Map<string, SpawnRange> = new Map<
-  string,
-  SpawnRange
->();
-// creatures
-CreatureTable.set("rat", { minDifficulty: 0, maxDifficulty: 4, weight: 5 });
-CreatureTable.set("ooze", { minDifficulty: 0, maxDifficulty: 5, weight: 2 });
-CreatureTable.set("goblin", { minDifficulty: 0, maxDifficulty: 5, weight: 2 });
+// export const CreatureTable: Map<string, SpawnRange> = new Map<
+//   string,
+//   SpawnRange
+// >();
+// // creatures
+// CreatureTable.set("rat", { minDifficulty: 0, maxDifficulty: 4, weight: 5 });
+// CreatureTable.set("ooze", { minDifficulty: 0, maxDifficulty: 5, weight: 2 });
+// CreatureTable.set("goblin", { minDifficulty: 0, maxDifficulty: 5, weight: 2 });
 
 export const ItemTable: Map<string, SpawnRange> = new Map<string, SpawnRange>();
 // weapons

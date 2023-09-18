@@ -3,9 +3,10 @@ import { Armor } from "./armor";
 import { Weapons } from "./weapons";
 
 export * from "./weapons";
+export * from "./categories";
 export * from "./factions";
 export * from "./armor";
-export * from "./entities";
+export * from "./lineages";
 export * from "./player";
 export * from "./spawn-table";
 export * from "./pantheon";

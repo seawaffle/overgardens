@@ -13,12 +13,23 @@ import {
 } from "../utils";
 import { Manager } from "./manager";
 import * as Prefabs from "../prefabs";
+import * as Actions from "../actions";
 import { nanoid } from "nanoid";
-import { type Ageless, Area, Level, Map, Tile } from "../data";
+import {
+  type Ageless,
+  Area,
+  Level,
+  Map,
+  Tile,
+  type Category,
+  type Lineage,
+  type Ranking,
+} from "../data";
 import { CharCode, Generation, type Vector2 } from "malwoden";
 import { StringGenerator } from "rot-js";
 import NameData from "../prefabs/names.json";
 import { populateBodyStats } from "../mechanics";
+import type { Entity } from "../components";
 
 export class ProcGenManager extends Manager {
   readonly AREA_NUMBER = 10;
@@ -65,7 +76,7 @@ export class ProcGenManager extends Manager {
     const area = new Area(
       id,
       this.game.map.areaWidth,
-      this.game.map.areaHeight
+      this.game.map.areaHeight,
     );
     area.rootNote = this.game.music.getRandomRoot();
     const levelCount = this.game.rng.nextInt(this.MIN_LEVELS, this.MAX_LEVELS);
@@ -76,7 +87,7 @@ export class ProcGenManager extends Manager {
         area.levels.push(this.generateLevel(i, area.rootNote, difficulty));
       } else {
         area.levels.push(
-          this.generateLevel(i, area.rootNote, difficulty, area.levels[i - 1])
+          this.generateLevel(i, area.rootNote, difficulty, area.levels[i - 1]),
         );
       }
     }
@@ -87,12 +98,12 @@ export class ProcGenManager extends Manager {
     id: number,
     rootNote: string,
     difficulty: number,
-    previousLevel?: Level
+    previousLevel?: Level,
   ): Level {
     const level = new Level(
       id,
       this.game.map.areaWidth,
-      this.game.map.areaHeight
+      this.game.map.areaHeight,
     );
     level.rootNote = rootNote;
     level.mode = this.game.music.getRandomScale();
@@ -112,13 +123,13 @@ export class ProcGenManager extends Manager {
       level.width,
       level.height,
       [1, 1 / 2, 1 / 4, 1 / 8, 1 / 16],
-      2
+      2,
     );
     const cloudMap = mixNoise(
       level.width,
       level.height,
       [1, 1 / 2, 1 / 4, 1 / 8, 1 / 16],
-      2
+      2,
     );
     for (let y = 0; y < level.height; y++) {
       for (let x = 0; x < level.width; x++) {
@@ -179,7 +190,7 @@ export class ProcGenManager extends Manager {
       level.width,
       level.height,
       [1, 1 / 2, 1 / 4, 1 / 8, 1 / 16],
-      2
+      2,
     );
     for (let x = 0; x < level.width; x++) {
       for (let y = 0; y < level.height; y++) {
@@ -207,7 +218,7 @@ export class ProcGenManager extends Manager {
           tile = randomTileShading(
             this.game.rng,
             genTile === 0 ? { ...Tile.Floor } : { ...Tile.Wall },
-            7
+            7,
           );
         }
         level.tiles.set(position, tile);
@@ -230,14 +241,14 @@ export class ProcGenManager extends Manager {
         const stairTile = randomTileShading(
           this.game.rng,
           { ...Tile.DownStairs },
-          5
+          5,
         );
         stairTile.destination = { area: area.id, level: i + 1 };
         level.tiles.set(pos, stairTile);
         console.log(
           `${area.id}.${level.id} ${stairTile.type} = ${JSON.stringify(
-            pos
-          )} to ${stairTile.destination.area}.${stairTile.destination.level}`
+            pos,
+          )} to ${stairTile.destination.area}.${stairTile.destination.level}`,
         );
 
         // set island transporters on level 0
@@ -251,14 +262,14 @@ export class ProcGenManager extends Manager {
         const tile = randomTileShading(
           this.game.rng,
           { ...Tile.Transporter },
-          5
+          5,
         );
         tile.destination = { area: area.id + 1, level: 0 };
         level.tiles.set(pos, tile);
         console.log(
           `${area.id}.${level.id} ${tile.type} = ${JSON.stringify(pos)} to ${
             tile.destination.area
-          }.${tile.destination.level}`
+          }.${tile.destination.level}`,
         );
         if (area.id > 0) {
           pos = randomOpenTile(this.game.rng, level);
@@ -271,14 +282,14 @@ export class ProcGenManager extends Manager {
           const tile = randomTileShading(
             this.game.rng,
             { ...Tile.Transporter },
-            5
+            5,
           );
           tile.destination = { area: area.id - 1, level: 0 };
           level.tiles.set(pos, tile);
           console.log(
             `${area.id}.${level.id} ${tile.type} = ${JSON.stringify(pos)} to ${
               tile.destination.area
-            }.${tile.destination.level}`
+            }.${tile.destination.level}`,
           );
         }
       } else {
@@ -286,7 +297,7 @@ export class ProcGenManager extends Manager {
         const previousLevel = area.levels[i - 1];
         let upPos = findOpenNearCoord(
           level,
-          this.findStair(previousLevel, i)!
+          this.findStair(previousLevel, i)!,
         )!;
         let validPosition = false;
         while (!validPosition) {
@@ -312,7 +323,7 @@ export class ProcGenManager extends Manager {
         console.log(
           `${area.id}.${level.id} ${tile.type} = ${JSON.stringify(upPos)} to ${
             tile.destination.area
-          }.${tile.destination.level}`
+          }.${tile.destination.level}`,
         );
         // place down stairs on any level that isn't the bottom
         if (i + 1 < area.levels.length) {
@@ -323,14 +334,14 @@ export class ProcGenManager extends Manager {
           const downTile = randomTileShading(
             this.game.rng,
             { ...Tile.DownStairs },
-            5
+            5,
           );
           downTile.destination = { area: area.id, level: i + 1 };
           level.tiles.set(pos, downTile);
           console.log(
             `${area.id}.${level.id} ${downTile.type} = ${JSON.stringify(
-              pos
-            )} to ${downTile.destination.area}.${downTile.destination.level}`
+              pos,
+            )} to ${downTile.destination.area}.${downTile.destination.level}`,
           );
         }
       }
@@ -385,27 +396,49 @@ export class ProcGenManager extends Manager {
 
   generateEntities(area: Area, level: Level) {
     this.populateAltars(area, level);
-    this.generateCreatures(area, level);
+    this.generateLineageCreatures(area, level);
     this.generateItems(area, level);
   }
 
-  generateCreatures(area: Area, level: Level) {
-    const entities: Record<string, number> = {};
-    for (const i of Prefabs.CreatureTable.keys()) {
-      const spawnTable = Prefabs.CreatureTable.get(i)!;
+  generateLineageCreatures(area: Area, level: Level) {
+    const maxDifficulty = level.difficulty + this.game.rng.nextInt(0, 3);
+    const minDifficulty = level.difficulty - this.game.rng.nextInt(0, 3);
+    // const outOfLevelCreature = this.game.rng.next() > 0.8;
+    // const group = this.game.rng.next() > 0.7;
+    const types = [];
+    for (const [_key, lineage] of Prefabs.Lineages) {
       if (
-        spawnTable.minDifficulty <= level.difficulty &&
-        spawnTable.maxDifficulty >= level.difficulty
+        lineage.minDifficulty >= minDifficulty &&
+        lineage.minDifficulty <= maxDifficulty
       ) {
-        entities[i] = spawnTable.weight;
+        types.push(lineage);
       }
     }
+
     const creatureAmount = this.game.rng.nextInt(5, 10);
     for (const _ of range(0, creatureAmount)) {
-      const entityType = getWeightedValue(this.game.rng, entities)!;
-      if (entityType) {
-        const entity = deepCopy(Prefabs.Creatures.get(entityType));
-        entity.id = nanoid();
+      const lineage = this.game.rng.nextItem(types);
+      if (lineage) {
+        // if our lineage difficulty is less than the max, we'll optionally add a
+        // category to the entity
+        let category = undefined;
+        if (lineage.minDifficulty < maxDifficulty) {
+          const remainingDifficulty = maxDifficulty - lineage.minDifficulty;
+          const cats = [];
+          for (const c of lineage.categories) {
+            if (c.addedDifficulty < remainingDifficulty) {
+              cats.push(c);
+            }
+          }
+          if (this.game.rng.nextBoolean()) {
+            category = this.game.rng.nextItem(cats);
+          }
+        }
+        const entity: Entity = this.createEntityFromLineage(
+          lineage,
+          category,
+          undefined,
+        );
         if (level === this.game.map.getCurrentLevel()) {
           entity.position = randomOpenTile(this.game.rng, level);
         } else {
@@ -415,11 +448,56 @@ export class ProcGenManager extends Manager {
             pos: randomOpenTile(this.game.rng, level),
           };
         }
-        populateBodyStats(entity);
         this.game.ecs.addEntity(entity);
         this.game.mapIndexingSystem.update();
       }
     }
+  }
+
+  createEntityFromLineage(
+    lineage: Lineage,
+    category: Category | undefined,
+    _ranking: Ranking | undefined,
+  ): Entity {
+    const entity: Entity = {
+      id: nanoid(),
+      mobile: true,
+      name: `${lineage.name}`,
+    };
+    const eq = [];
+    for (const i of lineage.equipment) {
+      eq.push(i);
+    }
+    if (category) {
+      entity.name += ` ${category.name}`;
+      for (const i of category.equipment) {
+        eq.push(i);
+      }
+    }
+    entity.renderable = deepCopy(lineage.renderable);
+    entity.viewshed = {
+      range: 5,
+      dirty: true,
+    };
+    entity.initiative = 6;
+    entity.faction = lineage.faction;
+    entity.body = {
+      might: { base: lineage.baseStats.might, modifier: 0, bonus: 0 },
+      agility: { base: lineage.baseStats.agility, modifier: 0, bonus: 0 },
+      stability: { base: lineage.baseStats.stability, modifier: 0, bonus: 0 },
+      intellect: { base: lineage.baseStats.intellect, modifier: 0, bonus: 0 },
+      slots: deepCopy(lineage.slots),
+    };
+    entity.inventory = { items: [] };
+    for (let i = eq.length - 1; i >= 0; i--) {
+      const item = deepCopy(eq[i]);
+      item.id = nanoid();
+      this.game.ecs.addEntity(item);
+      entity.inventory.items.push(item);
+      Actions.equipItem(this.game, entity, item, undefined, false);
+    }
+    populateBodyStats(entity);
+    return entity;
   }
 
   generateItems(area: Area, level: Level) {
@@ -433,7 +511,7 @@ export class ProcGenManager extends Manager {
         entities[i] = spawnTable.weight;
       }
     }
-    const itemAmount = this.game.rng.nextInt(5, 10);
+    const itemAmount = this.game.rng.nextInt(3, 10);
     for (const _ of range(0, itemAmount)) {
       const entityType = getWeightedValue(this.game.rng, entities)!;
       if (entityType) {
