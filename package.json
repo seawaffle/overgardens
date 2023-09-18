@@ -10,10 +10,10 @@
     "lint": "eslint src"
   },
   "devDependencies": {
-    "@types/babel__core": "^7.20.1",
-    "@typescript-eslint/eslint-plugin": "^6.6.0",
-    "@typescript-eslint/parser": "^6.6.0",
-    "astro": "^3.0.12",
+    "@types/babel__core": "^7.20.2",
+    "@typescript-eslint/eslint-plugin": "^6.7.0",
+    "@typescript-eslint/parser": "^6.7.0",
+    "astro": "^3.1.0",
     "eslint": "^8.49.0",
     "prettier": "^3.0.3",
     "typescript": "^5.2.2"
@@ -22,7 +22,7 @@
     "colortranslator": "^3.0.2",
     "malwoden": "^0.5.0",
     "miniplex": "^2.0.0",
-    "nanoid": "^4.0.2",
+    "nanoid": "^5.0.1",
     "rot-js": "^2.2.0",
     "tonal": "^5.0.0",
     "tone": "^14.7.77"
